@@ -1,0 +1,81 @@
+diff --git a/rl-starter-files/scripts/train.py b/rl-starter-files/scripts/train.py
+index 6b1b0c6..51ef539 100644
+--- a/rl-starter-files/scripts/train.py
++++ b/rl-starter-files/scripts/train.py
+@@ -19,6 +19,10 @@ sys.path.insert(0, os.path.abspath('/Users/corinacaraconcea/Documents/UCL DSML/M
+ import a2c
+ import ppo
+ 
++from Minigrid.minigrid.__init__ import register_minigrid_envs
++
++register_minigrid_envs()
++
+ # Parse arguments
+ 
+ #The argparse module is a standard Python library for writing user-friendly command-line interfaces.
+@@ -70,7 +74,7 @@ parser.add_argument("--optim-alpha", type=float, default=0.99,
+                     help="RMSprop optimizer alpha (default: 0.99)")
+ parser.add_argument("--clip-eps", type=float, default=0.2,
+                     help="clipping epsilon for PPO (default: 0.2)")
+-parser.add_argument("--recurrence", type=int, default=2,
++parser.add_argument("--recurrence", type=int, default=1,
+                     help="number of time-steps gradient is backpropagated (default: 1). If > 1, a LSTM is added to the model to have memory.")
+ parser.add_argument("--text", action="store_true", default=False,
+                     help="add a GRU to the model to handle text input")
+@@ -313,15 +317,15 @@ if __name__ == "__main__":
+ 
+         # Save status
+ 
+-        # if args.save_interval > 0 and update % args.save_interval == 0:
+-        #     status_base = {"model_name": "ACmodel","num_frames": num_frames, "update": update,
+-        #               "model_state": acmodel.state_dict(), "optimizer_state": algo.optimizer.state_dict()}
+-        #     if hasattr(preprocess_obss, "vocab"):
+-        #         status_base["vocab"] = preprocess_obss.vocab.vocab
+-        #     utils.save_status(status_base,model_flag, model_dir)
+-        #     txt_logger.info("Status saved")
++        if args.save_interval > 0 and update % args.save_interval == 0:
++            status_base = {"model_name": "ACmodel","num_frames": num_frames, "update": update,
++                      "model_state": acmodel.state_dict(), "optimizer_state": algo.optimizer.state_dict()}
++            if hasattr(preprocess_obss, "vocab"):
++                status_base["vocab"] = preprocess_obss.vocab.vocab
++            utils.save_status(status_base,model_flag, model_dir)
++            txt_logger.info("Status saved")
+ 
+-        # Save status rnd
++        # Save status rn
+ 
+         # if args.save_interval > 0 and update % args.save_interval == 0:
+         #     status_rnd = {"model_name": "RNDmodel","num_frames": num_frames, "update": update,
+diff --git a/rl-starter-files/scripts/visualize.py b/rl-starter-files/scripts/visualize.py
+index dd28d0b..fb3150a 100644
+--- a/rl-starter-files/scripts/visualize.py
++++ b/rl-starter-files/scripts/visualize.py
+@@ -4,6 +4,9 @@ import numpy
+ import utils
+ from utils import device
+ 
++from Minigrid.minigrid.__init__ import register_minigrid_envs
++
++register_minigrid_envs()
+ 
+ # Parse arguments
+ 
+@@ -49,7 +52,8 @@ print("Environment loaded\n")
+ # Load agent
+ 
+ model_dir = utils.get_model_dir(args.model)
+-agent = utils.Agent(env.observation_space, env.action_space, model_dir,
++print("model directory path", model_dir)
++agent = utils.Agent(env.observation_space, env.action_space, "" , model_dir,
+                     argmax=args.argmax, use_memory=args.memory, use_text=args.text)
+ print("Agent loaded\n")
+ 
+diff --git a/rl-starter-files/utils/env.py b/rl-starter-files/utils/env.py
+index fa4f36d..24b9b4b 100644
+--- a/rl-starter-files/utils/env.py
++++ b/rl-starter-files/utils/env.py
+@@ -5,3 +5,4 @@ def make_env(env_key, seed=None, render_mode=None):
+     env = gym.make(env_key, render_mode=render_mode)
+     env.reset(seed=seed)
+     return env
++

@@ -44,7 +44,7 @@ class Agent:
             # do you keep the memory of previous experiences?
             # feeds them to the actor-critic model to get a distribution over actions
             if self.acmodel.recurrent:
-                dist, _, self.memories = self.acmodel(preprocessed_obss, self.memories)
+                dist, _, self.memories,_ = self.acmodel(preprocessed_obss, self.memories)
             else:
                 dist, _ = self.acmodel(preprocessed_obss)
 
