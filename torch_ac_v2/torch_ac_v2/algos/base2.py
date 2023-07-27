@@ -8,6 +8,7 @@ import torch.nn.functional as F
 
 sys.path.insert(0, '/cluster/project7/diversity_rl/diversity_study/torch_ac_v2/torch_ac_v2')
 
+import format
 from format import default_preprocess_obss
 
 sys.path.insert(0, '/cluster/project7/diversity_rl/diversity_study/torch_ac_v2/torch_ac_v2/utils')
