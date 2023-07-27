@@ -13,10 +13,9 @@ from format import default_preprocess_obss
 
 sys.path.insert(0, '/cluster/project7/diversity_rl/diversity_study/torch_ac_v2/torch_ac_v2/utils')
 
-
-from utils.dictlist import DictList
-from utils.penv import ParallelEnv
-from utils.count_module import CountModule,TrajectoryCountModule, DIAYN_reward, DIAYN_discriminator, RNDModel, WindowTrajectory, CNN_encoder, WindowEncoder, WindowDecoder,RNDTrajectoryModel
+from dictlist import DictList
+from penv import ParallelEnv
+from count_module import CountModule,TrajectoryCountModule, DIAYN_reward, DIAYN_discriminator, RNDModel, WindowTrajectory, CNN_encoder, WindowEncoder, WindowDecoder,RNDTrajectoryModel
 
 class BaseAlgo(ABC):
     """The base class for RL algorithms."""
