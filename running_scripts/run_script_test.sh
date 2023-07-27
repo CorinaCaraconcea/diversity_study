@@ -25,7 +25,7 @@
 #activate the virtual environment
 #source /home/rmapkay/new-env/bin/activate
 # source /shared/ucl/apps/miniconda/4.10.3/etc/profile.d/conda.sh
-conda activate minigrid
+# conda activate minigrid
 
 
 # Set the working directory to somewhere in your scratch space.  
