@@ -31,7 +31,7 @@
 # Set the working directory to somewhere in your scratch space.  
 #  This is a necessary step as compute nodes cannot write to $HOME.
 # Replace "<your_UCL_id>" with your UCL user ID.
-#$ -wd cd /cluster/project7/diversity_rl/diversity_study/rl-starter-files
+#$ -cwd
 
 # # Checks which copy of Python is being run
 # command -v python3
@@ -53,4 +53,4 @@
 # Run the application
 # echo "$algo" "$env" "$folder_name" "$frames" "$entropy_coef" "$ir_coef" "$disc_lr" "$num_skills" "$seed"
 # python3 -m scripts.train --algo "$algo" --env "$env" --folder-name "$folder_name" --frames "$frames" --entropy-coef "$entropy_coef" --ir-coef "$ir_coef" --disc-lr "$disc_lr" --num-skills "$num_skills" --seed "$seed"
-python3 -m scripts.train --algo ppo --env MiniGrid-DoorKey-5x5-v0 --model DoorKey --save-interval 10 --frames 80 --intrinsic-reward-model TrajectoryCount
+python3 -m rl_starter_files.scripts.train --algo ppo --env MiniGrid-DoorKey-5x5-v0 --model DoorKey --save-interval 10 --frames 80 --intrinsic-reward-model TrajectoryCount
