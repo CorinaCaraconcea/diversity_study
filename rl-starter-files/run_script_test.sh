@@ -41,16 +41,23 @@
 
 
 # #read parameter values and run
-# paramfile=/home/rmapkay/Scratch/DIAYN_corrected_params.txt
-# number=$SGE_TASK_ID
+paramfile=/cluster/project7/diversity_rl/diversity_study/rl-starter-files/params_test.txt
+number=$GPU_TASK_ID
 
-# env="`sed -n ${number}p $paramfile | awk '{print $1}'`"
-# model="`sed -n ${number}p $paramfile | awk '{print $2}'`"
-# frames="`sed -n ${number}p $paramfile | awk '{print $3}'`"
-# algo="`sed -n ${number}p $paramfile | awk '{print $4}'`"
+env ="`sed -n ${number}p $paramfile | awk '{print $1}'`"
+folder_name ="`sed -n ${number}p $paramfile | awk '{print $2}'`"
+seed = "`sed -n ${number}p $paramfile | awk '{print $3}'`"
+frames ="`sed -n ${number}p $paramfile | awk '{print $4}'`"
+intrinsic_reward_model = "`sed -n ${number}p $paramfile | awk '{print $5}'`"
+beta_coeff = "`sed -n ${number}p $paramfile | awk '{print $6}'`"
+no_skills = "`sed -n ${number}p $paramfile | awk '{print $7}'`"
+window_size = "`sed -n ${number}p $paramfile | awk '{print $8}'`"
 
 
 # Run the application
 # echo "$algo" "$env" "$folder_name" "$frames" "$entropy_coef" "$ir_coef" "$disc_lr" "$num_skills" "$seed"
 # python3 -m scripts.train --algo "$algo" --env "$env" --folder-name "$folder_name" --frames "$frames" --entropy-coef "$entropy_coef" --ir-coef "$ir_coef" --disc-lr "$disc_lr" --num-skills "$num_skills" --seed "$seed"
-python3 -m scripts.train --algo ppo --env MiniGrid-DoorKey-5x5-v0 --model DoorKey --save-interval 10 --frames 80 --intrinsic-reward-model TrajectoryCount
+# python3 -m scripts.train --algo ppo --env MiniGrid-DoorKey-5x5-v0 --model DoorKey --save-interval 10 --frames 80 --intrinsic-reward-model TrajectoryCount
+
+echo "$env" "$folder_name" "$seed" "$frames" "$intrinsic_reward_model" "$beta_coeff" "$no_skills" "$window_size"
+python3 -m scripts.train --algo ppo --env "$env" --model "$folder_name" --seed "$seed" --save-interval 10 --frames "$frames" --intrinsic-reward-model "$intrinsic_reward_model" --intrinsic-coef "$beta_coeff" --number-skills "$no_skills" --window-size "$window_size"
