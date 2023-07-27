@@ -6,7 +6,9 @@ import tensorboardX
 import sys
 import wandb
 
-import utils
+sys.path.insert(0, '/cluster/project7/diversity_rl/diversity_study/rl-starter-files')
+
+import utils 
 from utils import device
 from model import ACModel
 
@@ -14,7 +16,10 @@ import sys
 import os
 
 # Add folder1 to system path
-sys.path.insert(0, os.path.abspath('/Users/corinacaraconcea/Documents/UCL DSML/MSc projects/torch_ac_v2/torch_ac_v2/algos'))
+# sys.path.insert(0, os.path.abspath('/Users/corinacaraconcea/Downloads/diversity_study/torch_ac_v2/torch_ac_v2/algos'))
+
+sys.path.insert(0, '/cluster/project7/diversity_rl/diversity_study/torch_ac_v2/torch_ac_v2/algos')
+
 
 import a2c
 import ppo

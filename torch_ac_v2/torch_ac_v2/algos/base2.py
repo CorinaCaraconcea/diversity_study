@@ -6,11 +6,11 @@ import math
 import numpy as np
 import torch.nn.functional as F
 
-sys.path.insert(0, os.path.abspath('/Users/corinacaraconcea/Documents/UCL DSML/MSc projects/torch_ac_v2/torch_ac_v2'))
+sys.path.insert(0, os.path.abspath('/Users/corinacaraconcea/Downloads/diversity_study/torch_ac_v2/torch_ac_v2/algos'))
 
 from format import default_preprocess_obss
 
-sys.path.insert(0, os.path.abspath('/Users/corinacaraconcea/Documents/UCL DSML/MSc projects/torch_ac_v2/torch_ac_v2/utils'))
+sys.path.insert(0, os.path.abspath('/Users/corinacaraconcea/Downloads/diversity_study/torch_ac_v2/torch_ac_v2/utils'))
 
 from dictlist import DictList
 from penv import ParallelEnv
