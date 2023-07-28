@@ -45,13 +45,13 @@ paramfile=/cluster/project7/diversity_rl/diversity_study/rl-starter-files/params
 number=$SGE_TASK_ID
 
 env ="`sed -n ${number}p $paramfile | awk '{print $1}'`"
-folder_name ="`sed -n ${number}p $paramfile | awk '{print $2}'`"
-seed = "`sed -n ${number}p $paramfile | awk '{print $3}'`"
-frames ="`sed -n ${number}p $paramfile | awk '{print $4}'`"
-intrinsic_reward_model = "`sed -n ${number}p $paramfile | awk '{print $5}'`"
-beta_coeff = "`sed -n ${number}p $paramfile | awk '{print $6}'`"
-no_skills = "`sed -n ${number}p $paramfile | awk '{print $7}'`"
-window_size = "`sed -n ${number}p $paramfile | awk '{print $8}'`"
+folder_name="`sed -n ${number}p $paramfile | awk '{print $2}'`"
+seed="`sed -n ${number}p $paramfile | awk '{print $3}'`"
+frames="`sed -n ${number}p $paramfile | awk '{print $4}'`"
+intrinsic_reward_model="`sed -n ${number}p $paramfile | awk '{print $5}'`"
+beta_coeff="`sed -n ${number}p $paramfile | awk '{print $6}'`"
+no_skills="`sed -n ${number}p $paramfile | awk '{print $7}'`"
+window_size="`sed -n ${number}p $paramfile | awk '{print $8}'`"
 
 
 # Run the application
