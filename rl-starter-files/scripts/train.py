@@ -84,7 +84,7 @@ parser.add_argument("--recurrence", type=int, default=3,
 parser.add_argument("--text", action="store_true", default=False,
                     help="add a GRU to the model to handle text input")
 
-parser.add_argument("--intrinsic-coef", type=int, default=0.005,
+parser.add_argument("--intrinsic-coef", type=float, default=0.005,
                     help="beta coefficient for the intrinsic reward (default: 0.005)")
 
 parser.add_argument("--intrinsic-reward-model", default=None,
