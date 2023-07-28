@@ -20,7 +20,7 @@
 #$ -R y
 
 # Set the name of the job.
-#$ -N TestTry1
+#$ -N TestTry2
 
 #activate the virtual environment
 #source /home/rmapkay/new-env/bin/activate
