@@ -2,7 +2,7 @@
 #$ -S /bin/bash
 
 # set a task increment
-#$ -t 1-{}
+#$ -t 1-80
 
 # amount of memory
 #$ -l tmem= 100G
@@ -44,6 +44,10 @@
 paramfile=/cluster/project7/diversity_rl/diversity_study/rl-starter-files/params_test.txt
 number=$SGE_TASK_ID
 
+echo $SGE_TASK_ID
+
+cat $paramfile
+
 env ="`sed -n ${number}p $paramfile | awk '{print $1}'`"
 folder_name="`sed -n ${number}p $paramfile | awk '{print $2}'`"
 frames="`sed -n ${number}p $paramfile | awk '{print $3}'`"
@@ -52,11 +56,6 @@ beta_coeff="`sed -n ${number}p $paramfile | awk '{print $5}'`"
 no_skills="`sed -n ${number}p $paramfile | awk '{print $6}'`"
 window_size="`sed -n ${number}p $paramfile | awk '{print $7}'`"
 
-
-# Run the application
-# echo "$algo" "$env" "$folder_name" "$frames" "$entropy_coef" "$ir_coef" "$disc_lr" "$num_skills" "$seed"
-# python3 -m scripts.train --algo "$algo" --env "$env" --folder-name "$folder_name" --frames "$frames" --entropy-coef "$entropy_coef" --ir-coef "$ir_coef" --disc-lr "$disc_lr" --num-skills "$num_skills" --seed "$seed"
-# python3 -m scripts.train --algo ppo --env MiniGrid-DoorKey-5x5-v0 --model DoorKey --save-interval 10 --frames 80 --intrinsic-reward-model TrajectoryCount
 
 echo "$env" "$folder_name" "$frames" "$intrinsic_reward_model" "$beta_coeff" "$no_skills" "$window_size"
 python3 -m scripts.train --algo ppo --env "$env" --model "$folder_name" --save-interval 10 --frames "$frames" --intrinsic-reward-model "$intrinsic_reward_model" --intrinsic-coef "$beta_coeff" --number-skills "$no_skills" --window-size "$window_size"
