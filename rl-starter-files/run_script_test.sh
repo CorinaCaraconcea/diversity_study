@@ -8,7 +8,7 @@
 #$ -l tmem= 100G
 
 # Limit of time
-#$ -l h_rt=00:20:00
+#$ -l h_rt=12:00:00
 
 # Request a number of GPU cards, in this case 2 (the maximum)
 #$ -l gpu=true
@@ -20,7 +20,7 @@
 #$ -R y
 
 # Set the name of the job.
-#$ -N TestEmpty
+#$ -N TestTry1
 
 #activate the virtual environment
 #source /home/rmapkay/new-env/bin/activate
@@ -42,7 +42,7 @@
 
 # #read parameter values and run
 paramfile=/cluster/project7/diversity_rl/diversity_study/rl-starter-files/params_test.txt
-number=$GPU_TASK_ID
+number=$SGE_TASK_ID
 
 env ="`sed -n ${number}p $paramfile | awk '{print $1}'`"
 folder_name ="`sed -n ${number}p $paramfile | awk '{print $2}'`"
