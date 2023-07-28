@@ -42,9 +42,8 @@
 
 # #read parameter values and run
 paramfile=/cluster/project7/diversity_rl/diversity_study/rl-starter-files/params_test.txt
-number=$SGE_TASK_ID
 
-env ="`sed -n ${SGE_TASK_ID}'{p;q}' $paramfile | awk '{print $1}'`"
+env="`sed -n ${SGE_TASK_ID}'{p;q}' $paramfile | awk '{print $1}'`"
 folder_name="`sed -n ${SGE_TASK_ID}'{p;q}' $paramfile | awk '{print $2}'`"
 frames="`sed -n ${SGE_TASK_ID}'{p;q}' $paramfile | awk '{print $3}'`"
 intrinsic_reward_model="`sed -n ${SGE_TASK_ID}'{p;q}' $paramfile | awk '{print $4}'`"
