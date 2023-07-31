@@ -171,7 +171,7 @@ if __name__ == "__main__":
     acmodel = ACModel(obs_space, envs[0].action_space, args.mem, args.text,diayn_flag,args.number_skills)
     if "model_state" in status_base:
         acmodel.load_state_dict(status_base["model_state"])
-    acmodel.to(device)
+    acmodel = acmodel.to(device)
     txt_logger.info("Model loaded\n")
     txt_logger.info("{}\n".format(acmodel))
 

@@ -5,16 +5,17 @@
 #$ -t 1-80
 
 # amount of memory
-#$ -l tmem= 100G
+#$ -l tmem=15G
 
 # Limit of time
-#$ -l h_rt=12:00:00
+#$ -l h_rt=2:00:00
 
 # Request a number of GPU cards, in this case 2 (the maximum)
-#$ -l gpu=true
+###$ -l gpu=true
 
 # GPU
-#$ -pe gpu 2
+###$ -pe gpu 1
+###$ -l gpu_type=!(gtx1080ti|titanx)
 
 # reserves requested resources:
 #$ -R y
@@ -31,7 +32,7 @@
 # Set the working directory to somewhere in your scratch space.  
 #  This is a necessary step as compute nodes cannot write to $HOME.
 # Replace "<your_UCL_id>" with your UCL user ID.
-#$ -cwd
+#$ -wd /cluster/project7/diversity_rl/diversity_study/rl-starter-files
 
 # # Checks which copy of Python is being run
 # command -v python3
@@ -53,4 +54,4 @@ window_size="`sed -n ${SGE_TASK_ID}'{p;q}' $paramfile | awk '{print $7}'`"
 
 
 echo "$env" "$folder_name" "$frames" "$intrinsic_reward_model" "$beta_coeff" "$no_skills" "$window_size"
-python3 -m scripts.train --algo ppo --env "$env" --model "$folder_name" --save-interval 10 --frames "$frames" --intrinsic-reward-model "$intrinsic_reward_model" --intrinsic-coef "$beta_coeff" --number-skills "$no_skills" --window-size "$window_size"
+/miniconda3/condabin/conda run -n minigrid python3 -m scripts.train --algo ppo --env "$env" --model "$folder_name" --save-interval 10 --frames "$frames" --intrinsic-reward-model "$intrinsic_reward_model" --intrinsic-coef "$beta_coeff" --number-skills "$no_skills" --window-size "$window_size"
