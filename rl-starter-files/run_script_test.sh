@@ -5,10 +5,10 @@
 #$ -t 1-{}
 
 # amount of memory
-#$ -l tmem=15G
+#$ -l tmem=50G
 
 # Limit of time
-#$ -l h_rt=2:00:00
+#$ -l h_rt=16:00:00
 
 # Request a number of GPU cards, in this case 2 (the maximum)
 ###$ -l gpu=true
@@ -21,7 +21,7 @@
 #$ -R y
 
 # Set the name of the job.
-#$ -N TestTry2
+#$ -N FirstJob
 
 #activate the virtual environment
 #source /home/rmapkay/new-env/bin/activate
