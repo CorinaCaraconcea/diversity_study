@@ -2,7 +2,7 @@
 #$ -S /bin/bash
 
 # set a task increment
-#$ -t 1-{}
+#$ -t 1-18
 
 # amount of memory
 #$ -l tmem=50G
