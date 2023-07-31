@@ -2,7 +2,7 @@
 #$ -S /bin/bash
 
 # set a task increment
-#$ -t 1-80
+#$ -t 1-{}
 
 # amount of memory
 #$ -l tmem=15G
@@ -54,4 +54,4 @@ window_size="`sed -n ${SGE_TASK_ID}'{p;q}' $paramfile | awk '{print $7}'`"
 
 
 echo "$env" "$folder_name" "$frames" "$intrinsic_reward_model" "$beta_coeff" "$no_skills" "$window_size"
-/miniconda3/condabin/conda run -n minigrid python3 -m scripts.train --algo ppo --env "$env" --model "$folder_name" --save-interval 10 --frames "$frames" --intrinsic-reward-model "$intrinsic_reward_model" --intrinsic-coef "$beta_coeff" --number-skills "$no_skills" --window-size "$window_size"
+/home/ccaracon/miniconda3/condabin/conda run -n minigrid python3 -m scripts.train --algo ppo --env "$env" --model "$folder_name" --save-interval 10 --frames "$frames" --intrinsic-reward-model "$intrinsic_reward_model" --intrinsic-coef "$beta_coeff" --number-skills "$no_skills" --window-size "$window_size"
