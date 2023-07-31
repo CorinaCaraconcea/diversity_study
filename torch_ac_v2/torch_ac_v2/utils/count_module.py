@@ -29,7 +29,8 @@ class CountModule():
         self.state_action = state_action # define if depends also to the state
         self.counts = {}
         self.beta = beta
-
+        print("Beta coefficient for count: ", self.beta)
+        
     def state_encoder(self, state, action):
         """
         Function to flatten the observed image state and encode the state or the state-action pair.
