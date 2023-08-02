@@ -112,12 +112,14 @@ class BaseAlgo(ABC):
             self.trajectory_window_decoder = WindowDecoder(64, 10, window_encoder_size)
             self.trajectory_window_decoder.to(self.device)
 
-        # initialize the DIAYN discriminator
-        self.diayn_discriminator = DIAYN_discriminator(self.obs_space, self.no_skills)
-        self.diayn_discriminator.to(self.device)
+        if self.intrinsic_reward_model == "DIAYN":        
 
-        # DIAYN reward class
-        self.diayn_reward = DIAYN_reward(self.no_skills, self.diayn_discriminator,self.intrinsic_coef)
+            # initialize the DIAYN discriminator
+            self.diayn_discriminator = DIAYN_discriminator(self.obs_space, self.no_skills)
+            self.diayn_discriminator.to(self.device)
+
+            # DIAYN reward class
+            self.diayn_reward = DIAYN_reward(self.no_skills, self.diayn_discriminator,self.intrinsic_coef)
 
         # initialize the RND module for the RND networks (predictor + target)
         self.rnd_model = RNDModel(self.obs_space)
