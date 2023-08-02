@@ -177,6 +177,7 @@ class BaseAlgo(ABC):
         self.values = torch.zeros(*shape, device=self.device)
         # the rewards tensor will include both intrinsic and extrinsic rewards
         self.rewards = torch.zeros(*shape, device=self.device)
+        self.total_rewards = torch.zeros(*shape, device=self.device)
         self.advantages = torch.zeros(*shape, device=self.device)
         self.log_probs = torch.zeros(*shape, device=self.device)
 
@@ -288,9 +289,9 @@ class BaseAlgo(ABC):
                 # update the state or state-action count
                 state_counts = self.count_module.update_count(preprocessed_obs.image, action)
 
-                reward = np.array(reward,dtype=np.float64)
-                reward += np.array(count_intrinsic_reward, dtype=np.float64)
-                reward = tuple(reward)
+                total_reward = np.array(reward,dtype=np.float64)
+                total_reward += np.array(count_intrinsic_reward, dtype=np.float64)
+                total_reward = tuple(total_reward)
 
             elif self.intrinsic_reward_model == "RND":
                 # print("Using RND")
@@ -313,10 +314,10 @@ class BaseAlgo(ABC):
                 self.rnd_loss[i]=intrinsic_reward
 
                 # Add the intrinsic reward to the the extrinsic/envs reward
-                reward = torch.tensor(reward, dtype=torch.float32, requires_grad=True)  # Ensure reward is float and requires grad
-                reward = reward.clone() + self.intrinsic_coef * intrinsic_reward
+                total_reward = torch.tensor(reward, dtype=torch.float32, requires_grad=True)  # Ensure reward is float and requires grad
+                total_reward = total_reward.clone() + self.intrinsic_coef * intrinsic_reward
                 # print("reward is", reward)
-                reward = tuple(reward)
+                total_reward = tuple(total_reward)
 
             elif self.intrinsic_reward_model == "TrajectoryCount":
                 # print("Using Trajectory Count")
@@ -335,21 +336,11 @@ class BaseAlgo(ABC):
                         trajectory_intrinsic_reward.append(0)
 
                 # Add the intrinsic reward to the the extrinsic/envs reward
-                reward = torch.tensor(reward, dtype=torch.float32, requires_grad=True)  # Ensure reward is float and requires grad
+                total_reward = torch.tensor(reward, dtype=torch.float32, requires_grad=True)  # Ensure reward is float and requires grad
                 trajectory_intrinsic_reward = torch.tensor(trajectory_intrinsic_reward, dtype=torch.float32, requires_grad=True)
-                reward = reward.clone() + trajectory_intrinsic_reward
+                total_reward = total_reward.clone() + trajectory_intrinsic_reward
                 # print("reward is", reward)
-                reward = tuple(reward)
-
-            elif self.intrinsic_reward_model == "TrajectoryNet":
-                # print("Using Trajectory Net")
-
-                state_embeddings = self.state_action_model(input_next_obs.image,action)
-
-                for idx, (state_embed,act) in enumerate(zip(state_embeddings,action)):
-                    state_act_embed = torch.cat((state_embed, act.unsqueeze(0)), dim=0)
-                    self.embedded_trajectories[idx] = (state_act_embed+self.embedded_trajectories[idx]) / 2
-
+                total_reward = tuple(total_reward)
 
             elif self.intrinsic_reward_model == "DIAYN":
                 # print("Using DYAIN")
@@ -370,10 +361,10 @@ class BaseAlgo(ABC):
                 # print("diayn rewards ", diayn_rewards)
 
                 # Add the intrinsic reward to the the extrinsic/envs reward
-                reward = torch.tensor(reward, dtype=torch.float32, requires_grad=True)  # Ensure reward is float and requires grad
+                total_reward = torch.tensor(reward, dtype=torch.float32, requires_grad=True)  # Ensure reward is float and requires grad
                 diayn_rewards = torch.tensor(diayn_rewards, dtype=torch.float32, requires_grad=True)
-                reward = reward.clone() + diayn_rewards
-                reward = tuple(reward)   
+                total_reward = total_reward.clone() + diayn_rewards
+                total_reward = tuple(reward)   
 
             elif self.intrinsic_reward_model == "TrajectoryWindowCount":
 
@@ -392,11 +383,11 @@ class BaseAlgo(ABC):
                         window_count_intrinsic_reward.append(0)
                 
                 # Add the intrinsic reward to the the extrinsic/envs reward
-                reward = torch.tensor(reward, dtype=torch.float32, requires_grad=True)  # Ensure reward is float and requires grad
+                total_reward = torch.tensor(reward, dtype=torch.float32, requires_grad=True)  # Ensure reward is float and requires grad
                 window_count_intrinsic_reward = torch.tensor(window_count_intrinsic_reward, dtype=torch.float32, requires_grad=True)
-                reward = reward.clone() + window_count_intrinsic_reward
+                total_reward = total_reward.clone() + window_count_intrinsic_reward
                 # print("reward is", reward)
-                reward = tuple(reward)
+                total_reward = tuple(total_reward)
 
             elif self.intrinsic_reward_model == "TrajectoryAutoencoder":
 
@@ -431,10 +422,10 @@ class BaseAlgo(ABC):
                     self.trajectory_autoencoder_rewards[i] = traj_intrinsic_reward
 
                 # Add the intrinsic reward to the the extrinsic/envs reward
-                reward = torch.tensor(reward, dtype=torch.float32, requires_grad=True)  # Ensure reward is float and requires grad
-                reward = reward.clone() + self.intrinsic_coef * self.trajectory_autoencoder_rewards[i, :]
+                total_reward = torch.tensor(reward, dtype=torch.float32, requires_grad=True)  # Ensure reward is float and requires grad
+                total_reward = total_reward.clone() + self.intrinsic_coef * self.trajectory_autoencoder_rewards[i, :]
                 # print("reward is", reward)
-                reward = tuple(reward)
+                total_reward = tuple(total_reward)
 
             elif self.intrinsic_reward_model == "TrajectoryRND":
  
@@ -449,12 +440,11 @@ class BaseAlgo(ABC):
                 traj_rnd_intrinsic_reward = torch.mean(square_diff, dim=1)
 
                 # Add the intrinsic reward to the the extrinsic/envs reward
-                reward = torch.tensor(reward, dtype=torch.float32, requires_grad=True)  # Ensure reward is float and requires grad
-                reward = reward.clone() + self.intrinsic_coef * traj_rnd_intrinsic_reward
+                total_reward = torch.tensor(reward, dtype=torch.float32, requires_grad=True)  # Ensure reward is float and requires grad
+                total_reward = total_reward.clone() + self.intrinsic_coef * traj_rnd_intrinsic_reward
                 # print("reward is", reward)
-                reward = tuple(reward)
-                # print(traj_rnd_intrinsic_reward)
-
+                total_reward = tuple(total_reward)
+                print(reward)
 
             # essentially the logical OR operator -> check if the episode is done
             # which is either ended in a natural way (terminal state) or somehow cutoff before
@@ -490,6 +480,14 @@ class BaseAlgo(ABC):
                 ], device=self.device)
             else:
                 self.rewards[i] = torch.tensor(reward, device=self.device)
+
+            if self.reshape_reward is not None:
+                self.total_rewards[i] = torch.tensor([
+                    self.reshape_reward(obs_, action_, reward_, done_)
+                    for obs_, action_, reward_, done_ in zip(obs, action, total_rewards, done)
+                ], device=self.device)
+            else:
+                self.total_rewards[i] = torch.tensor(total_rewards, device=self.device)
 
             # keep track of the skills
             if self.intrinsic_reward_model == "DIAYN":
@@ -554,7 +552,7 @@ class BaseAlgo(ABC):
             next_advantage = self.advantages[i+1] if i < self.num_frames_per_proc - 1 else 0
 
             # reward + discount * next_state_value*next_mask - current value
-            delta = self.rewards[i] + self.discount * next_value * next_mask - self.values[i]
+            delta = self.total_rewards[i] + self.discount * next_value * next_mask - self.values[i]
             self.advantages[i] = delta + self.discount * self.gae_lambda * next_advantage * next_mask
 
         # Define experiences:
