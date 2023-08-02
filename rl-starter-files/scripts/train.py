@@ -254,6 +254,7 @@ if __name__ == "__main__":
     # Track hyperparameters and run metadata
     config={
         "model": model_flag,
+        "env": args.env,
         "seed": args.seed,
         "intr_coeff": args.intrinsic_coef,
         "window_size": args.window_size,

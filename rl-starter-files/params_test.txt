@@ -16,3 +16,12 @@ MiniGrid-MultiRoom-N7-S4-v0 MultiroomN7S4 80000000 DIAYN 0.0005 15 0
 MiniGrid-MultiRoom-N7-S4-v0 MultiroomN7S4 80000000 DIAYN 0.005 5 0
 MiniGrid-MultiRoom-N7-S4-v0 MultiroomN7S4 80000000 DIAYN 0.001 5 0
 MiniGrid-MultiRoom-N7-S4-v0 MultiroomN7S4 80000000 DIAYN 0.0005 5 0
+MiniGrid-MultiRoom-N7-S4-v0 MultiroomN7S4 80000000 TrajectoryWindowCount 0.005 1 3
+MiniGrid-MultiRoom-N7-S4-v0 MultiroomN7S4 80000000 TrajectoryWindowCount 0.005 1 5
+MiniGrid-MultiRoom-N7-S4-v0 MultiroomN7S4 80000000 TrajectoryWindowCount 0.005 1 10
+MiniGrid-MultiRoom-N7-S4-v0 MultiroomN7S4 80000000 TrajectoryWindowCount 0.001 1 3
+MiniGrid-MultiRoom-N7-S4-v0 MultiroomN7S4 80000000 TrajectoryWindowCount 0.001 1 5
+MiniGrid-MultiRoom-N7-S4-v0 MultiroomN7S4 80000000 TrajectoryWindowCount 0.001 1 10
+MiniGrid-MultiRoom-N7-S4-v0 MultiroomN7S4 80000000 TrajectoryWindowCount 0.0005 1 3
+MiniGrid-MultiRoom-N7-S4-v0 MultiroomN7S4 80000000 TrajectoryWindowCount 0.0005 1 5
+MiniGrid-MultiRoom-N7-S4-v0 MultiroomN7S4 80000000 TrajectoryWindowCount 0.0005 1 10

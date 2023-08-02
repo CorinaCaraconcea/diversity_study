@@ -21,7 +21,7 @@
 #$ -R y
 
 # Set the name of the job.
-#$ -N FirstJob
+#$ -N MN7S4
 
 #activate the virtual environment
 #source /home/rmapkay/new-env/bin/activate

@@ -271,6 +271,8 @@ class BaseAlgo(ABC):
             obs, reward, terminated, truncated,agent_loc,_= self.env.step(action.cpu().numpy())
 
 
+            input_next_obs = self.preprocess_obss(obs, device=self.device)
+
             # keep track of the extrinsic rewards
             self.log_episode_ext_return += torch.tensor(reward, device=self.device, dtype=torch.float)
 
@@ -279,7 +281,7 @@ class BaseAlgo(ABC):
                 # print("Using state-count")
 
                 # calculate the count-based intrinsic reward:
-                count_intrinsic_reward = [self.count_module.count_based_ir(ob, act) for ob,act in zip(preprocessed_obs.image, action)]
+                count_intrinsic_reward = [self.count_module.count_based_ir(ob, act) for ob,act in zip(input_next_obs.image, action)]
 
                 # update the state or state-action count
                 state_counts = self.count_module.update_count(preprocessed_obs.image, action)
@@ -295,7 +297,7 @@ class BaseAlgo(ABC):
                 #     # shape is no of parallel envs x latent dim (512)
                 #     predictor_output, target_output = self.rnd_model(preprocessed_obs, self.memory * self.mask.unsqueeze(1))
                 # else:
-                predictor_output, target_output= self.rnd_model(preprocessed_obs)
+                predictor_output, target_output= self.rnd_model(input_next_obs)
 
                 # calculate the intrinsic reward as the MSE between the output of the target and predictor nets for each parallel environment
 
@@ -340,7 +342,7 @@ class BaseAlgo(ABC):
             elif self.intrinsic_reward_model == "TrajectoryNet":
                 # print("Using Trajectory Net")
 
-                state_embeddings = self.state_action_model(preprocessed_obs.image,action)
+                state_embeddings = self.state_action_model(input_next_obs.image,action)
 
                 for idx, (state_embed,act) in enumerate(zip(state_embeddings,action)):
                     state_act_embed = torch.cat((state_embed, act.unsqueeze(0)), dim=0)
@@ -359,7 +361,7 @@ class BaseAlgo(ABC):
                 discriminator_predicted_probabilities_unnormalised = self.diayn_discriminator(next_preprocessed_obs)
                 probability_of_correct_skill = F.softmax(discriminator_predicted_probabilities_unnormalised)
 
-                for idx,ob in enumerate(preprocessed_obs.image):
+                for idx,ob in enumerate(input_next_obs.image):
                     diayn_reward = self.diayn_reward.diayn_reward(probability_of_correct_skill[idx,self.skills[idx]])
                     diayn_rewards.append(diayn_reward)
                 
@@ -375,7 +377,7 @@ class BaseAlgo(ABC):
 
                 window_count_intrinsic_reward = []
 
-                for idx,(ob, act) in enumerate(zip(preprocessed_obs.image, action)):
+                for idx,(ob, act) in enumerate(zip(input_next_obs.image, action)):
                     # concatenate the state-action pair
                     state_act = self.window_trajectory_count_module.state_action_encoder(ob,act)
                     # add it to the trajectory
