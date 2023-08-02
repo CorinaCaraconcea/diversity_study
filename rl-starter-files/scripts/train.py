@@ -250,7 +250,7 @@ if __name__ == "__main__":
     # Set the entity
     entity = "cori-caraconcea",
     # Set the project where this run will be logged
-    project="Training test for CS cluster II",
+    project="Empty 8x8 training cluster",
     # Track hyperparameters and run metadata
     config={
         "model": model_flag,
