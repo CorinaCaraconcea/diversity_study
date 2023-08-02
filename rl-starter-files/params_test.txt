@@ -1,3 +1,4 @@
+MiniGrid-Empty-8x8-v0 Empty 80000000
 MiniGrid-Empty-8x8-v0 Empty 8000000 RND 0.005 1 0
 MiniGrid-Empty-8x8-v0 Empty 8000000 RND 0.001 1 0
 MiniGrid-Empty-8x8-v0 Empty 8000000 RND 0.0005 1 0
@@ -22,4 +23,3 @@ MiniGrid-Empty-8x8-v0 Empty 80000000 TrajectoryWindowCount 0.001 1 10
 MiniGrid-Empty-8x8-v0 Empty 80000000 TrajectoryWindowCount 0.0005 1 3
 MiniGrid-Empty-8x8-v0 Empty 80000000 TrajectoryWindowCount 0.0005 1 5
 MiniGrid-Empty-8x8-v0 Empty 80000000 TrajectoryWindowCount 0.0005 1 10
-MiniGrid-Empty-8x8-v0 Empty 80000000
