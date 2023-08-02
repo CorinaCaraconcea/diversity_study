@@ -8,7 +8,7 @@
 #$ -l tmem=50G
 
 # Limit of time
-#$ -l h_rt=16:00:00
+#$ -l h_rt=20:00:00
 
 # Request a number of GPU cards, in this case 2 (the maximum)
 ###$ -l gpu=true
