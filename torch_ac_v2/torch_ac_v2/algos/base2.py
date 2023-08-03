@@ -5,6 +5,8 @@ import os
 import math
 import numpy as np
 import torch.nn.functional as F
+from collections import deque
+from statistics import mean
 
 sys.path.insert(0, '/cluster/project7/diversity_rl/diversity_study/torch_ac_v2/torch_ac_v2')
 
@@ -202,6 +204,9 @@ class BaseAlgo(ABC):
         self.log_ext_return = [0] * self.num_procs
         self.log_reshaped_return = [0] * self.num_procs
         self.log_num_frames = [0] * self.num_procs
+
+        # add avg 100 episodes return
+        self.last_100return = deque([0],maxlen=100)
 
         # Initialize list of empty trajectories for all parallel environments
         self.trajectories = [[] for _ in range(self.num_procs)]
@@ -513,6 +518,7 @@ class BaseAlgo(ABC):
                     self.log_ext_return.append(self.log_episode_ext_return[i].item())
                     self.log_reshaped_return.append(self.log_episode_reshaped_return[i].item())
                     self.log_num_frames.append(self.log_episode_num_frames[i].item())
+                    self.last_100return.append(self.log_episode_return[i].item())
 
                     # if the episode is done then reset the trajectory
                     if self.intrinsic_reward_model == "TrajectoryCount":
@@ -602,7 +608,8 @@ class BaseAlgo(ABC):
             "reshaped_return_per_episode": self.log_reshaped_return[-keep:],
             "num_frames_per_episode": self.log_num_frames[-keep:],
             "num_frames": self.num_frames,
-            "ext_return_per_episode": self.log_ext_return[-keep:]
+            "ext_return_per_episode": self.log_ext_return[-keep:],
+            "avg_return": mean(self.last_100return)
         }
 
         # reset the counters
