@@ -63,8 +63,8 @@ parser.add_argument("--frames-per-proc", type=int, default=None,
                     help="number of frames per process before update (default: 5 for A2C and 128 for PPO)")
 parser.add_argument("--discount", type=float, default=0.99,
                     help="discount factor (default: 0.99)")
-parser.add_argument("--lr", type=float, default=0.001,
-                    help="learning rate (default: 0.001)")
+parser.add_argument("--lr", type=float, default=0.0001,
+                    help="learning rate (default: 0.0001)")
 parser.add_argument("--gae-lambda", type=float, default=0.95,
                     help="lambda coefficient in GAE formula (default: 0.95, 1 means no gae)")
 parser.add_argument("--entropy-coef", type=float, default=0.0005,
@@ -240,7 +240,7 @@ if __name__ == "__main__":
     # Set the entity
     entity = "cori-caraconcea",
     # Set the project where this run will be logged
-    project="Empty 8x8 training cluster",
+    project="MN",
     # Track hyperparameters and run metadata
     config={
         "model": model_flag,
@@ -290,10 +290,7 @@ if __name__ == "__main__":
 
 
             # "mean_rreturn_per_episode_mean": rreturn_per_episode['mean'],
-            print("check the episodic returns : ",return_per_episode.values())
-            print("check the episodic returns : ",len(return_per_episode.values()))
-            for return_value in rreturn_per_episode.values():
-                wandb.log({"return_per_episode": return_value})
+            wandb.log({"mean_rreturn_per_episode_mean": rreturn_per_episode['mean']})
 
             header = ["update", "frames", "FPS", "duration"]
             data = [update, num_frames, fps, duration]
