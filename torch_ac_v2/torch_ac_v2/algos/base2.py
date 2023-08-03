@@ -489,10 +489,10 @@ class BaseAlgo(ABC):
             if self.reshape_reward is not None:
                 self.total_rewards[i] = torch.tensor([
                     self.reshape_reward(obs_, action_, reward_, done_)
-                    for obs_, action_, reward_, done_ in zip(obs, action, total_rewards, done)
+                    for obs_, action_, reward_, done_ in zip(obs, action, total_reward, done)
                 ], device=self.device)
             else:
-                self.total_rewards[i] = torch.tensor(total_rewards, device=self.device)
+                self.total_rewards[i] = torch.tensor(total_reward, device=self.device)
 
             # keep track of the skills
             if self.intrinsic_reward_model == "DIAYN":
