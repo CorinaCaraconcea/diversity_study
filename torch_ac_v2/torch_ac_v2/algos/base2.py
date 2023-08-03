@@ -448,6 +448,12 @@ class BaseAlgo(ABC):
                 # print("reward is", reward)
                 total_reward = tuple(total_reward)
                 print(reward)
+            
+            # for no intrinsic model
+            else:
+
+                total_reward = torch.tensor(reward, dtype=torch.float32, requires_grad=True) 
+
 
             # essentially the logical OR operator -> check if the episode is done
             # which is either ended in a natural way (terminal state) or somehow cutoff before
