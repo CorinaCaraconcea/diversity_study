@@ -175,17 +175,7 @@ if __name__ == "__main__":
     txt_logger.info("Model loaded\n")
     txt_logger.info("{}\n".format(acmodel))
 
-    # Always train RND from scratch
-
-    # rndmodel = RNDModel(obs_space, args.mem, args.text)
-    # # if "model_state" in status_rnd:
-    # #     rndmodel.load_state_dict(status_rnd["model_state"])
-    # rndmodel.to(device)
-    # txt_logger.info("RND model loaded\n")
-    # txt_logger.info("{}\n".format(rndmodel))
     
-
-
     # Load algo
 
     if args.algo == "a2c":
@@ -299,7 +289,7 @@ if __name__ == "__main__":
             # external return per episode
             external_return_per_episode = utils.synthesize(logs["ext_return_per_episode"])
 
-            wandb.log({"rreturn_per_episode": rreturn_per_episode['mean']})
+            wandb.log({"mean_rreturn_per_episode_mean": rreturn_per_episode['mean'], "return_per_episode": rreturn_per_episode.values() })
 
             header = ["update", "frames", "FPS", "duration"]
             data = [update, num_frames, fps, duration]
