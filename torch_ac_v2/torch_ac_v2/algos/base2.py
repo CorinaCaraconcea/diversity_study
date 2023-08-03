@@ -452,7 +452,8 @@ class BaseAlgo(ABC):
             # for no intrinsic model
             else:
 
-                total_reward = torch.tensor(reward, dtype=torch.float32, requires_grad=True) 
+                total_reward = torch.tensor(reward, dtype=torch.float32, requires_grad=True)
+                total_reward = tuple(total_reward) 
 
 
             # essentially the logical OR operator -> check if the episode is done
