@@ -288,7 +288,12 @@ if __name__ == "__main__":
             # external return per episode
             external_return_per_episode = utils.synthesize(logs["ext_return_per_episode"])
 
-            wandb.log({"mean_rreturn_per_episode_mean": rreturn_per_episode['mean'], "return_per_episode": rreturn_per_episode.values()})
+
+            # "mean_rreturn_per_episode_mean": rreturn_per_episode['mean'],
+            print("check the episodic returns : ",return_per_episode.values())
+            print("check the episodic returns : ",len(return_per_episode.values()))
+            for return_value in rreturn_per_episode.values():
+                wandb.log({"return_per_episode": return_value})
 
             header = ["update", "frames", "FPS", "duration"]
             data = [update, num_frames, fps, duration]
