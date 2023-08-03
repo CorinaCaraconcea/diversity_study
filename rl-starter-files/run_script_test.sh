@@ -5,10 +5,10 @@
 #$ -t 1
 
 # amount of memory
-#$ -l tmem=50G
+#$ -l tmem=75G
 
 # Limit of time
-#$ -l h_rt=20:00:00
+#$ -l h_rt=30:00:00
 
 # Request a number of GPU cards, in this case 2 (the maximum)
 ###$ -l gpu=true
@@ -46,12 +46,13 @@ paramfile=/cluster/project7/diversity_rl/diversity_study/rl-starter-files/params
 
 env="`sed -n ${SGE_TASK_ID}'{p;q}' $paramfile | awk '{print $1}'`"
 folder_name="`sed -n ${SGE_TASK_ID}'{p;q}' $paramfile | awk '{print $2}'`"
-frames="`sed -n ${SGE_TASK_ID}'{p;q}' $paramfile | awk '{print $3}'`"
-intrinsic_reward_model="`sed -n ${SGE_TASK_ID}'{p;q}' $paramfile | awk '{print $4}'`"
-beta_coeff="`sed -n ${SGE_TASK_ID}'{p;q}' $paramfile | awk '{print $5}'`"
-no_skills="`sed -n ${SGE_TASK_ID}'{p;q}' $paramfile | awk '{print $6}'`"
-window_size="`sed -n ${SGE_TASK_ID}'{p;q}' $paramfile | awk '{print $7}'`"
+seed="`sed -n ${SGE_TASK_ID}'{p;q}' $paramfile | awk '{print $3}'`"
+frames="`sed -n ${SGE_TASK_ID}'{p;q}' $paramfile | awk '{print $4}'`"
+intrinsic_reward_model="`sed -n ${SGE_TASK_ID}'{p;q}' $paramfile | awk '{print $5}'`"
+beta_coeff="`sed -n ${SGE_TASK_ID}'{p;q}' $paramfile | awk '{print $6}'`"
+no_skills="`sed -n ${SGE_TASK_ID}'{p;q}' $paramfile | awk '{print $7}'`"
+window_size="`sed -n ${SGE_TASK_ID}'{p;q}' $paramfile | awk '{print $8}'`"
 
 
-echo "$env" "$folder_name" "$frames" "$intrinsic_reward_model" "$beta_coeff" "$no_skills" "$window_size"
-/home/ccaracon/miniconda3/condabin/conda run -n minigrid python3 -m scripts.train --algo ppo --env "$env" --model "$folder_name" --save-interval 10 --frames "$frames" --intrinsic-reward-model "$intrinsic_reward_model" --intrinsic-coef "$beta_coeff" --number-skills "$no_skills" --window-size "$window_size"
+echo "$env" "$folder_name" "$seed" "$frames" "$intrinsic_reward_model" "$beta_coeff" "$no_skills" "$window_size"
+/home/ccaracon/miniconda3/condabin/conda run -n minigrid python3 -m scripts.train --algo ppo --env "$env" --model "$folder_name" --seed "$seed" --save-interval 10 --frames "$frames" --intrinsic-reward-model "$intrinsic_reward_model" --intrinsic-coef "$beta_coeff" --number-skills "$no_skills" --window-size "$window_size"
