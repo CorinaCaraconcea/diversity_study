@@ -236,7 +236,7 @@ if __name__ == "__main__":
     # Set the entity
     entity = "cori-caraconcea",
     # Set the project where this run will be logged
-    project="MN",
+    project="MN7S4",
     # Track hyperparameters and run metadata
     config={
         "model": model_flag,
