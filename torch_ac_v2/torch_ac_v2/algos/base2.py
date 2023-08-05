@@ -276,7 +276,6 @@ class BaseAlgo(ABC):
             # take a step using the sampled action and get the extrinsic reward
             obs, reward, terminated, truncated,agent_loc,_= self.env.step(action.cpu().numpy())
 
-
             input_next_obs = self.preprocess_obss(obs, device=self.device)
 
             # keep track of the extrinsic rewards
@@ -290,7 +289,7 @@ class BaseAlgo(ABC):
                 count_intrinsic_reward = [self.count_module.count_based_ir(ob, act) for ob,act in zip(input_next_obs.image, action)]
 
                 # update the state or state-action count
-                state_counts = self.count_module.update_count(preprocessed_obs.image, action)
+                state_counts = self.count_module.update_count(input_next_obs.image, action)
 
                 total_reward = np.array(reward,dtype=np.float64)
                 total_reward += np.array(count_intrinsic_reward, dtype=np.float64)
@@ -328,7 +327,7 @@ class BaseAlgo(ABC):
                 trajectory_intrinsic_reward = []
 
                 # encode the state-action for each environment and add it to the trajectory if it wasn't there already
-                for idx,(ob, act) in enumerate(zip(preprocessed_obs.image, action)):
+                for idx,(ob, act) in enumerate(zip(input_next_obs.image, action)):
                     state_act = self.trajectory_count_module.state_action_encoder(ob,act)
                     if state_act not in self.trajectories[idx]:
                         self.trajectories[idx].append(state_act)
@@ -350,11 +349,8 @@ class BaseAlgo(ABC):
 
                 diayn_rewards = []
 
-                # Discriminator takes as input the next pre-processed state
-                next_preprocessed_obs = self.preprocess_obss(obs, device=self.device)
-
                 # Gets the probability that the discriminator gives to the correct skill
-                discriminator_predicted_probabilities_unnormalised = self.diayn_discriminator(next_preprocessed_obs)
+                discriminator_predicted_probabilities_unnormalised = self.diayn_discriminator(input_next_obs)
                 probability_of_correct_skill = F.softmax(discriminator_predicted_probabilities_unnormalised)
 
                 for idx,ob in enumerate(input_next_obs.image):
