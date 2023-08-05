@@ -201,10 +201,6 @@ if __name__ == "__main__":
             algo = ppo.PPOAlgo(envs,obs_space, action_space, acmodel,None, args.intrinsic_reward_model, device, args.frames_per_proc, args.discount, args.lr, args.gae_lambda,
                                 args.entropy_coef, args.value_loss_coef, args.max_grad_norm, args.recurrence,
                                 args.optim_eps, args.clip_eps, args.epochs, args.batch_size, preprocess_obss, args.intrinsic_coef,args.number_skills,args.window_size)
-        elif args.intrinsic_reward_model == "TrajectoryNet":
-            algo = ppo.PPOAlgo(envs,obs_space, action_space, acmodel,state_action_model, args.intrinsic_reward_model, device, args.frames_per_proc, args.discount, args.lr, args.gae_lambda,
-                                args.entropy_coef, args.value_loss_coef, args.max_grad_norm, args.recurrence,
-                                args.optim_eps, args.clip_eps, args.epochs, args.batch_size, preprocess_obss, args.intrinsic_coef,args.number_skills,args.window_size)
         elif args.intrinsic_reward_model == "TrajectoryWindowCount":
             algo = ppo.PPOAlgo(envs,obs_space, action_space, acmodel,None, args.intrinsic_reward_model, device, args.frames_per_proc, args.discount, args.lr, args.gae_lambda,
                                 args.entropy_coef, args.value_loss_coef, args.max_grad_norm, args.recurrence,

@@ -297,7 +297,7 @@ class BaseAlgo(ABC):
                 total_reward = tuple(total_reward)
 
             elif self.intrinsic_reward_model == "RND":
-                # print("Using RND")
+                print("Using RND")
                 # only add the rnd intrinsic reward if the model is not None
                 # if self.rnd_model.recurrent:
                 #     # shape is no of parallel envs x latent dim (512)
@@ -498,6 +498,8 @@ class BaseAlgo(ABC):
                 ], device=self.device)
             else:
                 self.total_rewards[i] = torch.tensor(total_reward, device=self.device)
+
+            print(total_rewards[i])
 
             # keep track of the skills
             if self.intrinsic_reward_model == "DIAYN":
