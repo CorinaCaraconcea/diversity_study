@@ -80,6 +80,7 @@ class TrajectoryCountModule():
     def __init__(self,beta):
         self.trajectory_counts = {}
         self.beta = beta
+        print("intrinsic reward coefficient for trajectory count:", self.beta)
 
     def state_action_encoder(self, state, action):
         """
