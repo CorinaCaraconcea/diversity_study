@@ -446,7 +446,7 @@ class BaseAlgo(ABC):
                 print(reward)
             
             # for no intrinsic model
-            else:
+            elif self.intrinsic_reward_model == None:
 
                 total_reward = torch.tensor(reward, dtype=torch.float32, requires_grad=True)
                 total_reward = tuple(total_reward) 
@@ -494,8 +494,6 @@ class BaseAlgo(ABC):
                 ], device=self.device)
             else:
                 self.total_rewards[i] = torch.tensor(total_reward, device=self.device)
-
-            print(total_rewards[i])
 
             # keep track of the skills
             if self.intrinsic_reward_model == "DIAYN":
