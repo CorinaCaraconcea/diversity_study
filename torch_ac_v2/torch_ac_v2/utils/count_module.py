@@ -329,10 +329,11 @@ class WindowTrajectory():
     """
     WindowTrajectory is an implementation of trajectory windowing i.e. keeping track of windows of trajectories.
     """
-    def __init__(self,beta=0.001, state_action = False):
+    def __init__(self,beta, state_action):
         self.state_action = state_action # define if depends also to the state
         self.window_counts = {}
         self.beta = beta
+        print("window trajectory count", self.beta)
 
     def state_action_encoder(self, state, action):
         """
