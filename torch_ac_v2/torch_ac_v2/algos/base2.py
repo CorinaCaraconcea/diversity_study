@@ -443,7 +443,6 @@ class BaseAlgo(ABC):
                 total_reward = total_reward.clone() + self.intrinsic_coef * traj_rnd_intrinsic_reward
                 # print("reward is", reward)
                 total_reward = tuple(total_reward)
-                print(reward)
             
             # for no intrinsic model
             elif self.intrinsic_reward_model == None:
