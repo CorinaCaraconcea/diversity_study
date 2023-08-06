@@ -93,7 +93,7 @@ class BaseAlgo(ABC):
 
         
         # initialize the state count module
-        self.count_module = CountModule()
+        self.count_module = CountModule(self.intrinsic_coef)
 
         # initialize the trajectory count module
         self.trajectory_count_module = TrajectoryCountModule()

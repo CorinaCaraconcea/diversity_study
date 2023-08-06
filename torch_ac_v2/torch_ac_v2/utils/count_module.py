@@ -25,7 +25,7 @@ class Flatten(nn.Module):
         return input.view(input.size(0), -1)
 
 class CountModule():
-    def __init__(self, state_action = False,beta=0.005):
+    def __init__(self, beta, state_action = False):
         self.state_action = state_action # define if depends also to the state
         self.counts = {}
         self.beta = beta
