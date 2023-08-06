@@ -96,8 +96,8 @@ class BaseAlgo(ABC):
         self.count_module = CountModule(self.intrinsic_coef)
 
         # initialize the trajectory count module
-        self.trajectory_count_module = TrajectoryCountModule()
-        self.window_trajectory_count_module = WindowTrajectory()
+        self.trajectory_count_module = TrajectoryCountModule(self.intrinsic_coef)
+        self.window_trajectory_count_module = WindowTrajectory(self.intrinsic_coef, True)
 
 
         if self.intrinsic_reward_model == "TrajectoryAutoencoder":        

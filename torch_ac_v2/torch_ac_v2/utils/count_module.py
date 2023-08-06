@@ -77,7 +77,7 @@ class CountModule():
 
 
 class TrajectoryCountModule():
-    def __init__(self,beta=0.0005):
+    def __init__(self,beta):
         self.trajectory_counts = {}
         self.beta = beta
 
@@ -328,7 +328,7 @@ class WindowTrajectory():
     """
     WindowTrajectory is an implementation of trajectory windowing i.e. keeping track of windows of trajectories.
     """
-    def __init__(self, state_action = False,beta=0.001):
+    def __init__(self,beta=0.001, state_action = False):
         self.state_action = state_action # define if depends also to the state
         self.window_counts = {}
         self.beta = beta
