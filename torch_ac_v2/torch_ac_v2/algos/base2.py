@@ -122,12 +122,10 @@ class BaseAlgo(ABC):
             self.diayn_reward = DIAYN_reward(self.no_skills, self.diayn_discriminator,self.intrinsic_coef)
 
         # initialize the RND module for the RND networks (predictor + target)
-        self.rnd_model = RNDModel(self.obs_space)
-        self.rnd_model.to(self.device)
+        self.rnd_model = RNDModel(self.device)
 
         # initialize the RND module for the RND networks (predictor + target)
-        self.rnd_trajectory_model = RNDTrajectoryModel()
-        self.rnd_trajectory_model.to(self.device)     
+        self.rnd_trajectory_model = RNDTrajectoryModel(self.device)     
 
         # Control parameters
 
@@ -272,6 +270,8 @@ class BaseAlgo(ABC):
             # sample from the distribution over actions
             action = dist.sample()
 
+            lstm_embedding_copy = lstm_embedding.clone()
+
 
             # take a step using the sampled action and get the extrinsic reward
             obs, reward, terminated, truncated,agent_loc,_= self.env.step(action.cpu().numpy())
@@ -296,21 +296,8 @@ class BaseAlgo(ABC):
                 total_reward = tuple(total_reward)
 
             elif self.intrinsic_reward_model == "RND":
-                print("Using RND")
-                # only add the rnd intrinsic reward if the model is not None
-                # if self.rnd_model.recurrent:
-                #     # shape is no of parallel envs x latent dim (512)
-                #     predictor_output, target_output = self.rnd_model(preprocessed_obs, self.memory * self.mask.unsqueeze(1))
-                # else:
-                predictor_output, target_output= self.rnd_model(input_next_obs)
 
-                # calculate the intrinsic reward as the MSE between the output of the target and predictor nets for each parallel environment
-
-                # Calculate the element-wise square of the difference
-                square_diff = torch.pow(target_output - predictor_output, 2)
-
-                # Calculate the mean over the first dimension
-                intrinsic_reward = torch.mean(square_diff, dim=1)
+                intrinsic_reward = self.rnd_model.compute_intrinsic_reward(input_next_obs)
 
                 # Keep track of the MSE loss to update the params of the predictor network
                 self.rnd_loss[i]=intrinsic_reward
@@ -428,15 +415,8 @@ class BaseAlgo(ABC):
 
             elif self.intrinsic_reward_model == "TrajectoryRND":
  
-                predictor_output, target_output= self.rnd_trajectory_model(lstm_embedding)
 
-                # calculate the intrinsic reward as the MSE between the output of the target and predictor nets for each parallel environment
-
-                # Calculate the element-wise square of the difference
-                square_diff = torch.pow(target_output - predictor_output, 2)
-
-                # Calculate the mean over the first dimension
-                traj_rnd_intrinsic_reward = torch.mean(square_diff, dim=1)
+                traj_rnd_intrinsic_reward = self.rnd_trajectory_model.compute_intrinsic_reward(lstm_embedding_copy)
 
                 # Add the intrinsic reward to the the extrinsic/envs reward
                 total_reward = torch.tensor(reward, dtype=torch.float32, requires_grad=True)  # Ensure reward is float and requires grad

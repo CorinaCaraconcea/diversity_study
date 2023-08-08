@@ -2,7 +2,7 @@
 #$ -S /bin/bash
 
 # set a task increment
-#$ -t 1-84
+#$ -t 1-18
 
 # amount of memory
 #$ -l tmem=75G
@@ -21,7 +21,7 @@
 #$ -R y
 
 # Set the name of the job.
-#$ -N MN7S4try2
+#$ -N MN7S4_RND
 
 #activate the virtual environment
 #source /home/rmapkay/new-env/bin/activate

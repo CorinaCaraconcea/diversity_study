@@ -8,6 +8,7 @@ import torch.nn.functional as F
 import torch.optim as optim
 import torch_ac
 
+
 # Function from https://github.com/ikostrikov/pytorch-a2c-ppo-acktr/blob/master/model.py
 def init_params(m):
     # takes as input a pytorch class m and checks if the class is linear, if that's the case then the weights are sampled from a normal 0,1 distribution
@@ -19,6 +20,43 @@ def init_params(m):
         m.weight.data *= 1 / torch.sqrt(m.weight.data.pow(2).sum(1, keepdim=True))
         if m.bias is not None:
             m.bias.data.fill_(0)
+
+
+# RIDE initilization
+def init(module, weight_init, bias_init, gain=1):
+    weight_init(module.weight.data, gain=gain)
+    bias_init(module.bias.data)
+    return module
+
+class EmbeddingNetwork_RIDE(nn.Module):
+    """
+     Based on the architectures selected at minigrid in RIDE:
+     https://github.com/facebookresearch/impact-driven-exploration/blob/877c4ea530cc0ca3902211dba4e922bf8c3ce276/src/models.py#L352    """
+    def __init__(self):
+        super().__init__()
+
+        input_size=7*7*3
+        init_ = lambda m: init(m, nn.init.orthogonal_, lambda x: nn.init.
+                            constant_(x, 0), nn.init.calculate_gain('relu'))
+
+        self.feature_extractor = nn.Sequential(
+            init_(nn.Conv2d(in_channels=3,out_channels=32,kernel_size=3,stride=2,padding=1)),
+            nn.ELU(),
+            init_(nn.Conv2d(in_channels=32,out_channels=32,kernel_size=3,stride=2,padding=1)),
+            nn.ELU(),
+            init_(nn.Conv2d(in_channels=32,out_channels=32,kernel_size=3,stride=2,padding=1)),
+            nn.ELU(),
+        )
+        # params = sum(p.numel() for p in self.modules.parameters())
+        # print('Params:',params)
+
+
+
+    def forward(self, next_obs):
+        feature = self.feature_extractor(next_obs)
+        reshape = feature.view(feature.size(0),-1)
+
+        return reshape
 
 class Flatten(nn.Module):
     def forward(self, input):
@@ -235,7 +273,7 @@ class DIAYN_discriminator(nn.Module, torch_ac.RecurrentACModel):
 
         return x
 
-class RNDModel(nn.Module,torch_ac.RecurrentACModel):
+class RNDModel():
 
     """
     RNDModel is an implementation of the Random Network Distillation (RND) 
@@ -246,83 +284,73 @@ class RNDModel(nn.Module,torch_ac.RecurrentACModel):
     its predictions and the output of the target network.
     """
 
-    def __init__(self, obs_space,use_memory=False, use_text=False):
-        super(RNDModel, self).__init__()
+    def __init__(self,device):
 
-        # Decide which components are enabled
-        self.use_text = use_text
-        self.use_memory = use_memory
+        self.device = device
 
-        # Define image embedding
-        self.image_conv = nn.Sequential(
-            nn.Conv2d(3, 16, (2, 2)),
-            nn.ReLU(),
-            nn.MaxPool2d((2, 2)),
-            nn.Conv2d(16, 32, (2, 2)),
-            nn.ReLU(),
-            nn.Conv2d(32, 64, (2, 2)),
-            nn.ReLU()
-        )
-        n = obs_space["image"][0]
-        m = obs_space["image"][1]
-        self.image_embedding_size = ((n-1)//2-2)*((m-1)//2-2)*64
+        self.update_proportion = 1.0
 
-        # Define the embedding size
-        self.embedding_size = self.semi_memory_size
-        if self.use_text:
-            self.embedding_size += self.text_embedding_size
+        # RND networks
+        self.predictor = EmbeddingNetwork_RIDE()
+        self.target = EmbeddingNetwork_RIDE()
 
-        # The predictor network, which is trained to predict the output of the target network
-        self.predictor = nn.Sequential(
-            nn.Linear(self.embedding_size, 64),
-            nn.ReLU(),
-            nn.Linear(64, 64),
-            nn.ReLU()
-        )
+        self.optimizer = optim.Adam(list(self.predictor.parameters()),
+                                    lr=0.0001)
+        
+        # move to GPU/CPU
+        self.predictor = self.predictor.to(self.device)
+        self.target = self.target.to(self.device)
 
-        # The target network, which is randomly initialized and then frozen
-        self.target = nn.Sequential(
-            nn.Linear(self.embedding_size, 64),
-            nn.ReLU(),
-            nn.Linear(64, 64),
-            nn.ReLU()
-        )
+        self.predictor.train()
+        self.target.eval()
 
-        # Initialize parameters correctly
-        self.apply(init_params)
+        self.forward_mse = nn.MSELoss(reduction='none')
 
-        # The target network is not trained, so we freeze its parameters
-        for param in self.target.parameters():
-            param.requires_grad = False
+    def compute_intrinsic_reward(self,next_obs):
+        """
+            Genrate Intrinsic reward bonus based on the given input
+        """
+        # get tensor shape [batch,3,7,7]
+        embedding = next_obs.image.transpose(1, 3).transpose(2, 3)
 
-        for param in self.predictor.parameters():
-            param.requires_grad = True
+        with torch.no_grad():
+            predict_next_state_feature = self.predictor(embedding)
+            target_next_state_feature = self.target(embedding)
 
-    @property
-    def memory_size(self):
-        return 2*self.semi_memory_size
+        # intrinsic_reward = torch.norm(predict_next_state_feature.detach() - target_next_state_feature.detach(), dim=1, p=2)
+        intrinsic_reward = self.forward_mse(predict_next_state_feature,target_next_state_feature).mean(-1)
 
-    @property
-    def semi_memory_size(self):
-        return self.image_embedding_size
-
-    # The forward pass calculates the output of the target and predictor networks
-    def forward(self, next_obs):
-        x = next_obs.image.transpose(1, 3).transpose(2, 3)
-        x = self.image_conv(x)
-        x = x.reshape(x.shape[0], -1)
-
-        embedding = x
-
-        target_feature = self.target(embedding)
-        predict_feature = self.predictor(embedding)
-
-        return predict_feature, target_feature
-
-    def _get_embed_text(self, text):
-        _, hidden = self.text_rnn(self.word_embedding(text))
-        return hidden[-1]
+        return intrinsic_reward
     
+    def update(self,next_obs):
+        """
+            Update NN parameters with batch of observations
+        """
+        # get tensor shape [batch,3,7,7]
+        embedding = next_obs.image.transpose(1, 3).transpose(2, 3)
+
+        predict_next_state_feature = self.predictor(embedding)
+        with torch.no_grad():
+            target_next_state_feature = self.target(embedding)
+
+        # compute loss
+        forward_loss = self.forward_mse(predict_next_state_feature, target_next_state_feature.detach()).mean(-1)
+
+
+        # Proportion of exp used for predictor update (select randomly the samples collected by a groupd of parallel envs)
+        mask = torch.rand(len(forward_loss)).to(self.device)
+        mask = (mask < self.update_proportion).type(torch.FloatTensor).to(self.device)
+        # update loss to be proportional
+        forward_loss = (forward_loss * mask).sum() / torch.max(mask.sum(), torch.Tensor([1]).to(self.device))
+
+        # Optimization step
+        self.optimizer.zero_grad()
+        forward_loss.backward()
+        # grad_normalization
+        torch.nn.utils.clip_grad_norm_(self.predictor.parameters(), 0.5)
+
+        self.optimizer.step()
+
 
 
 class WindowTrajectory():
@@ -427,7 +455,6 @@ class WindowDecoder(nn.Module):
         return predictions, hidden
 
 
-    
 
 class CNN_encoder(nn.Module):
     def __init__(self, obs_space,action_space):
@@ -475,7 +502,7 @@ class CNN_encoder(nn.Module):
         return state_action_encoding
 
 
-class RNDTrajectoryModel(nn.Module,torch_ac.RecurrentACModel):
+class RNDTrajectoryModel():
 
     """
     RNDModel is an implementation of the Random Network Distillation (RND) 
@@ -486,11 +513,14 @@ class RNDTrajectoryModel(nn.Module,torch_ac.RecurrentACModel):
     its predictions and the output of the target network.
     """
 
-    def __init__(self):
-        super(RNDTrajectoryModel, self).__init__()
+    def __init__(self,device):
+
+        self.device = device
+
+        self.update_proportion = 1.0
 
         # The predictor network, which is trained to predict the output of the target network
-        self.predictor = nn.Sequential(
+        self.rnd_predictor = nn.Sequential(
             nn.Linear(64, 32),
             nn.ReLU(),
             nn.Linear(32, 32),
@@ -498,29 +528,61 @@ class RNDTrajectoryModel(nn.Module,torch_ac.RecurrentACModel):
         )
 
         # The target network, which is randomly initialized and then frozen
-        self.target = nn.Sequential(
+        self.rnd_target = nn.Sequential(
             nn.Linear(64, 32),
             nn.ReLU(),
             nn.Linear(32, 32),
             nn.ReLU()
         )
 
-        # Initialize parameters correctly
-        self.apply(init_params)
+        self.optimizer = optim.Adam(list(self.rnd_predictor.parameters()),lr=0.0001)
 
-        # The target network is not trained, so we freeze its parameters
-        for param in self.target.parameters():
-            param.requires_grad = False
+       # move to GPU/CPU
+        self.rnd_predictor = self.rnd_predictor.to(self.device)
+        self.rnd_target = self.rnd_target.to(self.device)
 
-        for param in self.predictor.parameters():
-            param.requires_grad = True
+        self.rnd_predictor.train()
+        self.rnd_target.eval()
+
+        self.forward_mse = nn.MSELoss(reduction='none')
+
+    def compute_intrinsic_reward(self,embedding):
+        """
+            Genrate Intrinsic reward bonus based on the given input
+        """
+
+        with torch.no_grad():
+            predict_next_state_feature = self.rnd_predictor(embedding)
+            target_next_state_feature = self.rnd_target(embedding)
+
+        # intrinsic_reward = torch.norm(predict_next_state_feature.detach() - target_next_state_feature.detach(), dim=1, p=2)
+        intrinsic_reward = self.forward_mse(predict_next_state_feature,target_next_state_feature).mean(-1)
+
+        return intrinsic_reward
+
+    def update(self,embedding):
+        """
+            Update NN parameters with batch of observations
+        """
 
 
-    # The forward pass calculates the output of the target and predictor networks
-    def forward(self, embedding):
+        predict_next_state_feature = self.rnd_predictor(embedding)
+        with torch.no_grad():
+            target_next_state_feature = self.rnd_target(embedding)
 
-        target_feature = self.target(embedding)
-        predict_feature = self.predictor(embedding)
+        # compute loss
+        forward_loss = self.forward_mse(predict_next_state_feature, target_next_state_feature.detach()).mean(-1)
 
-        return predict_feature, target_feature
+        # Proportion of exp used for predictor update (select randomly the samples collected by a groupd of parallel envs)
+        mask = torch.rand(len(forward_loss)).to(self.device)
+        mask = (mask < self.update_proportion).type(torch.FloatTensor).to(self.device)
+        # update loss to be proportional
+        forward_loss = (forward_loss * mask).sum() / torch.max(mask.sum(), torch.Tensor([1]).to(self.device))
 
+        # Optimization step
+        self.optimizer.zero_grad()
+        forward_loss.backward()
+        # grad_normalization
+        torch.nn.utils.clip_grad_norm_(self.rnd_predictor.parameters(), 0.5)
+
+        self.optimizer.step()

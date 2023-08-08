@@ -12,7 +12,7 @@ class PPOAlgo(BaseAlgo):
     """The Proximal Policy Optimization algorithm
     ([Schulman et al., 2015](https://arxiv.org/abs/1707.06347))."""
 
-    def __init__(self, envs,obs_space,action_space, acmodel, state_action_model = None ,intrinsic_reward_model = None, device=None, num_frames_per_proc=None, discount=0.99, lr=0.001, gae_lambda=0.95,
+    def __init__(self, envs,obs_space,action_space, acmodel, state_action_model = None ,intrinsic_reward_model = None, device=None, num_frames_per_proc=None, discount=0.99, lr=0.0001, gae_lambda=0.95,
                  entropy_coef=0.0005, value_loss_coef=0.5, max_grad_norm=0.5, recurrence=4,
                  adam_eps=1e-8, clip_eps=0.2, epochs=4, batch_size=256, preprocess_obss=None, intrinsic_coef = 0.005, no_skills = 10, window_size = 10,
                  reshape_reward=None):
@@ -33,17 +33,11 @@ class PPOAlgo(BaseAlgo):
     
         # define the optimizer
         if self.intrinsic_reward_model == "RND":
-            combined_params = list(self.acmodel.parameters()) + list(self.rnd_model.predictor.parameters())
+            combined_params = list(self.acmodel.parameters())
             self.optimizer = torch.optim.Adam(combined_params, lr, eps=adam_eps)
         elif self.intrinsic_reward_model == "DIAYN":
             combined_params = list(self.acmodel.parameters()) + list(self.diayn_discriminator.parameters())
-            self.optimizer = torch.optim.Adam(combined_params, lr, eps=adam_eps)
-        elif self.intrinsic_reward_model == "TrajectoryAutoencoder":
-            combined_params = list(self.acmodel.parameters()) + list(self.cnn_state_action_encoder.parameters())+list(self.trajectory_window_encoder.parameters()) + list(self.trajectory_window_decoder.parameters())
-            self.optimizer = torch.optim.Adam(combined_params, lr, eps=adam_eps)
-        elif self.intrinsic_reward_model == "TrajectoryRND":
-            combined_params = list(self.acmodel.parameters()) + list(self.rnd_trajectory_model.predictor.parameters())
-            self.optimizer = torch.optim.Adam(combined_params, lr, eps=adam_eps)                    
+            self.optimizer = torch.optim.Adam(combined_params, lr, eps=adam_eps)                 
         else:
             self.optimizer = torch.optim.Adam(self.acmodel.parameters(), lr, eps=adam_eps)
     
@@ -103,6 +97,10 @@ class PPOAlgo(BaseAlgo):
                     else:
                         dist, value, _ = self.acmodel(sb.obs,None, update_skills)
 
+
+                    lstm_embeddings_copy = lstm_embeddings.clone()
+                    lstm_embeddings_copy = lstm_embeddings_copy.detach()
+
                     # compute the entropy of the policy
                     entropy = dist.entropy().mean()
 
@@ -129,17 +127,8 @@ class PPOAlgo(BaseAlgo):
                     loss = policy_loss - self.entropy_coef * entropy + self.value_loss_coef * value_loss
 
                     if self.intrinsic_reward_model == "RND":
-                    #     if self.rnd_model.recurrent:
-                    #         predict_feature, target_feature = self.rnd_model(sb.obs, memory * sb.mask)
-                    #     else:
-                        predict_feature, target_feature = self.rnd_model(sb.obs)
 
-                        # Calculate the element-wise square of the difference
-                        square_diff = torch.pow(target_feature - predict_feature, 2)
-
-                        # Calculate the mean over the first dimension
-                        rnd_model_loss = torch.mean(square_diff, dim=1)
-                        rnd_model_loss = rnd_model_loss.mean()  
+                        self.rnd_model.update(sb.obs)
 
                     if self.intrinsic_reward_model == "DIAYN":
                         discriminator_outputs = self.diayn_discriminator(sb.obs)
@@ -151,22 +140,9 @@ class PPOAlgo(BaseAlgo):
 
                         # this need to take the LSTM embedding as input
 
-                        predict_feature, target_feature = self.rnd_trajectory_model(lstm_embeddings)
+                        self.rnd_trajectory_model.update(lstm_embeddings_copy)
 
-                        # Calculate the element-wise square of the difference
-                        square_diff = torch.pow(target_feature - predict_feature, 2)
-
-                        # Calculate the mean over the first dimension
-                        trajectory_rnd_model_loss = torch.mean(square_diff, dim=1)
-                        trajectory_rnd_model_loss = trajectory_rnd_model_loss.mean()  
-
-                    # if self.intrinsic_reward_model == "TrajectoryAutoencoder":
-
-
-                    #     discriminator_outputs = self.diayn_discriminator(sb.obs)
-                    #     skills = sb.skill.long()
-                    #     discriminator_loss = nn.CrossEntropyLoss()(discriminator_outputs, skills)
-
+                        
                     # Update batch values
 
                     batch_entropy += entropy.item()
@@ -174,12 +150,10 @@ class PPOAlgo(BaseAlgo):
                     batch_policy_loss += policy_loss.item()
                     batch_value_loss += value_loss.item()
                     batch_loss += loss
-                    if self.intrinsic_reward_model == "RND":
-                        batch_rnd_loss += rnd_model_loss
+                    # if self.intrinsic_reward_model == "RND":
+                    #     batch_rnd_loss += rnd_model_loss
                     if self.intrinsic_reward_model == "DIAYN":
                         batch_discriminator_loss += discriminator_loss
-                    if self.intrinsic_reward_model == "TrajectoryRND":
-                        batch_trajectory_rnd_loss += trajectory_rnd_model_loss
                     
                     # Update memories for next epoch
 
@@ -200,18 +174,11 @@ class PPOAlgo(BaseAlgo):
 
                 self.optimizer.zero_grad()
 
-                loss = batch_loss + batch_rnd_loss + batch_discriminator_loss + batch_trajectory_rnd_loss
+                loss = batch_loss  + batch_discriminator_loss 
 
                 loss.backward()
 
-                if self.intrinsic_reward_model == "RND":
-                    global_grad_norm_(list(self.acmodel.parameters())+list(self.rnd_model.predictor.parameters()))
-                    grad_norm = sum(p.grad.data.norm(2) ** 2 for p in self.acmodel.parameters()) ** 0.5
-                    # print("RND network update")
-                elif self.intrinsic_reward_model == "TrajectoryRND":
-                    global_grad_norm_(list(self.acmodel.parameters())+list(self.rnd_trajectory_model.predictor.parameters()))
-                    grad_norm = sum(p.grad.data.norm(2) ** 2 for p in self.acmodel.parameters()) ** 0.5
-                elif self.intrinsic_reward_model == "DIAYN":
+                if self.intrinsic_reward_model == "DIAYN":
                     global_grad_norm_(list(self.acmodel.parameters())+list(self.diayn_discriminator.parameters()))
                     grad_norm = sum(p.grad.data.norm(2) ** 2 for p in self.acmodel.parameters()) ** 0.5
                     # print("discriminator network update")                   
