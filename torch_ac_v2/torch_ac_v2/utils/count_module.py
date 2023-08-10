@@ -521,17 +521,17 @@ class RNDTrajectoryModel():
 
         # The predictor network, which is trained to predict the output of the target network
         self.rnd_predictor = nn.Sequential(
-            nn.Linear(64, 32),
+            nn.Linear(64, 64),
             nn.ReLU(),
-            nn.Linear(32, 32),
+            nn.Linear(64, 64),
             nn.ReLU()
         )
 
         # The target network, which is randomly initialized and then frozen
         self.rnd_target = nn.Sequential(
-            nn.Linear(64, 32),
+            nn.Linear(64, 64),
             nn.ReLU(),
-            nn.Linear(32, 32),
+            nn.Linear(64, 64),
             nn.ReLU()
         )
 
