@@ -11,7 +11,7 @@
 #$ -l h_rt=30:00:00
 
 # Request a number of GPU cards, in this case 2 (the maximum)
-###$ -l gpu=true
+###$ -l gpu=truecd
 
 # GPU
 ###$ -pe gpu 1
