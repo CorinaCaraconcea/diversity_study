@@ -520,22 +520,49 @@ class RNDTrajectoryModel():
         self.update_proportion = 1.0
 
         # The predictor network, which is trained to predict the output of the target network
+        # The predictor network, which is trained to predict the output of the target network
         self.rnd_predictor = nn.Sequential(
-            nn.Linear(64, 32),
+            nn.Linear(64, 128),  # Increase the number of units
+            nn.BatchNorm1d(128), # Add batch normalization
             nn.ReLU(),
-            nn.Linear(32, 32),
+            nn.Dropout(0.5), # Add dropout with 50% probability
+            
+            nn.Linear(128, 64),
+            nn.BatchNorm1d(64),
+            nn.ReLU(),
+            nn.Dropout(0.5),
+            
+            nn.Linear(64, 32),
+            nn.BatchNorm1d(32),
+            nn.ReLU(),
+            nn.Dropout(0.5),
+
+            nn.Linear(32, 16),
             nn.ReLU()
         )
 
         # The target network, which is randomly initialized and then frozen
         self.rnd_target = nn.Sequential(
-            nn.Linear(64, 32),
+            nn.Linear(64, 128),  # Increase the number of units
+            nn.BatchNorm1d(128), # Add batch normalization
             nn.ReLU(),
-            nn.Linear(32, 32),
+            nn.Dropout(0.5), # Add dropout with 50% probability
+            
+            nn.Linear(128, 64),
+            nn.BatchNorm1d(64),
+            nn.ReLU(),
+            nn.Dropout(0.5),
+            
+            nn.Linear(64, 32),
+            nn.BatchNorm1d(32),
+            nn.ReLU(),
+            nn.Dropout(0.5),
+
+            nn.Linear(32, 16),
             nn.ReLU()
         )
 
-        self.optimizer = optim.Adam(list(self.rnd_predictor.parameters()),lr=0.0001)
+        self.optimizer = optim.Adam(list(self.rnd_predictor.parameters()),lr=0.00001)
 
        # move to GPU/CPU
         self.rnd_predictor = self.rnd_predictor.to(self.device)
@@ -586,3 +613,23 @@ class RNDTrajectoryModel():
         torch.nn.utils.clip_grad_norm_(self.rnd_predictor.parameters(), 0.5)
 
         self.optimizer.step()
+
+class TrajectoryModel():
+
+
+    def __init__(self,device):
+
+        self.device = device
+
+        self.forward_mse = nn.MSELoss(reduction='none')
+
+
+    def compute_intrinsic_reward(self,previous_embedding,next_embedding):
+        """
+            Genrate Intrinsic reward bonus based on the given input
+        """
+
+        # intrinsic_reward = torch.norm(predict_next_state_feature.detach() - target_next_state_feature.detach(), dim=1, p=2)
+        intrinsic_reward = self.forward_mse(previous_embedding,next_embedding).mean(-1)
+
+        return intrinsic_reward

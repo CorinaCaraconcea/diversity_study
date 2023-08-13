@@ -15,7 +15,7 @@ sys.path.insert(0, '/cluster/project7/diversity_rl/diversity_study/torch_ac_v2/t
 
 from dictlist import DictList
 from penv import ParallelEnv
-from count_module import CountModule,TrajectoryCountModule, DIAYN_reward, DIAYN_discriminator, RNDModel, WindowTrajectory, CNN_encoder, WindowEncoder, WindowDecoder,RNDTrajectoryModel
+from count_module import CountModule,TrajectoryCountModule, DIAYN_reward, DIAYN_discriminator, RNDModel, WindowTrajectory, CNN_encoder, WindowEncoder, WindowDecoder,RNDTrajectoryModel, TrajectoryModel
 
 class BaseAlgo(ABC):
     """The base class for RL algorithms."""
@@ -123,6 +123,8 @@ class BaseAlgo(ABC):
 
         # initialize the RND module for the RND networks (predictor + target)
         self.rnd_model = RNDModel(self.device)
+
+        self.trajectory_model = TrajectoryModel(self.device)
 
         # initialize the RND module for the RND networks (predictor + target)
         self.rnd_trajectory_model = RNDTrajectoryModel(self.device)     
@@ -270,13 +272,24 @@ class BaseAlgo(ABC):
             # sample from the distribution over actions
             action = dist.sample()
 
-            lstm_embedding_copy = lstm_embedding.clone()
-
-
             # take a step using the sampled action and get the extrinsic reward
             obs, reward, terminated, truncated,agent_loc,_= self.env.step(action.cpu().numpy())
 
             input_next_obs = self.preprocess_obss(obs, device=self.device)
+
+            lstm_embedding_copy = lstm_embedding.clone()
+
+            with torch.no_grad():
+                # if you have a recurrent model you have a memory and you try to return a distribution
+                # over the action space and an approx of state value which is the expected cumulative return
+                # under the current policy
+                if self.acmodel.recurrent:
+                    _,_,_, next_lstm_embedding = self.acmodel(input_next_obs, self.memory * self.mask.unsqueeze(1),self.one_hot_skills)
+                else:
+                    _,_ = self.acmodel(preprocessed_obs, False, self.one_hot_skills)
+
+
+            next_lstm_embedding_copy = next_lstm_embedding.clone()
 
             # keep track of the extrinsic rewards
             self.log_episode_ext_return += torch.tensor(reward, device=self.device, dtype=torch.float)
@@ -301,6 +314,8 @@ class BaseAlgo(ABC):
 
                 # Keep track of the MSE loss to update the params of the predictor network
                 self.rnd_loss[i]=intrinsic_reward
+
+                print("intrinsic reward: ", intrinsic_reward)
 
                 # Add the intrinsic reward to the the extrinsic/envs reward
                 total_reward = torch.tensor(reward, dtype=torch.float32, requires_grad=True)  # Ensure reward is float and requires grad
@@ -416,11 +431,21 @@ class BaseAlgo(ABC):
             elif self.intrinsic_reward_model == "TrajectoryRND":
  
 
-                traj_rnd_intrinsic_reward = self.rnd_trajectory_model.compute_intrinsic_reward(lstm_embedding_copy)
+                traj_rnd_intrinsic_reward = self.rnd_trajectory_model.compute_intrinsic_reward(next_lstm_embedding_copy)
 
                 # Add the intrinsic reward to the the extrinsic/envs reward
                 total_reward = torch.tensor(reward, dtype=torch.float32, requires_grad=True)  # Ensure reward is float and requires grad
                 total_reward = total_reward.clone() + self.intrinsic_coef * traj_rnd_intrinsic_reward
+                # print("reward is", reward)
+                total_reward = tuple(total_reward)
+
+            elif self.intrinsic_reward_model == "TrajectoryModel":
+
+                traj_intrinsic_reward = self.trajectory_model.compute_intrinsic_reward(lstm_embedding_copy,next_lstm_embedding_copy)
+
+                # Add the intrinsic reward to the the extrinsic/envs reward
+                total_reward = torch.tensor(reward, dtype=torch.float32, requires_grad=True)  # Ensure reward is float and requires grad
+                total_reward = total_reward.clone() + self.intrinsic_coef * traj_intrinsic_reward
                 # print("reward is", reward)
                 total_reward = tuple(total_reward)
             
