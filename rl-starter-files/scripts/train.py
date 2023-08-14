@@ -240,7 +240,7 @@ if __name__ == "__main__":
     # Set the entity
     entity = "cori-caraconcea",
     # Set the project where this run will be logged
-    project="MN7S4",
+    project="Empty Minigrid 16x16",
     # Track hyperparameters and run metadata
     config={
         "model": model_flag,
@@ -287,10 +287,13 @@ if __name__ == "__main__":
             num_frames_per_episode = utils.synthesize(logs["num_frames_per_episode"])
             # external return per episode
             external_return_per_episode = utils.synthesize(logs["ext_return_per_episode"])
+            # batch policies entropy 
+            entropy = utils.synthesize(logs["entropy"])
 
 
             # "mean_rreturn_per_episode_mean": rreturn_per_episode['mean'],
-            wandb.log({"mean_rreturn_per_episode_mean": rreturn_per_episode['mean']})
+            wandb.log({"mean_rreturn_per_episode_mean": rreturn_per_episode['mean'],
+                       "batch_entropy_mean": entropy['mean']})
 
             header = ["update", "frames", "FPS", "duration"]
             data = [update, num_frames, fps, duration]

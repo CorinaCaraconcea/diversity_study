@@ -2,7 +2,7 @@
 #$ -S /bin/bash
 
 # set a task increment
-#$ -t 1-14
+#$ -t 1-183
 
 # amount of memory
 #$ -l tmem=75G
@@ -21,7 +21,7 @@
 #$ -R y
 
 # Set the name of the job.
-#$ -N MN7S4_RND
+#$ -N Empty_minigrid
 
 #activate the virtual environment
 #source /home/rmapkay/new-env/bin/activate
