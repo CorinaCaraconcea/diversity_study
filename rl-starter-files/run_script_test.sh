@@ -2,13 +2,13 @@
 #$ -S /bin/bash
 
 # set a task increment
-#$ -t 1-183
+#$ -t 18-183
 
 # amount of memory
 #$ -l tmem=75G
 
 # Limit of time
-#$ -l h_rt=30:00:00
+#$ -l h_rt=19:00:00
 
 # Request a number of GPU cards, in this case 2 (the maximum)
 ###$ -l gpu=truecd
