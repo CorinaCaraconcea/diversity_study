@@ -2,7 +2,7 @@
 #$ -S /bin/bash
 
 # set a task increment
-#$ -t 1-183
+#$ -t 9-183
 
 # amount of memory
 #$ -l tmem=75G
@@ -11,7 +11,7 @@
 #$ -l h_rt=19:00:00
 
 # Request a number of GPU cards, in this case 2 (the maximum)
-###$ -l gpu=truecd
+###$ -l gpu=true
 
 # GPU
 ###$ -pe gpu 1
