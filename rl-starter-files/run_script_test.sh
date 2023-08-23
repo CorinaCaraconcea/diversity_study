@@ -2,13 +2,13 @@
 #$ -S /bin/bash
 
 # set a task increment
-#$ -t 9-183
+#$ -t 1-183
 
 # amount of memory
 #$ -l tmem=75G
 
 # Limit of time
-#$ -l h_rt=19:00:00
+#$ -l h_rt=15:00:00
 
 # Request a number of GPU cards, in this case 2 (the maximum)
 ###$ -l gpu=true
@@ -21,7 +21,7 @@
 #$ -R y
 
 # Set the name of the job.
-#$ -N Minigrid_MN7S4
+#$ -N Minigrid_KS3R3
 
 #activate the virtual environment
 #source /home/rmapkay/new-env/bin/activate
