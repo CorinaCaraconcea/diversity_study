@@ -5,7 +5,7 @@
 #$ -t 3-183
 
 # amount of memory
-#$ -l tmem=75G
+#$ -l tmem=10G
 
 # Limit of time
 #$ -l h_rt=10:00:00
