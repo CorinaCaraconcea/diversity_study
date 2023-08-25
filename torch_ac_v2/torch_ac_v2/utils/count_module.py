@@ -522,47 +522,25 @@ class RNDTrajectoryModel():
         # The predictor network, which is trained to predict the output of the target network
         # The predictor network, which is trained to predict the output of the target network
         self.rnd_predictor = nn.Sequential(
-            nn.Linear(64, 128),  # Increase the number of units
-            nn.BatchNorm1d(128), # Add batch normalization
+            nn.Linear(64, 32),  # Increase the number of units
             nn.ReLU(),
-            nn.Dropout(0.5), # Add dropout with 50% probability
-            
-            nn.Linear(128, 64),
-            nn.BatchNorm1d(64),
-            nn.ReLU(),
-            nn.Dropout(0.5),
-            
-            nn.Linear(64, 32),
-            nn.BatchNorm1d(32),
-            nn.ReLU(),
-            nn.Dropout(0.5),
 
-            nn.Linear(32, 16),
-            nn.ReLU()
+            
+            nn.Linear(32, 32),
+            nn.ReLU(),
         )
 
         # The target network, which is randomly initialized and then frozen
         self.rnd_target = nn.Sequential(
-            nn.Linear(64, 128),  # Increase the number of units
-            nn.BatchNorm1d(128), # Add batch normalization
+            nn.Linear(64, 32),  # Increase the number of units
             nn.ReLU(),
-            nn.Dropout(0.5), # Add dropout with 50% probability
-            
-            nn.Linear(128, 64),
-            nn.BatchNorm1d(64),
-            nn.ReLU(),
-            nn.Dropout(0.5),
-            
-            nn.Linear(64, 32),
-            nn.BatchNorm1d(32),
-            nn.ReLU(),
-            nn.Dropout(0.5),
 
-            nn.Linear(32, 16),
-            nn.ReLU()
+            
+            nn.Linear(32, 32),
+            nn.ReLU(),
         )
 
-        self.optimizer = optim.Adam(list(self.rnd_predictor.parameters()),lr=0.00001)
+        self.optimizer = optim.Adam(list(self.rnd_predictor.parameters()),lr=0.000005)
 
        # move to GPU/CPU
         self.rnd_predictor = self.rnd_predictor.to(self.device)
