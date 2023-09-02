@@ -180,6 +180,7 @@ class BaseAlgo(ABC):
         self.total_rewards = torch.zeros(*shape, device=self.device)
         self.advantages = torch.zeros(*shape, device=self.device)
         self.log_probs = torch.zeros(*shape, device=self.device)
+        self.int_rewards = torch.zeros(*shape, device=self.device)
 
         if self.intrinsic_reward_model == "RND":
             self.rnd_loss = torch.zeros(*shape, device=self.device)
@@ -439,6 +440,8 @@ class BaseAlgo(ABC):
                 # print("reward is", reward)
                 total_reward = tuple(total_reward)
 
+                traj_rnd_intrinsic_reward = self.intrinsic_coef * traj_rnd_intrinsic_reward
+
             elif self.intrinsic_reward_model == "TrajectoryModel":
 
                 traj_intrinsic_reward = self.trajectory_model.compute_intrinsic_reward(lstm_embedding_copy,next_lstm_embedding_copy)
@@ -454,6 +457,12 @@ class BaseAlgo(ABC):
 
                 total_reward = torch.tensor(reward, dtype=torch.float32, requires_grad=True)
                 total_reward = tuple(total_reward) 
+
+
+            if self.intrinsic_reward_model == "TrajectoryRND":
+                self.int_rewards[i] = torch.tensor(traj_rnd_intrinsic_reward, device=self.device)
+            elif self.intrinsic_reward_model == "count":
+                self.int_rewards[i] = torch.tensor(count_intrinsic_reward, device=self.device)
 
 
             # essentially the logical OR operator -> check if the episode is done
@@ -594,6 +603,7 @@ class BaseAlgo(ABC):
         exps.returnn = exps.value + exps.advantage
         exps.log_prob = self.log_probs.transpose(0, 1).reshape(-1)
         exps.skill = self.skills_tracker.transpose(0, 1).reshape(-1)
+        exps.intrinsic_rewards = self.int_rewards.transpose(0, 1).reshape(-1)
 
         if self.intrinsic_reward_model == "RND":
             exps.rnd_loss = self.rnd_loss.transpose(0, 1).reshape(-1)

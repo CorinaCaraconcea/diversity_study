@@ -288,12 +288,13 @@ if __name__ == "__main__":
             # external return per episode
             external_return_per_episode = utils.synthesize(logs["ext_return_per_episode"])
             # batch policies entropy 
-            entropy = utils.synthesize(logs["entropy"])
+            entropy = utils.synthesize(logs["entropy"])            
 
 
             # "mean_rreturn_per_episode_mean": rreturn_per_episode['mean'],
             wandb.log({"mean_rreturn_per_episode_mean": rreturn_per_episode['mean'],
-                       "batch_entropy_mean": entropy['mean']})
+                       "batch_entropy_mean": entropy['mean'],
+                       "intrinsic_reward": sum(list(exps.intrinsic_rewards))/len(list(exps.intrinsic_rewards))})
 
             header = ["update", "frames", "FPS", "duration"]
             data = [update, num_frames, fps, duration]
