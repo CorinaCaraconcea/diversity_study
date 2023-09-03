@@ -324,6 +324,8 @@ class BaseAlgo(ABC):
                 # print("reward is", reward)
                 total_reward = tuple(total_reward)
 
+                rnd_intrinsic_reward = self.intrinsic_coef * intrinsic_reward
+
             elif self.intrinsic_reward_model == "TrajectoryCount":
                 # print("Using Trajectory Count")
                 
@@ -463,6 +465,16 @@ class BaseAlgo(ABC):
                 self.int_rewards[i] = torch.tensor(traj_rnd_intrinsic_reward, device=self.device)
             elif self.intrinsic_reward_model == "count":
                 self.int_rewards[i] = torch.tensor(count_intrinsic_reward, device=self.device)
+            elif self.intrinsic_reward_model == "RND":
+                self.int_rewards[i] = torch.tensor(rnd_intrinsic_reward, device=self.device)
+            elif self.intrinsic_reward_model == "TrajectoryCount":
+                self.int_rewards[i] = torch.tensor(trajectory_intrinsic_reward, device=self.device)
+            elif self.intrinsic_reward_model == "DIAYN":
+                self.int_rewards[i] = torch.tensor(diayn_rewards, device=self.device)
+            elif self.intrinsic_reward_model == "TrajectoryWindowCount":
+                self.int_rewards[i] = torch.tensor(window_count_intrinsic_reward, device=self.device)
+
+            
 
 
             # essentially the logical OR operator -> check if the episode is done
