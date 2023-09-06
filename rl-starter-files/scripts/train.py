@@ -322,13 +322,13 @@ if __name__ == "__main__":
 
         # Save status
 
-        # if args.save_interval > 0 and update % args.save_interval == 0:
-        #     status_base = {"model_name": "ACmodel","num_frames": num_frames, "update": update,
-        #               "model_state": acmodel.state_dict(), "optimizer_state": algo.optimizer.state_dict()}
-        #     if hasattr(preprocess_obss, "vocab"):
-        #         status_base["vocab"] = preprocess_obss.vocab.vocab
-        #     utils.save_status(status_base,model_flag, model_dir)
-        #     txt_logger.info("Status saved")
+        if args.save_interval > 0 and update % args.save_interval == 0:
+            status_base = {"model_name": "ACmodel","num_frames": num_frames, "update": update,
+                      "model_state": acmodel.state_dict(), "optimizer_state": algo.optimizer.state_dict()}
+            if hasattr(preprocess_obss, "vocab"):
+                status_base["vocab"] = preprocess_obss.vocab.vocab
+            utils.save_status(status_base,model_flag, model_dir)
+            txt_logger.info("Status saved")
 
         # Save status rn
 

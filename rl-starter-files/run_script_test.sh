@@ -2,7 +2,7 @@
 #$ -S /bin/bash
 
 # set a task increment
-#$ -t 1-16
+#$ -t 1-7
 
 # amount of memory
 #$ -l tmem=10G
