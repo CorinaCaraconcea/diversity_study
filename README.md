@@ -25,3 +25,5 @@ python3 -m scripts.train --algo ppo --env MiniGrid-MultiRoom-N7-S4-v0 --model Mu
 The torc_ac folder uses the https://github.com/lcswillems/torch-ac.git repo.
 
 The rl-starter-file folder uses the https://github.com/lcswillems/rl-starter-files.git repo.
+
+The Minigrid environment uses the https://github.com/Farama-Foundation/Minigrid.git repo.
