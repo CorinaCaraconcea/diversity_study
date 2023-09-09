@@ -212,15 +212,7 @@ if __name__ == "__main__":
         elif args.intrinsic_reward_model == "TrajectoryRND":
             algo = ppo.PPOAlgo(envs,obs_space, action_space, acmodel, None, args.intrinsic_reward_model, device, args.frames_per_proc, args.discount, args.lr, args.gae_lambda,
                                 args.entropy_coef, args.value_loss_coef, args.max_grad_norm, args.recurrence,
-                                args.optim_eps, args.clip_eps, args.epochs, args.batch_size, preprocess_obss, args.intrinsic_coef,args.number_skills,args.window_size)
-        elif args.intrinsic_reward_model == "TrajectoryModel":
-            algo = ppo.PPOAlgo(envs,obs_space, action_space, acmodel, None, args.intrinsic_reward_model, device, args.frames_per_proc, args.discount, args.lr, args.gae_lambda,
-                                args.entropy_coef, args.value_loss_coef, args.max_grad_norm, args.recurrence,
-                                args.optim_eps, args.clip_eps, args.epochs, args.batch_size, preprocess_obss, args.intrinsic_coef,args.number_skills,args.window_size)
-        elif args.intrinsic_reward_model == "TrajectoryAutoencoder":
-            algo = ppo.PPOAlgo(envs,obs_space, action_space, acmodel, None, args.intrinsic_reward_model, device, args.frames_per_proc, args.discount, args.lr, args.gae_lambda,
-                                args.entropy_coef, args.value_loss_coef, args.max_grad_norm, args.recurrence,
-                                args.optim_eps, args.clip_eps, args.epochs, args.batch_size, preprocess_obss, args.intrinsic_coef,args.number_skills,args.window_size)  
+                                args.optim_eps, args.clip_eps, args.epochs, args.batch_size, preprocess_obss, args.intrinsic_coef,args.number_skills,args.window_size) 
         elif args.intrinsic_reward_model == "None":
             algo = ppo.PPOAlgo(envs, obs_space, action_space, acmodel, None, None, device, args.frames_per_proc, args.discount, args.lr, args.gae_lambda,
                                 args.entropy_coef, args.value_loss_coef, args.max_grad_norm, args.recurrence,
@@ -293,8 +285,8 @@ if __name__ == "__main__":
 
             # "mean_rreturn_per_episode_mean": rreturn_per_episode['mean'],
             wandb.log({"mean_rreturn_per_episode_mean": rreturn_per_episode['mean'],
-                       "batch_entropy_mean": entropy['mean'],
-                       "intrinsic_reward": sum(list(exps.intrinsic_rewards))/len(list(exps.intrinsic_rewards))})
+                       "batch_entropy_mean": entropy['mean']
+                      })
 
             header = ["update", "frames", "FPS", "duration"]
             data = [update, num_frames, fps, duration]
@@ -330,12 +322,3 @@ if __name__ == "__main__":
             utils.save_status(status_base,model_flag, model_dir)
             txt_logger.info("Status saved")
 
-        # Save status rn
-
-        # if args.save_interval > 0 and update % args.save_interval == 0:
-        #     status_rnd = {"model_name": "RNDmodel","num_frames": num_frames, "update": update,
-        #               "model_state": acmodel.state_dict(), "optimizer_state": algo.optimizer.state_dict()}
-        #     if hasattr(preprocess_obss, "vocab"):
-        #         status_rnd["vocab"] = preprocess_obss.vocab.vocab
-        #     utils.save_status_rnd(status_rnd,model_flag, model_dir)
-        #     txt_logger.info("Status saved")

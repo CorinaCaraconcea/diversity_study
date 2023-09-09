@@ -15,7 +15,7 @@ sys.path.insert(0, '/cluster/project7/diversity_rl/diversity_study/torch_ac_v2/t
 
 from dictlist import DictList
 from penv import ParallelEnv
-from count_module import CountModule,TrajectoryCountModule, DIAYN_reward, DIAYN_discriminator, RNDModel, WindowTrajectory, CNN_encoder, WindowEncoder, WindowDecoder,RNDTrajectoryModel, TrajectoryModel
+from count_module import CountModule,TrajectoryCountModule, DIAYN_reward, DIAYN_discriminator, RNDModel, WindowTrajectory,RNDTrajectoryModel
 
 class BaseAlgo(ABC):
     """The base class for RL algorithms."""
@@ -100,18 +100,6 @@ class BaseAlgo(ABC):
         self.window_trajectory_count_module = WindowTrajectory(self.intrinsic_coef, True)
 
 
-        if self.intrinsic_reward_model == "TrajectoryAutoencoder":        
-            # initialize the CNN encoder + one-hot action encoder for the state-action pair
-            self.cnn_state_action_encoder = CNN_encoder(self.obs_space,self.action_space)
-            self.cnn_state_action_encoder.to(self.device)
-            # initialize trajectory window encoder
-            window_encoder_size = 71 * self.window_size
-            self.trajectory_window_encoder = WindowEncoder(window_encoder_size, hidden_size = 10, output_size = 64)
-            self.trajectory_window_encoder.to(self.device)
-            # initialize trajectory window decoder
-            self.trajectory_window_decoder = WindowDecoder(64, 10, window_encoder_size)
-            self.trajectory_window_decoder.to(self.device)
-
         if self.intrinsic_reward_model == "DIAYN":        
 
             # initialize the DIAYN discriminator
@@ -123,8 +111,6 @@ class BaseAlgo(ABC):
 
         # initialize the RND module for the RND networks (predictor + target)
         self.rnd_model = RNDModel(self.device)
-
-        self.trajectory_model = TrajectoryModel(self.device)
 
         # initialize the RND module for the RND networks (predictor + target)
         self.rnd_trajectory_model = RNDTrajectoryModel(self.device)     
@@ -180,16 +166,9 @@ class BaseAlgo(ABC):
         self.total_rewards = torch.zeros(*shape, device=self.device)
         self.advantages = torch.zeros(*shape, device=self.device)
         self.log_probs = torch.zeros(*shape, device=self.device)
-        self.int_rewards = torch.zeros(*shape, device=self.device)
 
         if self.intrinsic_reward_model == "RND":
             self.rnd_loss = torch.zeros(*shape, device=self.device)
-        
-        if self.intrinsic_reward_model == "TrajectoryAutoencoder":
-            self.trajectory_autoencoder_rewards = torch.zeros(*shape, device=self.device)
-            self.trajectory_windows = [None] * (shape[0])
-            self.frame_trajectory = [None] * (shape[1])
-
 
         # Initialize log values with a zero entry for each parallel environment
         self.log_episode_return = torch.zeros(self.num_procs, device=self.device)
@@ -393,43 +372,6 @@ class BaseAlgo(ABC):
                 # print("reward is", reward)
                 total_reward = tuple(total_reward)
 
-            elif self.intrinsic_reward_model == "TrajectoryAutoencoder":
-
-                state_actions_encodings = self.cnn_state_action_encoder(preprocessed_obs.image,action)
-
-                for idx,state_action in enumerate(state_actions_encodings):
-                    self.trajectories[idx].append(state_action)
-                    if len(self.trajectories[idx]) >= self.window_size:
-                        last_window = self.trajectories[idx][-self.window_size:]
-                        last_window = torch.cat(last_window, dim = 0)
-                    else:
-                        last_window = self.trajectories[idx]
-                        pad  = torch.zeros(self.window_size * 71 - len(last_window)*71)
-                        if len(last_window) == 0:
-                            last_window = pad
-                        else:
-                            last_window = torch.cat(last_window, dim = 0)
-                            last_window = torch.cat((pad,last_window), dim = 0)
-                    
-                    self.frame_trajectory[idx] = last_window
-
-                    last_window = last_window.unsqueeze(0)
-                    encoded_window, input_hidden = self.trajectory_window_encoder(last_window.unsqueeze(0))
-                    decoded_window, _ = self.trajectory_window_decoder(encoded_window,input_hidden)
-
-                    # Calculate the element-wise square of the difference
-                    square_diff = torch.pow(decoded_window - last_window, 2)
-
-                    # Calculate the mean over the first dimension
-                    traj_intrinsic_reward = torch.mean(square_diff, dim=1)
-
-                    self.trajectory_autoencoder_rewards[i] = traj_intrinsic_reward
-
-                # Add the intrinsic reward to the the extrinsic/envs reward
-                total_reward = torch.tensor(reward, dtype=torch.float32, requires_grad=True)  # Ensure reward is float and requires grad
-                total_reward = total_reward.clone() + self.intrinsic_coef * self.trajectory_autoencoder_rewards[i, :]
-                # print("reward is", reward)
-                total_reward = tuple(total_reward)
 
             elif self.intrinsic_reward_model == "TrajectoryRND":
  
@@ -443,39 +385,13 @@ class BaseAlgo(ABC):
                 total_reward = tuple(total_reward)
 
                 traj_rnd_intrinsic_reward = self.intrinsic_coef * traj_rnd_intrinsic_reward
-
-            elif self.intrinsic_reward_model == "TrajectoryModel":
-
-                traj_intrinsic_reward = self.trajectory_model.compute_intrinsic_reward(lstm_embedding_copy,next_lstm_embedding_copy)
-
-                # Add the intrinsic reward to the the extrinsic/envs reward
-                total_reward = torch.tensor(reward, dtype=torch.float32, requires_grad=True)  # Ensure reward is float and requires grad
-                total_reward = total_reward.clone() + self.intrinsic_coef * traj_intrinsic_reward
-                # print("reward is", reward)
-                total_reward = tuple(total_reward)
             
             # for no intrinsic model
             elif self.intrinsic_reward_model == None:
 
                 total_reward = torch.tensor(reward, dtype=torch.float32, requires_grad=True)
                 total_reward = tuple(total_reward) 
-
-
-            if self.intrinsic_reward_model == "TrajectoryRND":
-                self.int_rewards[i] = torch.tensor(traj_rnd_intrinsic_reward, device=self.device)
-            elif self.intrinsic_reward_model == "count":
-                self.int_rewards[i] = torch.tensor(count_intrinsic_reward, device=self.device)
-            elif self.intrinsic_reward_model == "RND":
-                self.int_rewards[i] = torch.tensor(rnd_intrinsic_reward, device=self.device)
-            elif self.intrinsic_reward_model == "TrajectoryCount":
-                self.int_rewards[i] = torch.tensor(trajectory_intrinsic_reward, device=self.device)
-            elif self.intrinsic_reward_model == "DIAYN":
-                self.int_rewards[i] = torch.tensor(diayn_rewards, device=self.device)
-            elif self.intrinsic_reward_model == "TrajectoryWindowCount":
-                self.int_rewards[i] = torch.tensor(window_count_intrinsic_reward, device=self.device)
-
-            
-
+        
 
             # essentially the logical OR operator -> check if the episode is done
             # which is either ended in a natural way (terminal state) or somehow cutoff before
@@ -615,7 +531,6 @@ class BaseAlgo(ABC):
         exps.returnn = exps.value + exps.advantage
         exps.log_prob = self.log_probs.transpose(0, 1).reshape(-1)
         exps.skill = self.skills_tracker.transpose(0, 1).reshape(-1)
-        exps.intrinsic_rewards = self.int_rewards.transpose(0, 1).reshape(-1)
 
         if self.intrinsic_reward_model == "RND":
             exps.rnd_loss = self.rnd_loss.transpose(0, 1).reshape(-1)

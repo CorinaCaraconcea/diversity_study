@@ -143,29 +143,6 @@ class TrajectoryCountModule():
             intrinsic_reward = self.beta
 
         return intrinsic_reward,self.trajectory_counts
-    
-class TrajectoryEncoder(nn.Module):
-    def __init__(self, input_size, hidden_size, num_layers):
-        super(TrajectoryEncoder, self).__init__()
-
-        self.hidden_size = hidden_size
-        self.num_layers = num_layers
-
-        self.lstm = nn.LSTM(input_size, hidden_size, num_layers, batch_first=True)
-
-    def forward(self, x):
-        # Initializing hidden state for first input with zeros
-        h0 = torch.zeros(self.num_layers, x.size(0), self.hidden_size).to(x.device)
-        c0 = torch.zeros(self.num_layers, x.size(0), self.hidden_size).to(x.device)
-
-        # Forward propagate LSTM
-        out, _ = self.lstm(x, (h0, c0))  # out: tensor of shape (batch_size, seq_length, hidden_size)
-
-        # We only want the final timestep output, to have a single fixed-size vector per sequence
-        out = out[:, -1, :]
-
-        return out
-    
 
 class DIAYN_reward():
     def __init__(self,no_skills,discriminator,beta):
@@ -352,7 +329,6 @@ class RNDModel():
         self.optimizer.step()
 
 
-
 class WindowTrajectory():
     """
     WindowTrajectory is an implementation of trajectory windowing i.e. keeping track of windows of trajectories.
@@ -386,75 +362,6 @@ class WindowTrajectory():
             intrinsic_reward = self.beta
 
         return intrinsic_reward,self.window_counts
-
-
-
-class WindowEncoder(nn.Module):
-    """
-    input_size - will be 1 in this example since we have only 1 predictor (a sequence of previous values)
-    hidden_size - Can be chosen to dictate how much hidden "long term memory" the network will have
-    output_size - fixed to a lower dimensionality
-
-    The input to this class should be [batch_size, sequence_length, no_features]
-
-    """
-    def __init__(self, input_size, hidden_size, output_size):
-        super(WindowEncoder, self).__init__()
-        self.hidden_size = hidden_size
-        
-        self.lstm = nn.LSTM(input_size, hidden_size)
-        
-        self.linear = nn.Linear(hidden_size, output_size)
-        
-    def forward(self, x, hidden=None):
-        if hidden==None:
-            self.hidden = (torch.zeros(1,1,self.hidden_size),
-                           torch.zeros(1,1,self.hidden_size))
-        else:
-            self.hidden = hidden
-            
-        """
-        inputs need to be in the right shape as defined in documentation
-        - https://pytorch.org/docs/stable/generated/torch.nn.LSTM.html
-        
-        lstm_out - will contain the hidden states from all times in the sequence
-        self.hidden - will contain the current hidden state and cell state
-        """
-        lstm_out, self.hidden = self.lstm(x.view(len(x),1,-1), 
-                                          self.hidden)
-        
-        predictions = self.linear(lstm_out.view(len(x), -1))
-        
-        return predictions, self.hidden
-
-
-class WindowDecoder(nn.Module):
-    """
-    input_size - will be the same as the output_size of the encoder
-    hidden_size - Should be the same as the hidden_size of the encoder
-    output_size - This will be the prediction size you desire
-    """
-    def __init__(self, input_size, hidden_size, output_size):
-        super(WindowDecoder, self).__init__()
-        self.hidden_size = hidden_size
-        
-        self.lstm = nn.LSTM(input_size, hidden_size)
-        
-        self.linear = nn.Linear(hidden_size, output_size)
-        
-    def forward(self, x, hidden):
-        """
-        For the decoder, the hidden state is required, it can't be None.
-        """
-        assert hidden is not None, "Hidden state must be provided to the decoder."
-
-        lstm_out, hidden = self.lstm(x.view(x.shape[0],1,-1), hidden)
-                
-        predictions = self.linear(lstm_out.view(x.shape[0], -1))
-        
-        return predictions, hidden
-
-
 
 class CNN_encoder(nn.Module):
     def __init__(self, obs_space,action_space):
@@ -591,23 +498,3 @@ class RNDTrajectoryModel():
         torch.nn.utils.clip_grad_norm_(self.rnd_predictor.parameters(), 0.5)
 
         self.optimizer.step()
-
-class TrajectoryModel():
-
-
-    def __init__(self,device):
-
-        self.device = device
-
-        self.forward_mse = nn.MSELoss(reduction='none')
-
-
-    def compute_intrinsic_reward(self,previous_embedding,next_embedding):
-        """
-            Genrate Intrinsic reward bonus based on the given input
-        """
-
-        # intrinsic_reward = torch.norm(predict_next_state_feature.detach() - target_next_state_feature.detach(), dim=1, p=2)
-        intrinsic_reward = self.forward_mse(previous_embedding,next_embedding).mean(-1)
-
-        return intrinsic_reward
