@@ -1,6 +1,6 @@
 # diversity_study
 
-This repository is used to study benchmark state-of-the-art intrinsic motivation methods for exploration in RL. This repository also introduces two novel trajectory-based intrinsic motivation methods, Trajectory Window Count and Trajectory RND.
+This repository is used to study benchmark state-of-the-art intrinsic motivation methods for exploration in RL such as State Count, Random Network Distillation (RND), and Diversity is all you Need (DIAYN). This repository introduces two novel trajectory-based intrinsic motivation methods, Trajectory Window Count and Trajectory RND.
 
 ## Installation
 
