@@ -1,6 +1,6 @@
 # diversity_study
 
-This repository is used to study benchmark state-of-the-art intrinsic motivation methods for exploration in RL. This repository also introduces two novel trajectory-based intrinsic motivation methods, Trajectory Window Count and Trajectory RND.
+This repository is used to study benchmark state-of-the-art intrinsic motivation methods for exploration in RL such as State Count, Random Network Distillation (RND), and Diversity is all you Need (DIAYN). This repository introduces two novel trajectory-based intrinsic motivation methods, Trajectory Window Count and Trajectory RND.
 
 ## Installation
 
@@ -25,3 +25,5 @@ python3 -m scripts.train --algo ppo --env MiniGrid-MultiRoom-N7-S4-v0 --model Mu
 The torc_ac folder uses the https://github.com/lcswillems/torch-ac.git repo.
 
 The rl-starter-file folder uses the https://github.com/lcswillems/rl-starter-files.git repo.
+
+The Minigrid environment uses the https://github.com/Farama-Foundation/Minigrid.git repo.
