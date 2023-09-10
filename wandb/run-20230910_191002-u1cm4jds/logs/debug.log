@@ -26,3 +26,4 @@ config: {'model': 'TrajectoryWindowCount', 'env': 'MiniGrid-KeyCorridorS3R3-v0',
 2023-09-10 19:10:03,134 INFO    MainThread:51622 [wandb_run.py:_redirect():2072] Wrapping output streams.
 2023-09-10 19:10:03,134 INFO    MainThread:51622 [wandb_run.py:_redirect():2097] Redirects installed.
 2023-09-10 19:10:03,135 INFO    MainThread:51622 [wandb_init.py:init():830] run started, returning control to user process
+2023-09-10 19:10:37,465 WARNING MsgRouterThr:51622 [router.py:message_loop():77] message_loop has been closed
