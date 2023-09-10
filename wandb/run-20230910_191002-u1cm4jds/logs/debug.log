@@ -1,0 +1,28 @@
+2023-09-10 19:10:02,409 INFO    MainThread:51622 [wandb_setup.py:_flush():76] Current SDK version is 0.15.5
+2023-09-10 19:10:02,409 INFO    MainThread:51622 [wandb_setup.py:_flush():76] Configure stats pid to 51622
+2023-09-10 19:10:02,409 INFO    MainThread:51622 [wandb_setup.py:_flush():76] Loading settings from /Users/corinacaraconcea/.config/wandb/settings
+2023-09-10 19:10:02,409 INFO    MainThread:51622 [wandb_setup.py:_flush():76] Loading settings from /Users/corinacaraconcea/Downloads/diversity_study/wandb/settings
+2023-09-10 19:10:02,409 INFO    MainThread:51622 [wandb_setup.py:_flush():76] Loading settings from environment variables: {}
+2023-09-10 19:10:02,409 INFO    MainThread:51622 [wandb_setup.py:_flush():76] Applying setup settings: {'_disable_service': False}
+2023-09-10 19:10:02,409 WARNING MainThread:51622 [wandb_setup.py:_flush():76] Could not find program at -m rl_starter_files.scripts.train
+2023-09-10 19:10:02,409 INFO    MainThread:51622 [wandb_setup.py:_flush():76] Inferring run settings from compute environment: {'program_relpath': None, 'program': '-m rl_starter_files.scripts.train'}
+2023-09-10 19:10:02,409 INFO    MainThread:51622 [wandb_init.py:_log_setup():507] Logging user logs to /Users/corinacaraconcea/Downloads/diversity_study/wandb/run-20230910_191002-u1cm4jds/logs/debug.log
+2023-09-10 19:10:02,409 INFO    MainThread:51622 [wandb_init.py:_log_setup():508] Logging internal logs to /Users/corinacaraconcea/Downloads/diversity_study/wandb/run-20230910_191002-u1cm4jds/logs/debug-internal.log
+2023-09-10 19:10:02,409 INFO    MainThread:51622 [wandb_init.py:init():547] calling init triggers
+2023-09-10 19:10:02,409 INFO    MainThread:51622 [wandb_init.py:init():554] wandb.init called with sweep_config: {}
+config: {'model': 'TrajectoryWindowCount', 'env': 'MiniGrid-KeyCorridorS3R3-v0', 'seed': 1, 'intr_coeff': 0.005, 'window_size': 3, 'no_skills': 10}
+2023-09-10 19:10:02,409 INFO    MainThread:51622 [wandb_init.py:init():596] starting backend
+2023-09-10 19:10:02,409 INFO    MainThread:51622 [wandb_init.py:init():600] setting up manager
+2023-09-10 19:10:02,415 INFO    MainThread:51622 [backend.py:_multiprocessing_setup():106] multiprocessing start_methods=spawn,fork,forkserver, using: spawn
+2023-09-10 19:10:02,419 INFO    MainThread:51622 [wandb_init.py:init():606] backend started and connected
+2023-09-10 19:10:02,428 INFO    MainThread:51622 [wandb_init.py:init():705] updated telemetry
+2023-09-10 19:10:02,459 INFO    MainThread:51622 [wandb_init.py:init():738] communicating run to backend with 60.0 second timeout
+2023-09-10 19:10:02,916 INFO    MainThread:51622 [wandb_run.py:_on_init():2173] communicating current version
+2023-09-10 19:10:03,016 INFO    MainThread:51622 [wandb_run.py:_on_init():2182] got version response upgrade_message: "wandb version 0.15.10 is available!  To upgrade, please run:\n $ pip install wandb --upgrade"
+
+2023-09-10 19:10:03,016 INFO    MainThread:51622 [wandb_init.py:init():789] starting run threads in backend
+2023-09-10 19:10:03,133 INFO    MainThread:51622 [wandb_run.py:_console_start():2152] atexit reg
+2023-09-10 19:10:03,134 INFO    MainThread:51622 [wandb_run.py:_redirect():2007] redirect: SettingsConsole.WRAP_RAW
+2023-09-10 19:10:03,134 INFO    MainThread:51622 [wandb_run.py:_redirect():2072] Wrapping output streams.
+2023-09-10 19:10:03,134 INFO    MainThread:51622 [wandb_run.py:_redirect():2097] Redirects installed.
+2023-09-10 19:10:03,135 INFO    MainThread:51622 [wandb_init.py:init():830] run started, returning control to user process

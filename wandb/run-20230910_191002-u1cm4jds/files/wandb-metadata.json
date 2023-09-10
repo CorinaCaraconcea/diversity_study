@@ -1,0 +1,50 @@
+{
+    "os": "macOS-13.4-arm64-arm-64bit",
+    "python": "3.9.6",
+    "heartbeatAt": "2023-09-10T18:10:03.039494",
+    "startedAt": "2023-09-10T18:10:02.407878",
+    "docker": null,
+    "cuda": null,
+    "args": [
+        "--algo",
+        "ppo",
+        "--env",
+        "MiniGrid-KeyCorridorS3R3-v0",
+        "--model",
+        "KeyCorridor",
+        "--save-interval",
+        "10",
+        "--frames",
+        "100000",
+        "--intrinsic-reward-model",
+        "TrajectoryWindowCount",
+        "--intrinsic-coef",
+        "0.005",
+        "--window-size",
+        "3"
+    ],
+    "state": "running",
+    "program": "-m rl_starter_files.scripts.train",
+    "git": {
+        "remote": "https://github.com/CorinaCaraconcea/diversity_study.git",
+        "commit": "4cfbd4e3559adb76b2b5af2153ef129ed2b56334"
+    },
+    "email": "cori.caraconcea@gmail.com",
+    "root": "/Users/corinacaraconcea/Downloads/diversity_study",
+    "host": "Corinas-MacBook-Air.local",
+    "username": "corinacaraconcea",
+    "executable": "/Library/Developer/CommandLineTools/usr/bin/python3",
+    "cpu_count": 8,
+    "cpu_count_logical": 8,
+    "disk": {
+        "total": 228.27386474609375,
+        "used": 11.018623352050781
+    },
+    "gpuapple": {
+        "type": "arm",
+        "vendor": "Apple"
+    },
+    "memory": {
+        "total": 8.0
+    }
+}
