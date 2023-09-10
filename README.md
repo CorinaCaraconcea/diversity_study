@@ -17,7 +17,7 @@ pip3 install -r requirements.txt
 Train an agent on the `MiniGrid-MultiRoom-N7-S4-v0` environment for 100000 with a state count intrinsic reward model and an intrinsic coefficient of 0.005:
 
 ```
-python3 -m scripts.train --algo ppo --env MiniGrid-MultiRoom-N7-S4-v0 --model MultiroomN7S4 --seed 1 --save-interval 10 --frames 100000 --intrinsic-reward-model count --intrinsic-coef 0.005
+python3 -m rl_starter_files.scripts.train --algo ppo --env MiniGrid-MultiRoom-N7-S4-v0 --model MultiroomN7S4 --seed 1 --save-interval 10 --frames 100000 --intrinsic-reward-model count --intrinsic-coef 0.005
 ```
 
 ## Citations
