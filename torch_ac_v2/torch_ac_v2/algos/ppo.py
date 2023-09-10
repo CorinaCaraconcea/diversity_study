@@ -3,10 +3,10 @@ import torch
 import torch.nn.functional as F
 from torch import optim, nn
 
-from base2 import BaseAlgo
+from .base2 import BaseAlgo
 
-from clip_grads import global_grad_norm_
-from count_module import CountModule,TrajectoryCountModule, DIAYN_reward, DIAYN_discriminator
+from torch_ac_v2.torch_ac_v2.utils.clip_grads import global_grad_norm_
+from torch_ac_v2.torch_ac_v2.utils.count_module import CountModule,TrajectoryCountModule, DIAYN_reward, DIAYN_discriminator
 
 class PPOAlgo(BaseAlgo):
     """The Proximal Policy Optimization algorithm

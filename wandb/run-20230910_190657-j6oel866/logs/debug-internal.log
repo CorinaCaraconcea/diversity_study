@@ -1,0 +1,210 @@
+2023-09-10 19:06:57,402 INFO    StreamThr :51149 [internal.py:wandb_internal():86] W&B internal server running at pid: 51149, started at: 2023-09-10 19:06:57.402654
+2023-09-10 19:06:57,403 DEBUG   HandlerThread:51149 [handler.py:handle_request():144] handle_request: status
+2023-09-10 19:06:57,404 INFO    WriterThread:51149 [datastore.py:open_for_write():85] open: /Users/corinacaraconcea/Downloads/diversity_study/wandb/run-20230910_190657-j6oel866/run-j6oel866.wandb
+2023-09-10 19:06:57,405 DEBUG   SenderThread:51149 [sender.py:send():369] send: header
+2023-09-10 19:06:57,425 DEBUG   SenderThread:51149 [sender.py:send():369] send: run
+2023-09-10 19:06:57,965 INFO    SenderThread:51149 [dir_watcher.py:__init__():211] watching files in: /Users/corinacaraconcea/Downloads/diversity_study/wandb/run-20230910_190657-j6oel866/files
+2023-09-10 19:06:57,965 INFO    SenderThread:51149 [sender.py:_start_run_threads():1100] run started: j6oel866 with start time 1694369217.397818
+2023-09-10 19:06:57,967 DEBUG   SenderThread:51149 [sender.py:send_request():396] send_request: summary_record
+2023-09-10 19:06:57,967 INFO    SenderThread:51149 [sender.py:_save_file():1354] saving file wandb-summary.json with policy end
+2023-09-10 19:06:57,968 DEBUG   HandlerThread:51149 [handler.py:handle_request():144] handle_request: check_version
+2023-09-10 19:06:57,968 DEBUG   SenderThread:51149 [sender.py:send_request():396] send_request: check_version
+2023-09-10 19:06:58,101 DEBUG   HandlerThread:51149 [handler.py:handle_request():144] handle_request: run_start
+2023-09-10 19:06:58,109 DEBUG   HandlerThread:51149 [system_info.py:__init__():31] System info init
+2023-09-10 19:06:58,109 DEBUG   HandlerThread:51149 [system_info.py:__init__():46] System info init done
+2023-09-10 19:06:58,109 INFO    HandlerThread:51149 [system_monitor.py:start():181] Starting system monitor
+2023-09-10 19:06:58,109 INFO    SystemMonitor:51149 [system_monitor.py:_start():145] Starting system asset monitoring threads
+2023-09-10 19:06:58,110 INFO    HandlerThread:51149 [system_monitor.py:probe():201] Collecting system info
+2023-09-10 19:06:58,110 INFO    SystemMonitor:51149 [interfaces.py:start():190] Started cpu monitoring
+2023-09-10 19:06:58,110 DEBUG   HandlerThread:51149 [system_info.py:probe():195] Probing system
+2023-09-10 19:06:58,110 INFO    SystemMonitor:51149 [interfaces.py:start():190] Started disk monitoring
+2023-09-10 19:06:58,112 INFO    SystemMonitor:51149 [interfaces.py:start():190] Started gpuapple monitoring
+2023-09-10 19:06:58,113 INFO    SystemMonitor:51149 [interfaces.py:start():190] Started memory monitoring
+2023-09-10 19:06:58,116 INFO    SystemMonitor:51149 [interfaces.py:start():190] Started network monitoring
+2023-09-10 19:06:58,117 DEBUG   HandlerThread:51149 [system_info.py:_probe_git():180] Probing git
+2023-09-10 19:06:58,141 DEBUG   HandlerThread:51149 [system_info.py:_probe_git():188] Probing git done
+2023-09-10 19:06:58,141 DEBUG   HandlerThread:51149 [system_info.py:probe():240] Probing system done
+2023-09-10 19:06:58,141 DEBUG   HandlerThread:51149 [system_monitor.py:probe():210] {'os': 'macOS-13.4-arm64-arm-64bit', 'python': '3.9.6', 'heartbeatAt': '2023-09-10T18:06:58.110801', 'startedAt': '2023-09-10T18:06:57.382803', 'docker': None, 'cuda': None, 'args': ('--algo', 'ppo', '--env', 'MiniGrid-MultiRoom-N7-S4-v0', '--model', 'MultiroomN7S4', '--seed', '1', '--save-interval', '10', '--frames', '10000', '--intrinsic-reward-model', 'count', '--intrinsic-coef', '0.005'), 'state': 'running', 'program': '-m rl_starter_files.scripts.train', 'git': {'remote': 'https://github.com/CorinaCaraconcea/diversity_study.git', 'commit': '0d0f896639a623f35910b84db41b7269ca1dbd8b'}, 'email': 'cori.caraconcea@gmail.com', 'root': '/Users/corinacaraconcea/Downloads/diversity_study', 'host': 'Corinas-MacBook-Air.local', 'username': 'corinacaraconcea', 'executable': '/Library/Developer/CommandLineTools/usr/bin/python3', 'cpu_count': 8, 'cpu_count_logical': 8, 'disk': {'total': 228.27386474609375, 'used': 11.018623352050781}, 'gpuapple': {'type': 'arm', 'vendor': 'Apple'}, 'memory': {'total': 8.0}}
+2023-09-10 19:06:58,141 INFO    HandlerThread:51149 [system_monitor.py:probe():211] Finished collecting system info
+2023-09-10 19:06:58,141 INFO    HandlerThread:51149 [system_monitor.py:probe():214] Publishing system info
+2023-09-10 19:06:58,141 DEBUG   HandlerThread:51149 [system_info.py:_save_pip():51] Saving list of pip packages installed into the current environment
+2023-09-10 19:06:58,141 DEBUG   HandlerThread:51149 [system_info.py:_save_pip():67] Saving pip packages done
+2023-09-10 19:06:58,142 DEBUG   HandlerThread:51149 [system_info.py:_save_code():89] Saving code
+2023-09-10 19:06:58,142 WARNING HandlerThread:51149 [system_info.py:_save_code():91] unable to save code -- program entry not found
+2023-09-10 19:06:58,142 DEBUG   HandlerThread:51149 [system_info.py:_save_patches():127] Saving git patches
+2023-09-10 19:06:58,284 DEBUG   HandlerThread:51149 [system_info.py:_save_patches():169] Saving git patches done
+2023-09-10 19:06:58,285 INFO    HandlerThread:51149 [system_monitor.py:probe():216] Finished publishing system info
+2023-09-10 19:06:58,288 DEBUG   SenderThread:51149 [sender.py:send():369] send: files
+2023-09-10 19:06:58,288 INFO    SenderThread:51149 [sender.py:_save_file():1354] saving file wandb-metadata.json with policy now
+2023-09-10 19:06:58,288 INFO    SenderThread:51149 [sender.py:_save_file():1354] saving file diff.patch with policy now
+2023-09-10 19:06:58,293 DEBUG   HandlerThread:51149 [handler.py:handle_request():144] handle_request: stop_status
+2023-09-10 19:06:58,295 DEBUG   SenderThread:51149 [sender.py:send_request():396] send_request: stop_status
+2023-09-10 19:06:58,863 DEBUG   SenderThread:51149 [sender.py:send():369] send: telemetry
+2023-09-10 19:06:58,971 INFO    Thread-12 :51149 [dir_watcher.py:_on_file_created():272] file/dir created: /Users/corinacaraconcea/Downloads/diversity_study/wandb/run-20230910_190657-j6oel866/files/wandb-summary.json
+2023-09-10 19:06:58,971 INFO    Thread-12 :51149 [dir_watcher.py:_on_file_created():272] file/dir created: /Users/corinacaraconcea/Downloads/diversity_study/wandb/run-20230910_190657-j6oel866/files/wandb-metadata.json
+2023-09-10 19:06:58,971 INFO    Thread-12 :51149 [dir_watcher.py:_on_file_created():272] file/dir created: /Users/corinacaraconcea/Downloads/diversity_study/wandb/run-20230910_190657-j6oel866/files/requirements.txt
+2023-09-10 19:06:58,971 INFO    Thread-12 :51149 [dir_watcher.py:_on_file_created():272] file/dir created: /Users/corinacaraconcea/Downloads/diversity_study/wandb/run-20230910_190657-j6oel866/files/diff.patch
+2023-09-10 19:06:58,971 INFO    Thread-12 :51149 [dir_watcher.py:_on_file_created():272] file/dir created: /Users/corinacaraconcea/Downloads/diversity_study/wandb/run-20230910_190657-j6oel866/files/output.log
+2023-09-10 19:06:59,220 INFO    wandb-upload_0:51149 [upload_job.py:push():133] Uploaded file /var/folders/n4/lk2x7f1j3g35spnvp796gmx40000gn/T/tmps_iq8o2lwandb/myehikn5-wandb-metadata.json
+2023-09-10 19:06:59,901 INFO    wandb-upload_1:51149 [upload_job.py:push():133] Uploaded file /var/folders/n4/lk2x7f1j3g35spnvp796gmx40000gn/T/tmps_iq8o2lwandb/fcvslgy5-diff.patch
+2023-09-10 19:07:00,287 DEBUG   HandlerThread:51149 [handler.py:handle_request():144] handle_request: partial_history
+2023-09-10 19:07:00,288 DEBUG   SenderThread:51149 [sender.py:send():369] send: history
+2023-09-10 19:07:00,288 DEBUG   SenderThread:51149 [sender.py:send_request():396] send_request: summary_record
+2023-09-10 19:07:00,290 INFO    SenderThread:51149 [sender.py:_save_file():1354] saving file wandb-summary.json with policy end
+2023-09-10 19:07:00,981 INFO    Thread-12 :51149 [dir_watcher.py:_on_file_modified():289] file/dir modified: /Users/corinacaraconcea/Downloads/diversity_study/wandb/run-20230910_190657-j6oel866/files/wandb-summary.json
+2023-09-10 19:07:00,981 INFO    Thread-12 :51149 [dir_watcher.py:_on_file_modified():289] file/dir modified: /Users/corinacaraconcea/Downloads/diversity_study/wandb/run-20230910_190657-j6oel866/files/output.log
+2023-09-10 19:07:01,819 DEBUG   HandlerThread:51149 [handler.py:handle_request():144] handle_request: partial_history
+2023-09-10 19:07:01,820 DEBUG   SenderThread:51149 [sender.py:send():369] send: history
+2023-09-10 19:07:01,820 DEBUG   SenderThread:51149 [sender.py:send_request():396] send_request: summary_record
+2023-09-10 19:07:01,820 INFO    SenderThread:51149 [sender.py:_save_file():1354] saving file wandb-summary.json with policy end
+2023-09-10 19:07:01,986 INFO    Thread-12 :51149 [dir_watcher.py:_on_file_modified():289] file/dir modified: /Users/corinacaraconcea/Downloads/diversity_study/wandb/run-20230910_190657-j6oel866/files/wandb-summary.json
+2023-09-10 19:07:02,991 INFO    Thread-12 :51149 [dir_watcher.py:_on_file_modified():289] file/dir modified: /Users/corinacaraconcea/Downloads/diversity_study/wandb/run-20230910_190657-j6oel866/files/output.log
+2023-09-10 19:07:03,179 DEBUG   HandlerThread:51149 [handler.py:handle_request():144] handle_request: status_report
+2023-09-10 19:07:03,209 DEBUG   HandlerThread:51149 [handler.py:handle_request():144] handle_request: partial_history
+2023-09-10 19:07:03,210 DEBUG   SenderThread:51149 [sender.py:send():369] send: history
+2023-09-10 19:07:03,210 DEBUG   SenderThread:51149 [sender.py:send_request():396] send_request: summary_record
+2023-09-10 19:07:03,211 INFO    SenderThread:51149 [sender.py:_save_file():1354] saving file wandb-summary.json with policy end
+2023-09-10 19:07:03,992 INFO    Thread-12 :51149 [dir_watcher.py:_on_file_modified():289] file/dir modified: /Users/corinacaraconcea/Downloads/diversity_study/wandb/run-20230910_190657-j6oel866/files/wandb-summary.json
+2023-09-10 19:07:04,668 DEBUG   HandlerThread:51149 [handler.py:handle_request():144] handle_request: partial_history
+2023-09-10 19:07:04,669 DEBUG   SenderThread:51149 [sender.py:send():369] send: history
+2023-09-10 19:07:04,670 DEBUG   SenderThread:51149 [sender.py:send_request():396] send_request: summary_record
+2023-09-10 19:07:04,670 INFO    SenderThread:51149 [sender.py:_save_file():1354] saving file wandb-summary.json with policy end
+2023-09-10 19:07:04,995 INFO    Thread-12 :51149 [dir_watcher.py:_on_file_modified():289] file/dir modified: /Users/corinacaraconcea/Downloads/diversity_study/wandb/run-20230910_190657-j6oel866/files/wandb-summary.json
+2023-09-10 19:07:04,995 INFO    Thread-12 :51149 [dir_watcher.py:_on_file_modified():289] file/dir modified: /Users/corinacaraconcea/Downloads/diversity_study/wandb/run-20230910_190657-j6oel866/files/output.log
+2023-09-10 19:07:06,129 DEBUG   HandlerThread:51149 [handler.py:handle_request():144] handle_request: partial_history
+2023-09-10 19:07:06,132 DEBUG   SenderThread:51149 [sender.py:send():369] send: history
+2023-09-10 19:07:06,132 DEBUG   SenderThread:51149 [sender.py:send_request():396] send_request: summary_record
+2023-09-10 19:07:06,133 INFO    SenderThread:51149 [sender.py:_save_file():1354] saving file wandb-summary.json with policy end
+2023-09-10 19:07:06,135 DEBUG   SenderThread:51149 [sender.py:send():369] send: exit
+2023-09-10 19:07:06,135 INFO    SenderThread:51149 [sender.py:send_exit():574] handling exit code: 0
+2023-09-10 19:07:06,136 INFO    SenderThread:51149 [sender.py:send_exit():576] handling runtime: 8
+2023-09-10 19:07:06,136 INFO    SenderThread:51149 [sender.py:_save_file():1354] saving file wandb-summary.json with policy end
+2023-09-10 19:07:06,136 INFO    SenderThread:51149 [sender.py:send_exit():582] send defer
+2023-09-10 19:07:06,136 DEBUG   HandlerThread:51149 [handler.py:handle_request():144] handle_request: defer
+2023-09-10 19:07:06,136 INFO    HandlerThread:51149 [handler.py:handle_request_defer():170] handle defer: 0
+2023-09-10 19:07:06,136 DEBUG   SenderThread:51149 [sender.py:send_request():396] send_request: defer
+2023-09-10 19:07:06,136 INFO    SenderThread:51149 [sender.py:send_request_defer():598] handle sender defer: 0
+2023-09-10 19:07:06,136 INFO    SenderThread:51149 [sender.py:transition_state():602] send defer: 1
+2023-09-10 19:07:06,136 DEBUG   HandlerThread:51149 [handler.py:handle_request():144] handle_request: defer
+2023-09-10 19:07:06,137 INFO    HandlerThread:51149 [handler.py:handle_request_defer():170] handle defer: 1
+2023-09-10 19:07:06,137 DEBUG   SenderThread:51149 [sender.py:send_request():396] send_request: defer
+2023-09-10 19:07:06,137 INFO    SenderThread:51149 [sender.py:send_request_defer():598] handle sender defer: 1
+2023-09-10 19:07:06,137 INFO    SenderThread:51149 [sender.py:transition_state():602] send defer: 2
+2023-09-10 19:07:06,137 DEBUG   HandlerThread:51149 [handler.py:handle_request():144] handle_request: defer
+2023-09-10 19:07:06,137 INFO    HandlerThread:51149 [handler.py:handle_request_defer():170] handle defer: 2
+2023-09-10 19:07:06,137 INFO    HandlerThread:51149 [system_monitor.py:finish():190] Stopping system monitor
+2023-09-10 19:07:06,137 DEBUG   SystemMonitor:51149 [system_monitor.py:_start():159] Starting system metrics aggregation loop
+2023-09-10 19:07:06,137 INFO    HandlerThread:51149 [interfaces.py:finish():202] Joined cpu monitor
+2023-09-10 19:07:06,137 DEBUG   SystemMonitor:51149 [system_monitor.py:_start():166] Finished system metrics aggregation loop
+2023-09-10 19:07:06,137 INFO    HandlerThread:51149 [interfaces.py:finish():202] Joined disk monitor
+2023-09-10 19:07:06,137 DEBUG   SystemMonitor:51149 [system_monitor.py:_start():170] Publishing last batch of metrics
+2023-09-10 19:07:06,359 INFO    HandlerThread:51149 [interfaces.py:finish():202] Joined gpuapple monitor
+2023-09-10 19:07:06,359 INFO    HandlerThread:51149 [interfaces.py:finish():202] Joined memory monitor
+2023-09-10 19:07:06,359 INFO    HandlerThread:51149 [interfaces.py:finish():202] Joined network monitor
+2023-09-10 19:07:06,360 DEBUG   SenderThread:51149 [sender.py:send_request():396] send_request: defer
+2023-09-10 19:07:06,360 INFO    SenderThread:51149 [sender.py:send_request_defer():598] handle sender defer: 2
+2023-09-10 19:07:06,360 INFO    SenderThread:51149 [sender.py:transition_state():602] send defer: 3
+2023-09-10 19:07:06,360 DEBUG   SenderThread:51149 [sender.py:send():369] send: telemetry
+2023-09-10 19:07:06,360 DEBUG   SenderThread:51149 [sender.py:send():369] send: stats
+2023-09-10 19:07:06,360 DEBUG   HandlerThread:51149 [handler.py:handle_request():144] handle_request: defer
+2023-09-10 19:07:06,360 INFO    HandlerThread:51149 [handler.py:handle_request_defer():170] handle defer: 3
+2023-09-10 19:07:06,360 DEBUG   SenderThread:51149 [sender.py:send_request():396] send_request: defer
+2023-09-10 19:07:06,360 INFO    SenderThread:51149 [sender.py:send_request_defer():598] handle sender defer: 3
+2023-09-10 19:07:06,360 INFO    SenderThread:51149 [sender.py:transition_state():602] send defer: 4
+2023-09-10 19:07:06,360 DEBUG   HandlerThread:51149 [handler.py:handle_request():144] handle_request: defer
+2023-09-10 19:07:06,360 INFO    HandlerThread:51149 [handler.py:handle_request_defer():170] handle defer: 4
+2023-09-10 19:07:06,360 DEBUG   SenderThread:51149 [sender.py:send_request():396] send_request: defer
+2023-09-10 19:07:06,360 INFO    SenderThread:51149 [sender.py:send_request_defer():598] handle sender defer: 4
+2023-09-10 19:07:06,360 INFO    SenderThread:51149 [sender.py:transition_state():602] send defer: 5
+2023-09-10 19:07:06,360 DEBUG   HandlerThread:51149 [handler.py:handle_request():144] handle_request: defer
+2023-09-10 19:07:06,360 INFO    HandlerThread:51149 [handler.py:handle_request_defer():170] handle defer: 5
+2023-09-10 19:07:06,361 DEBUG   SenderThread:51149 [sender.py:send():369] send: summary
+2023-09-10 19:07:06,361 INFO    SenderThread:51149 [sender.py:_save_file():1354] saving file wandb-summary.json with policy end
+2023-09-10 19:07:06,361 DEBUG   SenderThread:51149 [sender.py:send_request():396] send_request: defer
+2023-09-10 19:07:06,361 INFO    SenderThread:51149 [sender.py:send_request_defer():598] handle sender defer: 5
+2023-09-10 19:07:06,361 INFO    SenderThread:51149 [sender.py:transition_state():602] send defer: 6
+2023-09-10 19:07:06,361 DEBUG   HandlerThread:51149 [handler.py:handle_request():144] handle_request: defer
+2023-09-10 19:07:06,361 INFO    HandlerThread:51149 [handler.py:handle_request_defer():170] handle defer: 6
+2023-09-10 19:07:06,361 DEBUG   SenderThread:51149 [sender.py:send_request():396] send_request: defer
+2023-09-10 19:07:06,361 INFO    SenderThread:51149 [sender.py:send_request_defer():598] handle sender defer: 6
+2023-09-10 19:07:06,363 DEBUG   HandlerThread:51149 [handler.py:handle_request():144] handle_request: status_report
+2023-09-10 19:07:06,554 INFO    SenderThread:51149 [sender.py:transition_state():602] send defer: 7
+2023-09-10 19:07:06,554 DEBUG   HandlerThread:51149 [handler.py:handle_request():144] handle_request: defer
+2023-09-10 19:07:06,554 INFO    HandlerThread:51149 [handler.py:handle_request_defer():170] handle defer: 7
+2023-09-10 19:07:06,554 DEBUG   SenderThread:51149 [sender.py:send_request():396] send_request: defer
+2023-09-10 19:07:06,554 INFO    SenderThread:51149 [sender.py:send_request_defer():598] handle sender defer: 7
+2023-09-10 19:07:06,941 INFO    SenderThread:51149 [sender.py:transition_state():602] send defer: 8
+2023-09-10 19:07:06,942 DEBUG   HandlerThread:51149 [handler.py:handle_request():144] handle_request: defer
+2023-09-10 19:07:06,942 INFO    HandlerThread:51149 [handler.py:handle_request_defer():170] handle defer: 8
+2023-09-10 19:07:06,942 DEBUG   SenderThread:51149 [sender.py:send_request():396] send_request: defer
+2023-09-10 19:07:06,943 INFO    SenderThread:51149 [sender.py:send_request_defer():598] handle sender defer: 8
+2023-09-10 19:07:06,943 INFO    SenderThread:51149 [job_builder.py:build():240] Attempting to build job artifact
+2023-09-10 19:07:06,945 INFO    SenderThread:51149 [job_builder.py:build():274] no source found
+2023-09-10 19:07:06,945 INFO    SenderThread:51149 [sender.py:transition_state():602] send defer: 9
+2023-09-10 19:07:06,945 DEBUG   HandlerThread:51149 [handler.py:handle_request():144] handle_request: defer
+2023-09-10 19:07:06,945 INFO    HandlerThread:51149 [handler.py:handle_request_defer():170] handle defer: 9
+2023-09-10 19:07:06,945 DEBUG   SenderThread:51149 [sender.py:send_request():396] send_request: defer
+2023-09-10 19:07:06,946 INFO    SenderThread:51149 [sender.py:send_request_defer():598] handle sender defer: 9
+2023-09-10 19:07:06,946 INFO    SenderThread:51149 [dir_watcher.py:finish():359] shutting down directory watcher
+2023-09-10 19:07:07,005 INFO    Thread-12 :51149 [dir_watcher.py:_on_file_modified():289] file/dir modified: /Users/corinacaraconcea/Downloads/diversity_study/wandb/run-20230910_190657-j6oel866/files/wandb-summary.json
+2023-09-10 19:07:07,006 INFO    SenderThread:51149 [dir_watcher.py:_on_file_modified():289] file/dir modified: /Users/corinacaraconcea/Downloads/diversity_study/wandb/run-20230910_190657-j6oel866/files/output.log
+2023-09-10 19:07:07,006 INFO    SenderThread:51149 [dir_watcher.py:_on_file_modified():289] file/dir modified: /Users/corinacaraconcea/Downloads/diversity_study/wandb/run-20230910_190657-j6oel866/files/config.yaml
+2023-09-10 19:07:07,007 INFO    SenderThread:51149 [dir_watcher.py:finish():389] scan: /Users/corinacaraconcea/Downloads/diversity_study/wandb/run-20230910_190657-j6oel866/files
+2023-09-10 19:07:07,007 INFO    SenderThread:51149 [dir_watcher.py:finish():403] scan save: /Users/corinacaraconcea/Downloads/diversity_study/wandb/run-20230910_190657-j6oel866/files/diff.patch diff.patch
+2023-09-10 19:07:07,007 INFO    SenderThread:51149 [dir_watcher.py:finish():403] scan save: /Users/corinacaraconcea/Downloads/diversity_study/wandb/run-20230910_190657-j6oel866/files/requirements.txt requirements.txt
+2023-09-10 19:07:07,007 INFO    SenderThread:51149 [dir_watcher.py:finish():403] scan save: /Users/corinacaraconcea/Downloads/diversity_study/wandb/run-20230910_190657-j6oel866/files/output.log output.log
+2023-09-10 19:07:07,012 INFO    SenderThread:51149 [dir_watcher.py:finish():403] scan save: /Users/corinacaraconcea/Downloads/diversity_study/wandb/run-20230910_190657-j6oel866/files/config.yaml config.yaml
+2023-09-10 19:07:07,016 INFO    SenderThread:51149 [dir_watcher.py:finish():403] scan save: /Users/corinacaraconcea/Downloads/diversity_study/wandb/run-20230910_190657-j6oel866/files/wandb-summary.json wandb-summary.json
+2023-09-10 19:07:07,020 INFO    SenderThread:51149 [dir_watcher.py:finish():403] scan save: /Users/corinacaraconcea/Downloads/diversity_study/wandb/run-20230910_190657-j6oel866/files/wandb-metadata.json wandb-metadata.json
+2023-09-10 19:07:07,021 INFO    SenderThread:51149 [sender.py:transition_state():602] send defer: 10
+2023-09-10 19:07:07,024 DEBUG   HandlerThread:51149 [handler.py:handle_request():144] handle_request: defer
+2023-09-10 19:07:07,024 INFO    HandlerThread:51149 [handler.py:handle_request_defer():170] handle defer: 10
+2023-09-10 19:07:07,025 DEBUG   SenderThread:51149 [sender.py:send_request():396] send_request: defer
+2023-09-10 19:07:07,025 INFO    SenderThread:51149 [sender.py:send_request_defer():598] handle sender defer: 10
+2023-09-10 19:07:07,025 INFO    SenderThread:51149 [file_pusher.py:finish():159] shutting down file pusher
+2023-09-10 19:07:07,142 DEBUG   HandlerThread:51149 [handler.py:handle_request():144] handle_request: poll_exit
+2023-09-10 19:07:07,142 DEBUG   SenderThread:51149 [sender.py:send_request():396] send_request: poll_exit
+2023-09-10 19:07:07,428 INFO    wandb-upload_1:51149 [upload_job.py:push():133] Uploaded file /Users/corinacaraconcea/Downloads/diversity_study/wandb/run-20230910_190657-j6oel866/files/output.log
+2023-09-10 19:07:07,473 INFO    wandb-upload_3:51149 [upload_job.py:push():133] Uploaded file /Users/corinacaraconcea/Downloads/diversity_study/wandb/run-20230910_190657-j6oel866/files/wandb-summary.json
+2023-09-10 19:07:07,540 INFO    wandb-upload_0:51149 [upload_job.py:push():133] Uploaded file /Users/corinacaraconcea/Downloads/diversity_study/wandb/run-20230910_190657-j6oel866/files/requirements.txt
+2023-09-10 19:07:07,588 INFO    wandb-upload_2:51149 [upload_job.py:push():133] Uploaded file /Users/corinacaraconcea/Downloads/diversity_study/wandb/run-20230910_190657-j6oel866/files/config.yaml
+2023-09-10 19:07:07,794 INFO    Thread-11 :51149 [sender.py:transition_state():602] send defer: 11
+2023-09-10 19:07:07,795 DEBUG   HandlerThread:51149 [handler.py:handle_request():144] handle_request: defer
+2023-09-10 19:07:07,795 INFO    HandlerThread:51149 [handler.py:handle_request_defer():170] handle defer: 11
+2023-09-10 19:07:07,796 DEBUG   SenderThread:51149 [sender.py:send_request():396] send_request: defer
+2023-09-10 19:07:07,796 INFO    SenderThread:51149 [sender.py:send_request_defer():598] handle sender defer: 11
+2023-09-10 19:07:07,796 INFO    SenderThread:51149 [file_pusher.py:join():164] waiting for file pusher
+2023-09-10 19:07:07,796 INFO    SenderThread:51149 [sender.py:transition_state():602] send defer: 12
+2023-09-10 19:07:07,797 DEBUG   HandlerThread:51149 [handler.py:handle_request():144] handle_request: defer
+2023-09-10 19:07:07,797 INFO    HandlerThread:51149 [handler.py:handle_request_defer():170] handle defer: 12
+2023-09-10 19:07:07,797 DEBUG   SenderThread:51149 [sender.py:send_request():396] send_request: defer
+2023-09-10 19:07:07,797 INFO    SenderThread:51149 [sender.py:send_request_defer():598] handle sender defer: 12
+2023-09-10 19:07:07,989 INFO    SenderThread:51149 [sender.py:transition_state():602] send defer: 13
+2023-09-10 19:07:07,989 DEBUG   HandlerThread:51149 [handler.py:handle_request():144] handle_request: defer
+2023-09-10 19:07:07,989 INFO    HandlerThread:51149 [handler.py:handle_request_defer():170] handle defer: 13
+2023-09-10 19:07:07,990 DEBUG   SenderThread:51149 [sender.py:send_request():396] send_request: defer
+2023-09-10 19:07:07,990 INFO    SenderThread:51149 [sender.py:send_request_defer():598] handle sender defer: 13
+2023-09-10 19:07:07,990 INFO    SenderThread:51149 [sender.py:transition_state():602] send defer: 14
+2023-09-10 19:07:07,990 DEBUG   HandlerThread:51149 [handler.py:handle_request():144] handle_request: defer
+2023-09-10 19:07:07,990 DEBUG   SenderThread:51149 [sender.py:send():369] send: final
+2023-09-10 19:07:07,990 INFO    HandlerThread:51149 [handler.py:handle_request_defer():170] handle defer: 14
+2023-09-10 19:07:07,990 DEBUG   SenderThread:51149 [sender.py:send():369] send: footer
+2023-09-10 19:07:07,991 DEBUG   SenderThread:51149 [sender.py:send_request():396] send_request: defer
+2023-09-10 19:07:07,991 INFO    SenderThread:51149 [sender.py:send_request_defer():598] handle sender defer: 14
+2023-09-10 19:07:07,991 DEBUG   HandlerThread:51149 [handler.py:handle_request():144] handle_request: poll_exit
+2023-09-10 19:07:07,992 DEBUG   SenderThread:51149 [sender.py:send_request():396] send_request: poll_exit
+2023-09-10 19:07:07,992 DEBUG   HandlerThread:51149 [handler.py:handle_request():144] handle_request: poll_exit
+2023-09-10 19:07:07,992 DEBUG   SenderThread:51149 [sender.py:send_request():396] send_request: poll_exit
+2023-09-10 19:07:07,993 DEBUG   HandlerThread:51149 [handler.py:handle_request():144] handle_request: server_info
+2023-09-10 19:07:07,993 DEBUG   HandlerThread:51149 [handler.py:handle_request():144] handle_request: get_summary
+2023-09-10 19:07:07,994 DEBUG   SenderThread:51149 [sender.py:send_request():396] send_request: server_info
+2023-09-10 19:07:07,995 DEBUG   HandlerThread:51149 [handler.py:handle_request():144] handle_request: sampled_history
+2023-09-10 19:07:08,262 INFO    MainThread:51149 [wandb_run.py:_footer_history_summary_info():3464] rendering history
+2023-09-10 19:07:08,263 INFO    MainThread:51149 [wandb_run.py:_footer_history_summary_info():3496] rendering summary
+2023-09-10 19:07:08,263 INFO    MainThread:51149 [wandb_run.py:_footer_sync_info():3423] logging synced files
+2023-09-10 19:07:08,264 DEBUG   HandlerThread:51149 [handler.py:handle_request():144] handle_request: shutdown
+2023-09-10 19:07:08,264 INFO    HandlerThread:51149 [handler.py:finish():854] shutting down handler
+2023-09-10 19:07:08,994 INFO    WriterThread:51149 [datastore.py:close():298] close: /Users/corinacaraconcea/Downloads/diversity_study/wandb/run-20230910_190657-j6oel866/run-j6oel866.wandb
+2023-09-10 19:07:09,267 INFO    SenderThread:51149 [sender.py:finish():1526] shutting down sender
+2023-09-10 19:07:09,267 INFO    SenderThread:51149 [file_pusher.py:finish():159] shutting down file pusher
+2023-09-10 19:07:09,267 INFO    SenderThread:51149 [file_pusher.py:join():164] waiting for file pusher
