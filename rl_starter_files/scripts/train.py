@@ -217,21 +217,21 @@ if __name__ == "__main__":
         algo.optimizer.load_state_dict(status_base["optimizer_state"])
     txt_logger.info("Optimizer loaded\n")
 
-    # Initialize the Weights and Biases run
-    run = wandb.init(
-    # Set the entity
-    entity = "cori-caraconcea",
-    # Set the project where this run will be logged
-    project="Empty Minigrid 16x16",
-    # Track hyperparameters and run metadata
-    config={
-        "model": model_flag,
-        "env": args.env,
-        "seed": args.seed,
-        "intr_coeff": args.intrinsic_coef,
-        "window_size": args.window_size,
-        "no_skills": args.number_skills
-        })
+    # # Initialize the Weights and Biases run
+    # run = wandb.init(
+    # # Set the entity
+    # entity = "cori-caraconcea",
+    # # Set the project where this run will be logged
+    # project="Empty Minigrid 16x16",
+    # # Track hyperparameters and run metadata
+    # config={
+    #     "model": model_flag,
+    #     "env": args.env,
+    #     "seed": args.seed,
+    #     "intr_coeff": args.intrinsic_coef,
+    #     "window_size": args.window_size,
+    #     "no_skills": args.number_skills
+    #     })
 
     # Train model
 
@@ -273,10 +273,10 @@ if __name__ == "__main__":
             entropy = utils.synthesize(logs["entropy"])            
 
 
-            # "mean_rreturn_per_episode_mean": rreturn_per_episode['mean'],
-            wandb.log({"mean_rreturn_per_episode_mean": rreturn_per_episode['mean'],
-                       "batch_entropy_mean": entropy['mean']
-                      })
+            # # "mean_rreturn_per_episode_mean": rreturn_per_episode['mean'],
+            # wandb.log({"mean_rreturn_per_episode_mean": rreturn_per_episode['mean'],
+            #            "batch_entropy_mean": entropy['mean']
+            #           })
 
             header = ["update", "frames", "FPS", "duration"]
             data = [update, num_frames, fps, duration]
