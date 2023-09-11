@@ -3,24 +3,11 @@ import time
 import datetime
 # import torch_ac
 import tensorboardX
-import sys
-import wandb
 
 import rl_starter_files.utils as utils
 from rl_starter_files.utils import device
 from rl_starter_files.model import ACModel
 
-import sys
-import os
-
-# Add folder1 to system path
-# sys.path.insert(0, os.path.abspath('/Users/corinacaraconcea/Downloads/diversity_study/torch_ac_v2/torch_ac_v2/algos'))
-
-# sys.path.insert(0, '/cluster/project7/diversity_rl/diversity_study/torch_ac_v2/torch_ac_v2/algos')
-
-
-# import a2c
-# import ppo
 
 from torch_ac_v2.torch_ac_v2.algos import ppo
 
