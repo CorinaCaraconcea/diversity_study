@@ -1,0 +1,85 @@
+diff --git a/storage/KeyCorridor/log.txt b/storage/KeyCorridor/log.txt
+index 13dd98c..d716bad 100644
+--- a/storage/KeyCorridor/log.txt
++++ b/storage/KeyCorridor/log.txt
+@@ -56,3 +56,41 @@ U 16 | F 0000032768 | FPS 1429 | D 22 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM
+ U 17 | F 0000034816 | FPS 1470 | D 24 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 270.0 0.0 270.0 270.0 | H 1.934 | V 0.313 | pL 0.020 | vL 0.006 | ∇ 0.020
+ U 18 | F 0000036864 | FPS 1462 | D 25 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 270.0 0.0 270.0 270.0 | H 1.936 | V 0.335 | pL -0.025 | vL 0.000 | ∇ 0.011
+ U 19 | F 0000038912 | FPS 1477 | D 27 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 270.0 0.0 270.0 270.0 | H 1.936 | V 0.320 | pL 0.023 | vL 0.007 | ∇ 0.021
++/Users/corinacaraconcea/Downloads/diversity_study/rl_starter_files/scripts/train.py --algo ppo --env MiniGrid-KeyCorridorS3R3-v0 --model KeyCorridor --save-interval 10 --frames 100000 --intrinsic-reward-model TrajectoryWindowCount --intrinsic-coef 0.005 --window-size 3
++
++Namespace(algo='ppo', env='MiniGrid-KeyCorridorS3R3-v0', model='KeyCorridor', seed=1, log_interval=1, save_interval=10, procs=16, frames=100000, epochs=4, batch_size=256, frames_per_proc=None, discount=0.99, lr=0.0001, gae_lambda=0.95, entropy_coef=0.0005, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=2, text=False, intrinsic_coef=0.005, intrinsic_reward_model='TrajectoryWindowCount', number_skills=10, window_size=3, mem=True)
++
++Device: cpu
++
++Environments loaded
++
++Training status loaded
++
++Observations preprocessor loaded
++Model loaded
++
++ACModel(
++  (image_conv): Sequential(
++    (0): Conv2d(3, 16, kernel_size=(2, 2), stride=(1, 1))
++    (1): ReLU()
++    (2): MaxPool2d(kernel_size=(2, 2), stride=(2, 2), padding=0, dilation=1, ceil_mode=False)
++    (3): Conv2d(16, 32, kernel_size=(2, 2), stride=(1, 1))
++    (4): ReLU()
++    (5): Conv2d(32, 64, kernel_size=(2, 2), stride=(1, 1))
++    (6): ReLU()
++  )
++  (memory_rnn): LSTMCell(64, 64)
++  (actor): Sequential(
++    (0): Linear(in_features=64, out_features=64, bias=True)
++    (1): Tanh()
++    (2): Linear(in_features=64, out_features=7, bias=True)
++  )
++  (critic): Sequential(
++    (0): Linear(in_features=64, out_features=64, bias=True)
++    (1): Tanh()
++    (2): Linear(in_features=64, out_features=1, bias=True)
++  )
++)
++
++Optimizer loaded
++
+diff --git a/torch_ac_v2/torch_ac_v2/algos/ppo.py b/torch_ac_v2/torch_ac_v2/algos/ppo.py
+index e25dce1..4f5eeca 100644
+--- a/torch_ac_v2/torch_ac_v2/algos/ppo.py
++++ b/torch_ac_v2/torch_ac_v2/algos/ppo.py
+@@ -102,6 +102,7 @@ class PPOAlgo(BaseAlgo):
+                     lstm_embeddings_copy = lstm_embeddings_copy.detach()
+ 
+                     # compute the entropy of the policy
++                    print("no_policies", dist.shape)
+                     entropy = dist.entropy().mean()
+ 
+                     # ratio between the old policy and the new policy 
+diff --git a/wandb/debug-internal.log b/wandb/debug-internal.log
+index 9157465..b4ab8b1 120000
+--- a/wandb/debug-internal.log
++++ b/wandb/debug-internal.log
+@@ -1 +1 @@
+-run-20230910_191002-u1cm4jds/logs/debug-internal.log
+\ No newline at end of file
++run-20230911_114148-mllw3sk8/logs/debug-internal.log
+\ No newline at end of file
+diff --git a/wandb/debug.log b/wandb/debug.log
+index 1e4661d..a40e127 120000
+--- a/wandb/debug.log
++++ b/wandb/debug.log
+@@ -1 +1 @@
+-run-20230910_191002-u1cm4jds/logs/debug.log
+\ No newline at end of file
++run-20230911_114148-mllw3sk8/logs/debug.log
+\ No newline at end of file
+diff --git a/wandb/latest-run b/wandb/latest-run
+index b7f4c83..00984f1 120000
+--- a/wandb/latest-run
++++ b/wandb/latest-run
+@@ -1 +1 @@
+-run-20230910_191002-u1cm4jds
+\ No newline at end of file
++run-20230911_114148-mllw3sk8
+\ No newline at end of file

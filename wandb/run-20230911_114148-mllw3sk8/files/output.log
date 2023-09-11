@@ -1,0 +1,12 @@
+
+log_done_counter 0
+Traceback (most recent call last):
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/runpy.py", line 197, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/runpy.py", line 87, in _run_code
+    exec(code, run_globals)
+  File "/Users/corinacaraconcea/Downloads/diversity_study/rl_starter_files/scripts/train.py", line 248, in <module>
+    logs2 = algo.update_parameters(exps)
+  File "/Users/corinacaraconcea/Downloads/diversity_study/torch_ac_v2/torch_ac_v2/algos/ppo.py", line 105, in update_parameters
+    print("no_policies", dist.shape)
+AttributeError: 'Categorical' object has no attribute 'shape'

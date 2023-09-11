@@ -102,6 +102,7 @@ class PPOAlgo(BaseAlgo):
                     lstm_embeddings_copy = lstm_embeddings_copy.detach()
 
                     # compute the entropy of the policy
+                    print("no_policies", dist)
                     entropy = dist.entropy().mean()
 
                     # ratio between the old policy and the new policy 
