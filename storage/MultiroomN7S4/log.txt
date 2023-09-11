@@ -150,3 +150,172 @@ U 25 | F 0000051200 | FPS 1446 | D 7 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 
 U 26 | F 0000053248 | FPS 1465 | D 8 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.935 | V 0.069 | pL 0.003 | vL 0.000 | ∇ 0.007
 U 27 | F 0000055296 | FPS 1459 | D 9 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.938 | V 0.056 | pL 0.004 | vL 0.000 | ∇ 0.004
 U 28 | F 0000057344 | FPS 1476 | D 11 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.941 | V 0.052 | pL 0.003 | vL 0.000 | ∇ 0.004
+/Users/corinacaraconcea/Downloads/diversity_study/rl_starter_files/scripts/train.py --algo ppo --env MiniGrid-MultiRoom-N7-S4-v0 --model MultiroomN7S4 --seed 1 --save-interval 10 --frames 100000 --intrinsic-reward-model count --intrinsic-coef 0.005
+
+Namespace(algo='ppo', env='MiniGrid-MultiRoom-N7-S4-v0', model='MultiroomN7S4', seed=1, log_interval=1, save_interval=10, procs=16, frames=100000, epochs=4, batch_size=256, frames_per_proc=None, discount=0.99, lr=0.0001, gae_lambda=0.95, entropy_coef=0.0005, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=2, text=False, intrinsic_coef=0.005, intrinsic_reward_model='count', number_skills=10, window_size=5, mem=True)
+
+Device: cpu
+
+Environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Model loaded
+
+ACModel(
+  (image_conv): Sequential(
+    (0): Conv2d(3, 16, kernel_size=(2, 2), stride=(1, 1))
+    (1): ReLU()
+    (2): MaxPool2d(kernel_size=(2, 2), stride=(2, 2), padding=0, dilation=1, ceil_mode=False)
+    (3): Conv2d(16, 32, kernel_size=(2, 2), stride=(1, 1))
+    (4): ReLU()
+    (5): Conv2d(32, 64, kernel_size=(2, 2), stride=(1, 1))
+    (6): ReLU()
+  )
+  (memory_rnn): LSTMCell(64, 64)
+  (actor): Sequential(
+    (0): Linear(in_features=64, out_features=64, bias=True)
+    (1): Tanh()
+    (2): Linear(in_features=64, out_features=7, bias=True)
+  )
+  (critic): Sequential(
+    (0): Linear(in_features=64, out_features=64, bias=True)
+    (1): Tanh()
+    (2): Linear(in_features=64, out_features=1, bias=True)
+  )
+)
+
+Optimizer loaded
+
+U 21 | F 0000043008 | FPS 1366 | D 1 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 0.0 0.0 0 0 | H 1.942 | V 0.062 | pL -0.017 | vL 0.000 | ∇ 0.005
+U 22 | F 0000045056 | FPS 1426 | D 2 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.939 | V 0.075 | pL -0.009 | vL 0.000 | ∇ 0.006
+U 23 | F 0000047104 | FPS 1350 | D 4 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.938 | V 0.076 | pL 0.003 | vL 0.000 | ∇ 0.004
+/Users/corinacaraconcea/Downloads/diversity_study/rl_starter_files/scripts/train.py --algo ppo --env MiniGrid-MultiRoom-N7-S4-v0 --model MultiroomN7S4 --seed 1 --save-interval 10 --frames 100000 --intrinsic-reward-model None --intrinsic-coef 0.005
+
+Namespace(algo='ppo', env='MiniGrid-MultiRoom-N7-S4-v0', model='MultiroomN7S4', seed=1, log_interval=1, save_interval=10, procs=16, frames=100000, epochs=4, batch_size=256, frames_per_proc=None, discount=0.99, lr=0.0001, gae_lambda=0.95, entropy_coef=0.0005, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=2, text=False, intrinsic_coef=0.005, intrinsic_reward_model='None', number_skills=10, window_size=5, mem=True)
+
+Device: cpu
+
+Environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Model loaded
+
+ACModel(
+  (image_conv): Sequential(
+    (0): Conv2d(3, 16, kernel_size=(2, 2), stride=(1, 1))
+    (1): ReLU()
+    (2): MaxPool2d(kernel_size=(2, 2), stride=(2, 2), padding=0, dilation=1, ceil_mode=False)
+    (3): Conv2d(16, 32, kernel_size=(2, 2), stride=(1, 1))
+    (4): ReLU()
+    (5): Conv2d(32, 64, kernel_size=(2, 2), stride=(1, 1))
+    (6): ReLU()
+  )
+  (memory_rnn): LSTMCell(64, 64)
+  (actor): Sequential(
+    (0): Linear(in_features=64, out_features=64, bias=True)
+    (1): Tanh()
+    (2): Linear(in_features=64, out_features=7, bias=True)
+  )
+  (critic): Sequential(
+    (0): Linear(in_features=64, out_features=64, bias=True)
+    (1): Tanh()
+    (2): Linear(in_features=64, out_features=1, bias=True)
+  )
+)
+
+Optimizer loaded
+
+U 1 | F 0000002048 | FPS 1448 | D 1 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 0.0 0.0 0 0 | H 1.944 | V 0.065 | pL 0.011 | vL 0.000 | ∇ 0.004
+U 2 | F 0000004096 | FPS 1484 | D 2 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.944 | V 0.052 | pL 0.013 | vL 0.000 | ∇ 0.005
+U 3 | F 0000006144 | FPS 1508 | D 4 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.943 | V 0.042 | pL 0.012 | vL 0.000 | ∇ 0.005
+U 4 | F 0000008192 | FPS 1518 | D 5 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.942 | V 0.035 | pL 0.011 | vL 0.000 | ∇ 0.004
+/Users/corinacaraconcea/Downloads/diversity_study/rl_starter_files/scripts/train.py --algo ppo --env MiniGrid-MultiRoom-N7-S4-v0 --model MultiroomN7S4 --seed 1 --save-interval 10 --frames 10000 --intrinsic-reward-model TrajectoryCount --intrinsic-coef 0.005
+
+Namespace(algo='ppo', env='MiniGrid-MultiRoom-N7-S4-v0', model='MultiroomN7S4', seed=1, log_interval=1, save_interval=10, procs=16, frames=10000, epochs=4, batch_size=256, frames_per_proc=None, discount=0.99, lr=0.0001, gae_lambda=0.95, entropy_coef=0.0005, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=2, text=False, intrinsic_coef=0.005, intrinsic_reward_model='TrajectoryCount', number_skills=10, window_size=5, mem=True)
+
+Device: cpu
+
+Environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Model loaded
+
+ACModel(
+  (image_conv): Sequential(
+    (0): Conv2d(3, 16, kernel_size=(2, 2), stride=(1, 1))
+    (1): ReLU()
+    (2): MaxPool2d(kernel_size=(2, 2), stride=(2, 2), padding=0, dilation=1, ceil_mode=False)
+    (3): Conv2d(16, 32, kernel_size=(2, 2), stride=(1, 1))
+    (4): ReLU()
+    (5): Conv2d(32, 64, kernel_size=(2, 2), stride=(1, 1))
+    (6): ReLU()
+  )
+  (memory_rnn): LSTMCell(64, 64)
+  (actor): Sequential(
+    (0): Linear(in_features=64, out_features=64, bias=True)
+    (1): Tanh()
+    (2): Linear(in_features=64, out_features=7, bias=True)
+  )
+  (critic): Sequential(
+    (0): Linear(in_features=64, out_features=64, bias=True)
+    (1): Tanh()
+    (2): Linear(in_features=64, out_features=1, bias=True)
+  )
+)
+
+Optimizer loaded
+
+U 1 | F 0000002048 | FPS 1334 | D 1 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 0.0 0.0 0 0 | H 1.943 | V 0.095 | pL -0.018 | vL 0.000 | ∇ 0.005
+U 2 | F 0000004096 | FPS 1413 | D 2 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.943 | V 0.104 | pL -0.014 | vL 0.001 | ∇ 0.006
+U 3 | F 0000006144 | FPS 1441 | D 4 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.942 | V 0.105 | pL -0.006 | vL 0.001 | ∇ 0.007
+U 4 | F 0000008192 | FPS 1345 | D 5 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.943 | V 0.108 | pL -0.002 | vL 0.001 | ∇ 0.006
+U 5 | F 0000010240 | FPS 1439 | D 7 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.940 | V 0.112 | pL -0.003 | vL 0.001 | ∇ 0.008
+/Users/corinacaraconcea/Downloads/diversity_study/rl_starter_files/scripts/train.py --algo ppo --env MiniGrid-MultiRoom-N7-S4-v0 --model MultiroomN7S4 --seed 1 --save-interval 10 --frames 10000 --intrinsic-reward-model TrajectoryRND --intrinsic-coef 0.005
+
+Namespace(algo='ppo', env='MiniGrid-MultiRoom-N7-S4-v0', model='MultiroomN7S4', seed=1, log_interval=1, save_interval=10, procs=16, frames=10000, epochs=4, batch_size=256, frames_per_proc=None, discount=0.99, lr=0.0001, gae_lambda=0.95, entropy_coef=0.0005, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=2, text=False, intrinsic_coef=0.005, intrinsic_reward_model='TrajectoryRND', number_skills=10, window_size=5, mem=True)
+
+Device: cpu
+
+Environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Model loaded
+
+ACModel(
+  (image_conv): Sequential(
+    (0): Conv2d(3, 16, kernel_size=(2, 2), stride=(1, 1))
+    (1): ReLU()
+    (2): MaxPool2d(kernel_size=(2, 2), stride=(2, 2), padding=0, dilation=1, ceil_mode=False)
+    (3): Conv2d(16, 32, kernel_size=(2, 2), stride=(1, 1))
+    (4): ReLU()
+    (5): Conv2d(32, 64, kernel_size=(2, 2), stride=(1, 1))
+    (6): ReLU()
+  )
+  (memory_rnn): LSTMCell(64, 64)
+  (actor): Sequential(
+    (0): Linear(in_features=64, out_features=64, bias=True)
+    (1): Tanh()
+    (2): Linear(in_features=64, out_features=7, bias=True)
+  )
+  (critic): Sequential(
+    (0): Linear(in_features=64, out_features=64, bias=True)
+    (1): Tanh()
+    (2): Linear(in_features=64, out_features=1, bias=True)
+  )
+)
+
+Optimizer loaded
+
+U 1 | F 0000002048 | FPS 1427 | D 1 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 0.0 0.0 0 0 | H 1.944 | V 0.065 | pL 0.011 | vL 0.000 | ∇ 0.004
+U 2 | F 0000004096 | FPS 1429 | D 2 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.942 | V 0.055 | pL 0.012 | vL 0.000 | ∇ 0.005
+U 3 | F 0000006144 | FPS 1518 | D 4 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.939 | V 0.043 | pL 0.012 | vL 0.000 | ∇ 0.005
+U 4 | F 0000008192 | FPS 1470 | D 5 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.937 | V 0.034 | pL 0.011 | vL 0.000 | ∇ 0.004
+U 5 | F 0000010240 | FPS 1221 | D 7 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.937 | V 0.028 | pL 0.008 | vL 0.000 | ∇ 0.003
