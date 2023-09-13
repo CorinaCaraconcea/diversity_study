@@ -45,8 +45,11 @@ General Arguments:
 Intrinsic Motivation Arguments:
 
 --intrinsic-reward-model: (REQUIRED) Specifies the intrinsic reward model. Choices include None(no IM), count, RND, DIAYN, and TrajectoryCount, TrajectoryRND, TrajectoryWindowCount
+
 --intrinsic-coef: Specifies the beta coefficient for the intrinsic reward. Default: 0.005.
+
 --number-skills: Specifies the number of skills for DIAYN. Default: 10.
+
 --window-size: Specifies the window size for TrajectoryWindowCount. Default: 5.
 
 Singleton Env Arguments:
