@@ -31,6 +31,7 @@ General Arguments:
 --save-interval: Number of updates between saves (set to 0 to disable). Default: 10.
 --procs: Number of processes. Default: 16.
 --frames: Total number of frames. Default: 10**7.
+--pretrained-model: Specifies if to use a pretrained model. Default: False.
 
 Intrinsic Motivation Arguments:
 
@@ -39,6 +40,8 @@ Intrinsic Motivation Arguments:
 --number-skills: Specifies the number of skills for DIAYN. Default: 10.
 --window-size: Specifies the window size for TrajectoryWindowCount. Default: 5.
 
+Singleton Env Arguments:
+--singleton-env: Specifies if the env is singleton (default env is procedurally-generated). If this flat is set to true, the code will additionally plot an state visitation heatmap and intrinsic reward heatmap. Default False
 
 ## Example of use
 
