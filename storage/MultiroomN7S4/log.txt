@@ -319,3 +319,330 @@ U 2 | F 0000004096 | FPS 1429 | D 2 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 1
 U 3 | F 0000006144 | FPS 1518 | D 4 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.939 | V 0.043 | pL 0.012 | vL 0.000 | ∇ 0.005
 U 4 | F 0000008192 | FPS 1470 | D 5 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.937 | V 0.034 | pL 0.011 | vL 0.000 | ∇ 0.004
 U 5 | F 0000010240 | FPS 1221 | D 7 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.937 | V 0.028 | pL 0.008 | vL 0.000 | ∇ 0.003
+/Users/corinacaraconcea/Downloads/diversity_study/rl_starter_files/scripts/train.py --algo ppo --env MiniGrid-MultiRoom-N7-S4-v0 --model MultiroomN7S4 --seed 1 --save-interval 10 --frames 10000 --intrinsic-reward-model count --intrinsic-coef 0.005
+
+Namespace(algo='ppo', env='MiniGrid-MultiRoom-N7-S4-v0', model='MultiroomN7S4', seed=1, log_interval=1, save_interval=10, procs=16, frames=10000, epochs=4, batch_size=256, frames_per_proc=None, discount=0.99, lr=0.0001, gae_lambda=0.95, entropy_coef=0.0005, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=2, text=False, intrinsic_coef=0.005, intrinsic_reward_model='count', number_skills=10, window_size=5, singleton_env=False, pretrained_model=False, mem=True)
+
+Device: cpu
+
+Procedurally-generate environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Optimizer loaded
+
+/Users/corinacaraconcea/Downloads/diversity_study/rl_starter_files/scripts/train.py --algo ppo --env MiniGrid-MultiRoom-N7-S4-v0 --model MultiroomN7S4 --seed 1 --save-interval 10 --frames 100000 --intrinsic-reward-model count --intrinsic-coef 0.005 --singleton-env TRue
+
+Namespace(algo='ppo', env='MiniGrid-MultiRoom-N7-S4-v0', model='MultiroomN7S4', seed=1, log_interval=1, save_interval=10, procs=16, frames=100000, epochs=4, batch_size=256, frames_per_proc=None, discount=0.99, lr=0.0001, gae_lambda=0.95, entropy_coef=0.0005, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=2, text=False, intrinsic_coef=0.005, intrinsic_reward_model='count', number_skills=10, window_size=5, singleton_env='TRue', pretrained_model=False, mem=True)
+
+Device: cpu
+
+Singleton environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Optimizer loaded
+
+U 21 | F 0000043008 | FPS 1307 | D 1 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 0.0 0.0 0 0 | H 1.943 | V 0.079 | pL -0.004 | vL 0.000 | ∇ 0.003
+U 22 | F 0000045056 | FPS 1428 | D 3 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.942 | V 0.074 | pL 0.008 | vL 0.000 | ∇ 0.003
+U 23 | F 0000047104 | FPS 1446 | D 4 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.941 | V 0.060 | pL 0.011 | vL 0.000 | ∇ 0.004
+U 24 | F 0000049152 | FPS 1423 | D 5 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.939 | V 0.052 | pL 0.011 | vL 0.000 | ∇ 0.007
+U 25 | F 0000051200 | FPS 1424 | D 7 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.937 | V 0.043 | pL 0.008 | vL 0.000 | ∇ 0.004
+U 26 | F 0000053248 | FPS 1404 | D 8 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.938 | V 0.038 | pL 0.007 | vL 0.000 | ∇ 0.003
+U 27 | F 0000055296 | FPS 1365 | D 10 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.940 | V 0.029 | pL 0.005 | vL 0.000 | ∇ 0.003
+U 28 | F 0000057344 | FPS 1208 | D 11 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.941 | V 0.023 | pL 0.004 | vL 0.000 | ∇ 0.002
+U 29 | F 0000059392 | FPS 1276 | D 13 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.941 | V 0.019 | pL 0.004 | vL 0.000 | ∇ 0.002
+U 30 | F 0000061440 | FPS 1439 | D 15 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.941 | V 0.016 | pL 0.002 | vL 0.000 | ∇ 0.001
+Status saved
+U 31 | F 0000063488 | FPS 1291 | D 16 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.941 | V 0.014 | pL 0.002 | vL 0.000 | ∇ 0.001
+U 32 | F 0000065536 | FPS 1344 | D 18 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.941 | V 0.015 | pL -0.000 | vL 0.000 | ∇ 0.001
+U 33 | F 0000067584 | FPS 1446 | D 19 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.942 | V 0.016 | pL -0.000 | vL 0.000 | ∇ 0.001
+U 34 | F 0000069632 | FPS 1415 | D 21 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.942 | V 0.014 | pL 0.001 | vL 0.000 | ∇ 0.001
+U 35 | F 0000071680 | FPS 1435 | D 22 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.943 | V 0.012 | pL 0.001 | vL 0.000 | ∇ 0.001
+U 36 | F 0000073728 | FPS 1444 | D 23 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.943 | V 0.011 | pL 0.001 | vL 0.000 | ∇ 0.001
+U 37 | F 0000075776 | FPS 1462 | D 25 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.943 | V 0.011 | pL 0.001 | vL 0.000 | ∇ 0.001
+U 38 | F 0000077824 | FPS 1411 | D 26 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.943 | V 0.010 | pL 0.000 | vL 0.000 | ∇ 0.001
+U 39 | F 0000079872 | FPS 1463 | D 28 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.943 | V 0.010 | pL -0.001 | vL 0.000 | ∇ 0.001
+U 40 | F 0000081920 | FPS 1446 | D 29 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.942 | V 0.011 | pL 0.001 | vL 0.000 | ∇ 0.001
+Status saved
+U 41 | F 0000083968 | FPS 1447 | D 30 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.942 | V 0.011 | pL -0.000 | vL 0.000 | ∇ 0.001
+U 42 | F 0000086016 | FPS 1459 | D 32 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.942 | V 0.011 | pL 0.000 | vL 0.000 | ∇ 0.001
+U 43 | F 0000088064 | FPS 1454 | D 33 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.943 | V 0.014 | pL -0.001 | vL 0.000 | ∇ 0.002
+U 44 | F 0000090112 | FPS 1423 | D 35 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.943 | V 0.011 | pL -0.001 | vL 0.000 | ∇ 0.001
+U 45 | F 0000092160 | FPS 1456 | D 36 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.943 | V 0.010 | pL 0.001 | vL 0.000 | ∇ 0.001
+U 46 | F 0000094208 | FPS 1432 | D 38 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.942 | V 0.011 | pL 0.000 | vL 0.000 | ∇ 0.001
+U 47 | F 0000096256 | FPS 1323 | D 39 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.942 | V 0.010 | pL 0.000 | vL 0.000 | ∇ 0.001
+U 48 | F 0000098304 | FPS 1461 | D 41 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.942 | V 0.011 | pL 0.001 | vL 0.000 | ∇ 0.001
+U 49 | F 0000100352 | FPS 1491 | D 42 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.943 | V 0.010 | pL 0.001 | vL 0.000 | ∇ 0.001
+/Users/corinacaraconcea/Downloads/diversity_study/rl_starter_files/scripts/train.py --algo ppo --env MiniGrid-MultiRoom-N7-S4-v0 --model MultiroomN7S4 --seed 1 --save-interval 10 --frames 150000 --intrinsic-reward-model count --intrinsic-coef 0.005 --singleton-env True
+
+Namespace(algo='ppo', env='MiniGrid-MultiRoom-N7-S4-v0', model='MultiroomN7S4', seed=1, log_interval=1, save_interval=10, procs=16, frames=150000, epochs=4, batch_size=256, frames_per_proc=None, discount=0.99, lr=0.0001, gae_lambda=0.95, entropy_coef=0.0005, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=2, text=False, intrinsic_coef=0.005, intrinsic_reward_model='count', number_skills=10, window_size=5, singleton_env='True', pretrained_model=False, mem=True)
+
+Device: cpu
+
+Singleton environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Optimizer loaded
+
+U 41 | F 0000083968 | FPS 1330 | D 1 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 0.0 0.0 0 0 | H 1.943 | V 0.080 | pL -0.004 | vL 0.000 | ∇ 0.003
+U 42 | F 0000086016 | FPS 1340 | D 3 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.941 | V 0.074 | pL 0.008 | vL 0.000 | ∇ 0.006
+U 43 | F 0000088064 | FPS 1410 | D 4 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.939 | V 0.059 | pL 0.010 | vL 0.000 | ∇ 0.005
+U 44 | F 0000090112 | FPS 1416 | D 5 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.938 | V 0.052 | pL 0.010 | vL 0.000 | ∇ 0.005
+U 45 | F 0000092160 | FPS 1407 | D 7 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.935 | V 0.045 | pL 0.008 | vL 0.000 | ∇ 0.007
+U 46 | F 0000094208 | FPS 1442 | D 8 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.933 | V 0.042 | pL 0.008 | vL 0.000 | ∇ 0.003
+U 47 | F 0000096256 | FPS 1464 | D 10 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.938 | V 0.031 | pL 0.007 | vL 0.000 | ∇ 0.003
+U 48 | F 0000098304 | FPS 1432 | D 11 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.940 | V 0.028 | pL 0.006 | vL 0.000 | ∇ 0.003
+U 49 | F 0000100352 | FPS 1409 | D 13 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.940 | V 0.023 | pL 0.005 | vL 0.000 | ∇ 0.003
+U 50 | F 0000102400 | FPS 1421 | D 14 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.941 | V 0.021 | pL 0.003 | vL 0.000 | ∇ 0.001
+Status saved
+U 51 | F 0000104448 | FPS 1384 | D 16 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.941 | V 0.017 | pL 0.003 | vL 0.000 | ∇ 0.001
+U 52 | F 0000106496 | FPS 1441 | D 17 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.942 | V 0.018 | pL 0.000 | vL 0.000 | ∇ 0.000
+U 53 | F 0000108544 | FPS 1423 | D 18 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.943 | V 0.019 | pL -0.000 | vL 0.000 | ∇ 0.002
+U 54 | F 0000110592 | FPS 1410 | D 20 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.943 | V 0.016 | pL 0.002 | vL 0.000 | ∇ 0.001
+U 55 | F 0000112640 | FPS 1415 | D 21 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.943 | V 0.013 | pL 0.002 | vL 0.000 | ∇ 0.001
+U 56 | F 0000114688 | FPS 1431 | D 23 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.943 | V 0.013 | pL 0.001 | vL 0.000 | ∇ 0.001
+U 57 | F 0000116736 | FPS 1419 | D 24 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.943 | V 0.012 | pL 0.001 | vL 0.000 | ∇ 0.001
+U 58 | F 0000118784 | FPS 1435 | D 26 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.943 | V 0.012 | pL 0.001 | vL 0.000 | ∇ 0.001
+U 59 | F 0000120832 | FPS 1446 | D 27 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.943 | V 0.010 | pL 0.000 | vL 0.000 | ∇ 0.001
+U 60 | F 0000122880 | FPS 1417 | D 29 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.943 | V 0.011 | pL 0.001 | vL 0.000 | ∇ 0.001
+Status saved
+U 61 | F 0000124928 | FPS 1379 | D 30 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.943 | V 0.011 | pL 0.001 | vL 0.000 | ∇ 0.001
+U 62 | F 0000126976 | FPS 1423 | D 31 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.944 | V 0.010 | pL -0.000 | vL 0.000 | ∇ 0.001
+U 63 | F 0000129024 | FPS 1457 | D 33 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.944 | V 0.013 | pL -0.001 | vL 0.000 | ∇ 0.002
+U 64 | F 0000131072 | FPS 1405 | D 34 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.942 | V 0.011 | pL -0.002 | vL 0.000 | ∇ 0.001
+U 65 | F 0000133120 | FPS 1434 | D 36 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.943 | V 0.010 | pL 0.001 | vL 0.000 | ∇ 0.001
+U 66 | F 0000135168 | FPS 1428 | D 37 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.942 | V 0.011 | pL 0.000 | vL 0.000 | ∇ 0.001
+U 67 | F 0000137216 | FPS 1436 | D 39 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.942 | V 0.010 | pL 0.000 | vL 0.000 | ∇ 0.001
+U 68 | F 0000139264 | FPS 1414 | D 40 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.942 | V 0.010 | pL 0.001 | vL 0.000 | ∇ 0.001
+U 69 | F 0000141312 | FPS 1415 | D 42 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.943 | V 0.010 | pL 0.001 | vL 0.000 | ∇ 0.001
+U 70 | F 0000143360 | FPS 1432 | D 43 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.943 | V 0.009 | pL 0.001 | vL 0.000 | ∇ 0.001
+Status saved
+U 71 | F 0000145408 | FPS 1369 | D 44 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.942 | V 0.008 | pL 0.000 | vL 0.000 | ∇ 0.001
+U 72 | F 0000147456 | FPS 1393 | D 46 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.943 | V 0.008 | pL 0.001 | vL 0.000 | ∇ 0.001
+U 73 | F 0000149504 | FPS 1429 | D 47 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.943 | V 0.007 | pL 0.001 | vL 0.000 | ∇ 0.001
+U 74 | F 0000151552 | FPS 1420 | D 49 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.943 | V 0.007 | pL 0.001 | vL 0.000 | ∇ 0.001
+/Users/corinacaraconcea/Downloads/diversity_study/rl_starter_files/scripts/train.py --algo ppo --env MiniGrid-MultiRoom-N7-S4-v0 --model MultiroomN7S4 --seed 1 --save-interval 10 --frames 190000 --intrinsic-reward-model count --intrinsic-coef 0.005 --singleton-env True
+
+Namespace(algo='ppo', env='MiniGrid-MultiRoom-N7-S4-v0', model='MultiroomN7S4', seed=1, log_interval=1, save_interval=10, procs=16, frames=190000, epochs=4, batch_size=256, frames_per_proc=None, discount=0.99, lr=0.0001, gae_lambda=0.95, entropy_coef=0.0005, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=2, text=False, intrinsic_coef=0.005, intrinsic_reward_model='count', number_skills=10, window_size=5, singleton_env='True', pretrained_model=False, mem=True)
+
+Device: cpu
+
+Singleton environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Optimizer loaded
+
+U 71 | F 0000145408 | FPS 1180 | D 1 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 0.0 0.0 0 0 | H 1.942 | V 0.079 | pL -0.004 | vL 0.000 | ∇ 0.003
+U 72 | F 0000147456 | FPS 1437 | D 3 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.939 | V 0.076 | pL 0.007 | vL 0.000 | ∇ 0.008
+U 73 | F 0000149504 | FPS 1336 | D 4 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.937 | V 0.057 | pL 0.010 | vL 0.000 | ∇ 0.004
+U 74 | F 0000151552 | FPS 1333 | D 6 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.934 | V 0.047 | pL 0.009 | vL 0.000 | ∇ 0.005
+U 75 | F 0000153600 | FPS 1428 | D 7 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.930 | V 0.040 | pL 0.007 | vL 0.000 | ∇ 0.004
+U 76 | F 0000155648 | FPS 1411 | D 9 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.929 | V 0.034 | pL 0.005 | vL 0.000 | ∇ 0.005
+U 77 | F 0000157696 | FPS 1409 | D 10 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.934 | V 0.024 | pL 0.005 | vL 0.000 | ∇ 0.002
+U 78 | F 0000159744 | FPS 1399 | D 12 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.936 | V 0.020 | pL 0.003 | vL 0.000 | ∇ 0.001
+U 79 | F 0000161792 | FPS 1376 | D 13 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.936 | V 0.017 | pL 0.003 | vL 0.000 | ∇ 0.001
+U 80 | F 0000163840 | FPS 1339 | D 15 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.937 | V 0.017 | pL 0.001 | vL 0.000 | ∇ 0.001
+Status saved
+U 81 | F 0000165888 | FPS 1412 | D 16 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.937 | V 0.015 | pL 0.002 | vL 0.000 | ∇ 0.001
+U 82 | F 0000167936 | FPS 1407 | D 17 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.937 | V 0.016 | pL -0.001 | vL 0.000 | ∇ 0.001
+U 83 | F 0000169984 | FPS 1397 | D 19 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.938 | V 0.016 | pL -0.000 | vL 0.000 | ∇ 0.001
+U 84 | F 0000172032 | FPS 1407 | D 20 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.939 | V 0.014 | pL 0.001 | vL 0.000 | ∇ 0.001
+U 85 | F 0000174080 | FPS 1337 | D 22 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.938 | V 0.012 | pL 0.001 | vL 0.000 | ∇ 0.001
+U 86 | F 0000176128 | FPS 1361 | D 23 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.939 | V 0.012 | pL 0.001 | vL 0.000 | ∇ 0.001
+U 87 | F 0000178176 | FPS 1200 | D 25 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.939 | V 0.012 | pL -0.000 | vL 0.000 | ∇ 0.002
+U 88 | F 0000180224 | FPS 1248 | D 27 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.939 | V 0.012 | pL 0.001 | vL 0.000 | ∇ 0.001
+U 89 | F 0000182272 | FPS 1412 | D 28 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.939 | V 0.010 | pL 0.000 | vL 0.000 | ∇ 0.001
+U 90 | F 0000184320 | FPS 1436 | D 30 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.939 | V 0.010 | pL 0.000 | vL 0.000 | ∇ 0.001
+Status saved
+U 91 | F 0000186368 | FPS 1425 | D 31 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.938 | V 0.012 | pL 0.000 | vL 0.000 | ∇ 0.001
+U 92 | F 0000188416 | FPS 1431 | D 33 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.938 | V 0.012 | pL 0.000 | vL 0.000 | ∇ 0.001
+U 93 | F 0000190464 | FPS 1364 | D 34 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.939 | V 0.011 | pL -0.000 | vL 0.000 | ∇ 0.001
+/Users/corinacaraconcea/Downloads/diversity_study/rl_starter_files/scripts/train.py --algo ppo --env MiniGrid-MultiRoom-N7-S4-v0 --model MultiroomN7S4 --seed 1 --save-interval 10 --frames 190000 --intrinsic-reward-model rnd --intrinsic-coef 0.005 --singleton-env True
+
+Namespace(algo='ppo', env='MiniGrid-MultiRoom-N7-S4-v0', model='MultiroomN7S4', seed=1, log_interval=1, save_interval=10, procs=16, frames=190000, epochs=4, batch_size=256, frames_per_proc=None, discount=0.99, lr=0.0001, gae_lambda=0.95, entropy_coef=0.0005, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=2, text=False, intrinsic_coef=0.005, intrinsic_reward_model='rnd', number_skills=10, window_size=5, singleton_env='True', pretrained_model=False, mem=True)
+
+Device: cpu
+
+Singleton environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+/Users/corinacaraconcea/Downloads/diversity_study/rl_starter_files/scripts/train.py --algo ppo --env MiniGrid-MultiRoom-N7-S4-v0 --model MultiroomN7S4 --seed 1 --save-interval 10 --frames 190000 --intrinsic-reward-model RND --intrinsic-coef 0.005 --singleton-env True
+
+Namespace(algo='ppo', env='MiniGrid-MultiRoom-N7-S4-v0', model='MultiroomN7S4', seed=1, log_interval=1, save_interval=10, procs=16, frames=190000, epochs=4, batch_size=256, frames_per_proc=None, discount=0.99, lr=0.0001, gae_lambda=0.95, entropy_coef=0.0005, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=2, text=False, intrinsic_coef=0.005, intrinsic_reward_model='RND', number_skills=10, window_size=5, singleton_env='True', pretrained_model=False, mem=True)
+
+Device: cpu
+
+Singleton environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Optimizer loaded
+
+U 1 | F 0000002048 | FPS 0608 | D 3 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 0.0 0.0 0 0 | H 1.943 | V 0.110 | pL -0.040 | vL 0.000 | ∇ 0.012
+/Users/corinacaraconcea/Downloads/diversity_study/rl_starter_files/scripts/train.py --algo ppo --env MiniGrid-MultiRoom-N7-S4-v0 --model MultiroomN7S4 --seed 1 --save-interval 10 --frames 190000 --intrinsic-reward-model RND --intrinsic-coef 0.005 --singleton-env True
+
+Namespace(algo='ppo', env='MiniGrid-MultiRoom-N7-S4-v0', model='MultiroomN7S4', seed=1, log_interval=1, save_interval=10, procs=16, frames=190000, epochs=4, batch_size=256, frames_per_proc=None, discount=0.99, lr=0.0001, gae_lambda=0.95, entropy_coef=0.0005, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=2, text=False, intrinsic_coef=0.005, intrinsic_reward_model='RND', number_skills=10, window_size=5, singleton_env='True', pretrained_model=False, mem=True)
+
+Device: cpu
+
+Singleton environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Optimizer loaded
+
+U 1 | F 0000002048 | FPS 0610 | D 3 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 0.0 0.0 0 0 | H 1.943 | V 0.110 | pL -0.040 | vL 0.000 | ∇ 0.012
+U 2 | F 0000004096 | FPS 0635 | D 6 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.942 | V 0.116 | pL 0.008 | vL 0.001 | ∇ 0.006
+/Users/corinacaraconcea/Downloads/diversity_study/rl_starter_files/scripts/train.py --algo ppo --env MiniGrid-MultiRoom-N7-S4-v0 --model MultiroomN7S4 --seed 1 --save-interval 10 --frames 19000 --intrinsic-reward-model RND --intrinsic-coef 0.005 --singleton-env True
+
+Namespace(algo='ppo', env='MiniGrid-MultiRoom-N7-S4-v0', model='MultiroomN7S4', seed=1, log_interval=1, save_interval=10, procs=16, frames=19000, epochs=4, batch_size=256, frames_per_proc=None, discount=0.99, lr=0.0001, gae_lambda=0.95, entropy_coef=0.0005, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=2, text=False, intrinsic_coef=0.005, intrinsic_reward_model='RND', number_skills=10, window_size=5, singleton_env='True', pretrained_model=False, mem=True)
+
+Device: cpu
+
+Singleton environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Optimizer loaded
+
+U 1 | F 0000002048 | FPS 0569 | D 3 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 0.0 0.0 0 0 | H 1.943 | V 0.110 | pL -0.040 | vL 0.000 | ∇ 0.012
+U 2 | F 0000004096 | FPS 0625 | D 6 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.942 | V 0.116 | pL 0.008 | vL 0.001 | ∇ 0.006
+U 3 | F 0000006144 | FPS 0655 | D 10 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.941 | V 0.095 | pL 0.019 | vL 0.001 | ∇ 0.007
+U 4 | F 0000008192 | FPS 0592 | D 13 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.939 | V 0.070 | pL 0.017 | vL 0.000 | ∇ 0.007
+U 5 | F 0000010240 | FPS 0632 | D 16 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.939 | V 0.052 | pL 0.013 | vL 0.000 | ∇ 0.005
+U 6 | F 0000012288 | FPS 0646 | D 19 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.940 | V 0.037 | pL 0.010 | vL 0.000 | ∇ 0.002
+U 7 | F 0000014336 | FPS 0627 | D 23 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.941 | V 0.027 | pL 0.007 | vL 0.000 | ∇ 0.003
+U 8 | F 0000016384 | FPS 0641 | D 26 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.941 | V 0.021 | pL 0.006 | vL 0.000 | ∇ 0.002
+U 9 | F 0000018432 | FPS 0662 | D 29 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.940 | V 0.015 | pL 0.004 | vL 0.000 | ∇ 0.002
+U 10 | F 0000020480 | FPS 0649 | D 32 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.941 | V 0.012 | pL 0.004 | vL 0.000 | ∇ 0.001
+Status saved
+/Users/corinacaraconcea/Downloads/diversity_study/rl_starter_files/scripts/train.py --algo ppo --env MiniGrid-MultiRoom-N7-S4-v0 --model MultiroomN7S4 --seed 1 --save-interval 10 --frames 20000 --intrinsic-reward-model RND --intrinsic-coef 0.005 --singleton-env True --pretrained-model True
+
+Namespace(algo='ppo', env='MiniGrid-MultiRoom-N7-S4-v0', model='MultiroomN7S4', seed=1, log_interval=1, save_interval=10, procs=16, frames=20000, epochs=4, batch_size=256, frames_per_proc=None, discount=0.99, lr=0.0001, gae_lambda=0.95, entropy_coef=0.0005, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=2, text=False, intrinsic_coef=0.005, intrinsic_reward_model='RND', number_skills=10, window_size=5, singleton_env='True', pretrained_model='True', mem=True)
+
+Device: cpu
+
+Singleton environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Model loaded
+
+ACModel(
+  (image_conv): Sequential(
+    (0): Conv2d(3, 16, kernel_size=(2, 2), stride=(1, 1))
+    (1): ReLU()
+    (2): MaxPool2d(kernel_size=(2, 2), stride=(2, 2), padding=0, dilation=1, ceil_mode=False)
+    (3): Conv2d(16, 32, kernel_size=(2, 2), stride=(1, 1))
+    (4): ReLU()
+    (5): Conv2d(32, 64, kernel_size=(2, 2), stride=(1, 1))
+    (6): ReLU()
+  )
+  (memory_rnn): LSTMCell(64, 64)
+  (actor): Sequential(
+    (0): Linear(in_features=64, out_features=64, bias=True)
+    (1): Tanh()
+    (2): Linear(in_features=64, out_features=7, bias=True)
+  )
+  (critic): Sequential(
+    (0): Linear(in_features=64, out_features=64, bias=True)
+    (1): Tanh()
+    (2): Linear(in_features=64, out_features=1, bias=True)
+  )
+)
+
+Optimizer loaded
+
+/Users/corinacaraconcea/Downloads/diversity_study/rl_starter_files/scripts/train.py --algo ppo --env MiniGrid-MultiRoom-N7-S4-v0 --model MultiroomN7S4 --seed 1 --save-interval 10 --frames 23000 --intrinsic-reward-model RND --intrinsic-coef 0.005 --singleton-env True --pretrained-model True
+
+Namespace(algo='ppo', env='MiniGrid-MultiRoom-N7-S4-v0', model='MultiroomN7S4', seed=1, log_interval=1, save_interval=10, procs=16, frames=23000, epochs=4, batch_size=256, frames_per_proc=None, discount=0.99, lr=0.0001, gae_lambda=0.95, entropy_coef=0.0005, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=2, text=False, intrinsic_coef=0.005, intrinsic_reward_model='RND', number_skills=10, window_size=5, singleton_env='True', pretrained_model='True', mem=True)
+
+Device: cpu
+
+Singleton environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Model loaded
+
+ACModel(
+  (image_conv): Sequential(
+    (0): Conv2d(3, 16, kernel_size=(2, 2), stride=(1, 1))
+    (1): ReLU()
+    (2): MaxPool2d(kernel_size=(2, 2), stride=(2, 2), padding=0, dilation=1, ceil_mode=False)
+    (3): Conv2d(16, 32, kernel_size=(2, 2), stride=(1, 1))
+    (4): ReLU()
+    (5): Conv2d(32, 64, kernel_size=(2, 2), stride=(1, 1))
+    (6): ReLU()
+  )
+  (memory_rnn): LSTMCell(64, 64)
+  (actor): Sequential(
+    (0): Linear(in_features=64, out_features=64, bias=True)
+    (1): Tanh()
+    (2): Linear(in_features=64, out_features=7, bias=True)
+  )
+  (critic): Sequential(
+    (0): Linear(in_features=64, out_features=64, bias=True)
+    (1): Tanh()
+    (2): Linear(in_features=64, out_features=1, bias=True)
+  )
+)
+
+Optimizer loaded
+
+U 11 | F 0000022528 | FPS 0605 | D 3 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 0.0 0.0 0 0 | H 1.942 | V 0.061 | pL -0.047 | vL 0.000 | ∇ 0.013
+U 12 | F 0000024576 | FPS 0636 | D 6 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.941 | V 0.076 | pL -0.002 | vL 0.000 | ∇ 0.003
+/Users/corinacaraconcea/Downloads/diversity_study/rl_starter_files/scripts/train.py --algo ppo --env MiniGrid-MultiRoom-N7-S4-v0 --model MultiroomN7S4 --seed 1 --save-interval 10 --frames 50000 --intrinsic-reward-model TrajectoryRND --intrinsic-coef 0.005 --singleton-env True
+
+Namespace(algo='ppo', env='MiniGrid-MultiRoom-N7-S4-v0', model='MultiroomN7S4', seed=1, log_interval=1, save_interval=10, procs=16, frames=50000, epochs=4, batch_size=256, frames_per_proc=None, discount=0.99, lr=0.0001, gae_lambda=0.95, entropy_coef=0.0005, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=2, text=False, intrinsic_coef=0.005, intrinsic_reward_model='TrajectoryRND', number_skills=10, window_size=5, singleton_env='True', pretrained_model=False, mem=True)
+
+Device: cpu
+
+Singleton environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Optimizer loaded
+
+U 1 | F 0000002048 | FPS 1351 | D 1 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 0.0 0.0 0 0 | H 1.943 | V 0.065 | pL 0.010 | vL 0.000 | ∇ 0.004
+U 2 | F 0000004096 | FPS 1377 | D 3 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.942 | V 0.056 | pL 0.013 | vL 0.000 | ∇ 0.006
+U 3 | F 0000006144 | FPS 1421 | D 4 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.940 | V 0.044 | pL 0.013 | vL 0.000 | ∇ 0.005
+U 4 | F 0000008192 | FPS 1448 | D 5 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.938 | V 0.037 | pL 0.011 | vL 0.000 | ∇ 0.004
+U 5 | F 0000010240 | FPS 1438 | D 7 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.938 | V 0.030 | pL 0.009 | vL 0.000 | ∇ 0.004
+U 6 | F 0000012288 | FPS 1368 | D 8 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.939 | V 0.024 | pL 0.007 | vL 0.000 | ∇ 0.003
+U 7 | F 0000014336 | FPS 1397 | D 10 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.940 | V 0.018 | pL 0.006 | vL 0.000 | ∇ 0.002
+U 8 | F 0000016384 | FPS 1380 | D 11 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.940 | V 0.014 | pL 0.004 | vL 0.000 | ∇ 0.002
+U 9 | F 0000018432 | FPS 1389 | D 13 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.940 | V 0.011 | pL 0.003 | vL 0.000 | ∇ 0.001
+U 10 | F 0000020480 | FPS 1235 | D 14 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.941 | V 0.008 | pL 0.002 | vL 0.000 | ∇ 0.001
+Status saved
+U 11 | F 0000022528 | FPS 1318 | D 16 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.941 | V 0.005 | pL 0.001 | vL 0.000 | ∇ 0.001
+U 12 | F 0000024576 | FPS 1364 | D 17 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.942 | V 0.005 | pL 0.000 | vL 0.000 | ∇ 0.000
+U 13 | F 0000026624 | FPS 1379 | D 19 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.942 | V 0.005 | pL 0.001 | vL 0.000 | ∇ 0.000
+U 14 | F 0000028672 | FPS 1430 | D 20 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.942 | V 0.004 | pL 0.001 | vL 0.000 | ∇ 0.001
+U 15 | F 0000030720 | FPS 1441 | D 22 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.942 | V 0.003 | pL 0.000 | vL 0.000 | ∇ 0.000
+U 16 | F 0000032768 | FPS 1461 | D 23 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.943 | V 0.003 | pL 0.000 | vL 0.000 | ∇ 0.000
+U 17 | F 0000034816 | FPS 1436 | D 25 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.943 | V 0.002 | pL 0.000 | vL 0.000 | ∇ 0.001
+U 18 | F 0000036864 | FPS 1572 | D 26 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.943 | V 0.002 | pL 0.000 | vL 0.000 | ∇ 0.000
+U 19 | F 0000038912 | FPS 1489 | D 27 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.943 | V 0.002 | pL 0.000 | vL 0.000 | ∇ 0.000
+U 20 | F 0000040960 | FPS 1422 | D 29 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.944 | V 0.002 | pL 0.000 | vL 0.000 | ∇ 0.000
+Status saved
+U 21 | F 0000043008 | FPS 1317 | D 30 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.944 | V 0.002 | pL 0.000 | vL 0.000 | ∇ 0.000
+U 22 | F 0000045056 | FPS 0997 | D 32 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.944 | V 0.002 | pL 0.000 | vL 0.000 | ∇ 0.000
+U 23 | F 0000047104 | FPS 1292 | D 34 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.944 | V 0.002 | pL 0.000 | vL 0.000 | ∇ 0.000
+U 24 | F 0000049152 | FPS 1250 | D 36 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.944 | V 0.002 | pL -0.000 | vL 0.000 | ∇ 0.000
+U 25 | F 0000051200 | FPS 1166 | D 37 | rR:μσmM 0.00 0.00 0.00 0.00 | F:μσmM 140.0 0.0 140.0 140.0 | H 1.944 | V 0.003 | pL 0.000 | vL 0.000 | ∇ 0.000

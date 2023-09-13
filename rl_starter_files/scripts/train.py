@@ -3,10 +3,14 @@ import time
 import datetime
 # import torch_ac
 import tensorboardX
+import numpy as np
+import matplotlib.pyplot as plt
+
 
 import rl_starter_files.utils as utils
 from rl_starter_files.utils import device
 from rl_starter_files.model import ACModel
+import sys
 
 
 from torch_ac_v2.torch_ac_v2.algos import ppo
@@ -83,6 +87,12 @@ parser.add_argument("--number-skills", type=int, default=10,
 parser.add_argument("--window-size", type=int, default=5,
                     help="window size (default: 5)")
 
+parser.add_argument("--singleton-env", default=False,
+                    help="singleton environment training (default: False)")
+
+parser.add_argument("--pretrained-model", default=False,
+                    help="load the model status or not (default: False)")
+
 
 if __name__ == "__main__":
 
@@ -129,10 +139,18 @@ if __name__ == "__main__":
 
     # Load environments
 
-    envs = []
-    for i in range(args.procs):
-        envs.append(utils.make_env(args.env, args.seed + 10000 * i))
-    txt_logger.info("Environments loaded\n")
+    if args.singleton_env == False:
+        envs = []
+        for i in range(args.procs):
+            envs.append(utils.make_env(args.env, args.seed + 10000 * i))
+        txt_logger.info("Procedurally-generate environments loaded\n")
+    else:
+        envs = []
+        for i in range(args.procs):
+            env = utils.singleton_make_env(args.env, 10005)
+            envs.append(env)
+            obs, _ = env.reset(seed = 10005)
+        txt_logger.info("Singleton environments loaded\n")
 
     # Load training status for ACmodel from the intrinsic reward directory
     try:
@@ -147,7 +165,7 @@ if __name__ == "__main__":
 
     obs_space, preprocess_obss = utils.get_obss_preprocessor(envs[0].observation_space)
     action_space = envs[0].action_space
-    print("actions space", action_space)
+    # print("actions space", action_space)
 
     if "vocab" in status_base:
         preprocess_obss.vocab.load_vocab(status_base["vocab"])
@@ -156,11 +174,12 @@ if __name__ == "__main__":
     # Load model
 
     acmodel = ACModel(obs_space, envs[0].action_space, args.mem, args.text,diayn_flag,args.number_skills)
-    if "model_state" in status_base:
-        acmodel.load_state_dict(status_base["model_state"])
-    acmodel = acmodel.to(device)
-    txt_logger.info("Model loaded\n")
-    txt_logger.info("{}\n".format(acmodel))
+    if args.pretrained_model != False:
+        if "model_state" in status_base:
+            acmodel.load_state_dict(status_base["model_state"])
+        acmodel = acmodel.to(device)
+        txt_logger.info("Model loaded\n")
+        txt_logger.info("{}\n".format(acmodel))
 
     
     # Load algo
@@ -169,31 +188,31 @@ if __name__ == "__main__":
         if args.intrinsic_reward_model == "count":
             algo = ppo.PPOAlgo(envs, obs_space,action_space, acmodel,None, args.intrinsic_reward_model, device, args.frames_per_proc, args.discount, args.lr, args.gae_lambda,
                                 args.entropy_coef, args.value_loss_coef, args.max_grad_norm, args.recurrence,
-                                args.optim_eps, args.clip_eps, args.epochs, args.batch_size, preprocess_obss, args.intrinsic_coef, args.number_skills,args.window_size)
+                                args.optim_eps, args.clip_eps, args.epochs, args.batch_size, preprocess_obss, args.intrinsic_coef, args.number_skills,args.window_size, args.singleton_env)
         elif args.intrinsic_reward_model == "RND":
             algo = ppo.PPOAlgo(envs, obs_space, action_space, acmodel,None, args.intrinsic_reward_model, device, args.frames_per_proc, args.discount, args.lr, args.gae_lambda,
                                 args.entropy_coef, args.value_loss_coef, args.max_grad_norm, args.recurrence,
-                                args.optim_eps, args.clip_eps, args.epochs, args.batch_size, preprocess_obss, args.intrinsic_coef,args.number_skills,args.window_size)
+                                args.optim_eps, args.clip_eps, args.epochs, args.batch_size, preprocess_obss, args.intrinsic_coef,args.number_skills,args.window_size, args.singleton_env)
         elif args.intrinsic_reward_model == "TrajectoryCount":
             algo = ppo.PPOAlgo(envs,obs_space, action_space, acmodel,None, args.intrinsic_reward_model, device, args.frames_per_proc, args.discount, args.lr, args.gae_lambda,
                                 args.entropy_coef, args.value_loss_coef, args.max_grad_norm, args.recurrence,
-                                args.optim_eps, args.clip_eps, args.epochs, args.batch_size, preprocess_obss, args.intrinsic_coef,args.number_skills,args.window_size)
+                                args.optim_eps, args.clip_eps, args.epochs, args.batch_size, preprocess_obss, args.intrinsic_coef,args.number_skills,args.window_size, args.singleton_env)
         elif args.intrinsic_reward_model == "TrajectoryWindowCount":
             algo = ppo.PPOAlgo(envs,obs_space, action_space, acmodel,None, args.intrinsic_reward_model, device, args.frames_per_proc, args.discount, args.lr, args.gae_lambda,
                                 args.entropy_coef, args.value_loss_coef, args.max_grad_norm, args.recurrence,
-                                args.optim_eps, args.clip_eps, args.epochs, args.batch_size, preprocess_obss, args.intrinsic_coef,args.number_skills,args.window_size)
+                                args.optim_eps, args.clip_eps, args.epochs, args.batch_size, preprocess_obss, args.intrinsic_coef,args.number_skills,args.window_size, args.singleton_env)
         elif args.intrinsic_reward_model == "DIAYN":
             algo = ppo.PPOAlgo(envs,obs_space, action_space, acmodel, None, args.intrinsic_reward_model, device, args.frames_per_proc, args.discount, args.lr, args.gae_lambda,
                                 args.entropy_coef, args.value_loss_coef, args.max_grad_norm, args.recurrence,
-                                args.optim_eps, args.clip_eps, args.epochs, args.batch_size, preprocess_obss, args.intrinsic_coef,args.number_skills,args.window_size)
+                                args.optim_eps, args.clip_eps, args.epochs, args.batch_size, preprocess_obss, args.intrinsic_coef,args.number_skills,args.window_size, args.singleton_env)
         elif args.intrinsic_reward_model == "TrajectoryRND":
             algo = ppo.PPOAlgo(envs,obs_space, action_space, acmodel, None, args.intrinsic_reward_model, device, args.frames_per_proc, args.discount, args.lr, args.gae_lambda,
                                 args.entropy_coef, args.value_loss_coef, args.max_grad_norm, args.recurrence,
-                                args.optim_eps, args.clip_eps, args.epochs, args.batch_size, preprocess_obss, args.intrinsic_coef,args.number_skills,args.window_size) 
+                                args.optim_eps, args.clip_eps, args.epochs, args.batch_size, preprocess_obss, args.intrinsic_coef,args.number_skills,args.window_size, args.singleton_env) 
         elif args.intrinsic_reward_model == "None":
             algo = ppo.PPOAlgo(envs, obs_space, action_space, acmodel, None, None, device, args.frames_per_proc, args.discount, args.lr, args.gae_lambda,
                                 args.entropy_coef, args.value_loss_coef, args.max_grad_norm, args.recurrence,
-                                args.optim_eps, args.clip_eps, args.epochs, args.batch_size, preprocess_obss, args.intrinsic_coef,args.number_skills,args.window_size)     
+                                args.optim_eps, args.clip_eps, args.epochs, args.batch_size, preprocess_obss, args.intrinsic_coef,args.number_skills,args.window_size, args.singleton_env)     
         else:
             raise ValueError("Incorrect algorithm name: {}".format(args.algo))
 
@@ -230,7 +249,7 @@ if __name__ == "__main__":
         # Update model parameters
         update_start_time = time.time()
         # collect experiece and logs
-        exps, logs1 = algo.collect_experiences()
+        exps, logs1, state_visitation,intrinsic_reward_dict  = algo.collect_experiences()
         # update parameters and get logs
         logs2 = algo.update_parameters(exps)
         # print("parameters update")
@@ -298,4 +317,97 @@ if __name__ == "__main__":
                 status_base["vocab"] = preprocess_obss.vocab.vocab
             utils.save_status(status_base,model_flag, model_dir)
             txt_logger.info("Status saved")
+
+
+### Heatmaps
+
+    # State visitation heatmap
+    if args.singleton_env == "True":
+
+        # Grid dimensions (modify according to your environment)
+        grid_rows, grid_cols = 25,25
+
+        N = sum(state_visitation.values())
+
+        # Initialize the maximum value
+        max_value_state_visitation = float('-inf')
+
+        # Create a matrix from the state visitation dictionary
+        state_visitation_matrix = np.zeros((grid_rows, grid_cols))
+        for (row, col), count in state_visitation.items():
+            state_visitation_matrix[col, row] = count/N
+            value = count/N
+            if value>max_value_state_visitation:
+                max_value_state_visitation = value
+
+        print("This is the max value for the state_visitation maxtrix",max_value_state_visitation)
+
+        # Define fixed scale for your heatmap
+        vmin_val = 0.0  # Set to the lowest expected value for your data
+        vmax_val = 0.20  # Set to the highest expected value for your data
+
+        fig, ax = plt.subplots()
+
+        # Plot the heatmap
+        cax = ax.imshow(state_visitation_matrix, cmap='inferno', interpolation='nearest', vmin=vmin_val, vmax=vmax_val)
+
+        # Add color bar
+        cbar = plt.colorbar(cax, label='Visitation Count')
+
+        plt.title('State Visitation Heatmap KeyCorridor')
+        plt.xlabel('Grid X Coordinate')
+        plt.ylabel('Grid Y Coordinate')
+
+        # Turn off the tick labels
+        ax.set_xticks([])  # Turn off x-axis tick labels
+        ax.set_yticks([])  # Turn off y-axis tick labels
+
+        # Save the plot to a file
+        plt.savefig('heatmap.png', format='png', dpi=300)
+
+
+
+    # IR heatmap
+    if args.singleton_env == "True":
+
+        # Grid dimensions (modify according to your environment)
+        grid_rows, grid_cols = 25,25
+
+        N = sum(intrinsic_reward_dict.values())
+
+        # Initialize the maximum value
+        max_value_IR= float('-inf')
+
+        # Create a matrix from the state visitation dictionary
+        intrinsic_reward_matrix = np.zeros((grid_rows, grid_cols))
+        for (row, col), count in intrinsic_reward_dict.items():
+            intrinsic_reward_matrix[col, row] = count/N
+            value = count/N
+            if value>max_value_IR:
+                max_value_IR = value
+
+        print("This is the max value for the IR maxtrix",max_value_IR)
+
+        fig, ax = plt.subplots()
+
+        # Define fixed scale for your heatmap
+        vmin_val = 0.0  # Set to the lowest expected value for your data
+        vmax_val = 0.20  # Set to the highest expected value for your data
+
+        # Plot the heatmap
+        cax = ax.imshow(intrinsic_reward_matrix, cmap='inferno', interpolation='nearest', vmin=vmin_val, vmax=vmax_val)
+
+        # Add color bar
+        cbar = plt.colorbar(cax, label='Visitation Count')
+
+        plt.title('State Intrinsic Reward Heatmap KeyCorridor')
+        plt.xlabel('Grid X Coordinate')
+        plt.ylabel('Grid Y Coordinate')
+
+        # Turn off the tick labels
+        ax.set_xticks([])  # Turn off x-axis tick labels
+        ax.set_yticks([])  # Turn off y-axis tick labels
+
+        # Save the plot to a file
+        plt.savefig('heatmap_IR.png', format='png', dpi=300)  
 

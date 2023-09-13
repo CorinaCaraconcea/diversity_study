@@ -14,12 +14,12 @@ class PPOAlgo(BaseAlgo):
 
     def __init__(self, envs,obs_space,action_space, acmodel, state_action_model = None ,intrinsic_reward_model = None, device=None, num_frames_per_proc=None, discount=0.99, lr=0.0001, gae_lambda=0.95,
                  entropy_coef=0.0005, value_loss_coef=0.5, max_grad_norm=0.5, recurrence=4,
-                 adam_eps=1e-8, clip_eps=0.2, epochs=4, batch_size=256, preprocess_obss=None, intrinsic_coef = 0.005, no_skills = 10, window_size = 10,
+                 adam_eps=1e-8, clip_eps=0.2, epochs=4, batch_size=256, preprocess_obss=None, intrinsic_coef = 0.005, no_skills = 10, window_size = 10, singleton_env = False,
                  reshape_reward=None):
         num_frames_per_proc = num_frames_per_proc or 128
 
         super().__init__(envs,obs_space, action_space , acmodel, state_action_model, intrinsic_reward_model, device, num_frames_per_proc, discount, lr, gae_lambda, entropy_coef,
-                         value_loss_coef, max_grad_norm, recurrence, preprocess_obss ,intrinsic_coef, no_skills, window_size, reshape_reward)
+                         value_loss_coef, max_grad_norm, recurrence, preprocess_obss ,intrinsic_coef, no_skills, window_size, singleton_env, reshape_reward)
 
         self.clip_eps = clip_eps
         self.epochs = epochs

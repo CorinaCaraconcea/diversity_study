@@ -11,14 +11,14 @@ from torch_ac_v2.torch_ac_v2.format import default_preprocess_obss
 
 
 from torch_ac_v2.torch_ac_v2.utils.dictlist import DictList
-from torch_ac_v2.torch_ac_v2.utils.penv import ParallelEnv
+from torch_ac_v2.torch_ac_v2.utils.penv import ParallelEnv, SingletonParallelEnv
 from torch_ac_v2.torch_ac_v2.utils.count_module import CountModule,TrajectoryCountModule, DIAYN_reward, DIAYN_discriminator, RNDModel, WindowTrajectory,RNDTrajectoryModel
 
 class BaseAlgo(ABC):
     """The base class for RL algorithms."""
 
     def __init__(self, envs,obs_space,action_space, acmodel, state_action_model, intrinsic_reward_model, device, num_frames_per_proc, discount, lr, gae_lambda, entropy_coef,
-                 value_loss_coef, max_grad_norm, recurrence, preprocess_obss,intrinsic_coef, no_skills, window_size, reshape_reward):
+                 value_loss_coef, max_grad_norm, recurrence, preprocess_obss,intrinsic_coef, no_skills, window_size, singleton_env, reshape_reward):
         """
         Initializes a `BaseAlgo` instance.
 
@@ -85,8 +85,12 @@ class BaseAlgo(ABC):
         self.obs_space = obs_space
         self.action_space = action_space
         self.window_size = window_size
+        self.singleton_env = singleton_env
 
-        self.env = ParallelEnv(envs)
+        if self.singleton_env == False:
+            self.env = ParallelEnv(envs)
+        else:
+            self.env = SingletonParallelEnv(envs)     
 
         
         # initialize the state count module
@@ -204,6 +208,12 @@ class BaseAlgo(ABC):
         # placeholder to keep track of the skills of each environment at each frame
         self.skills_tracker = torch.zeros(*shape, device = self.device)
 
+        # initiate dictionary for the state visitation and state intrinsic rewards
+        self.state_visitation = {}
+
+        self.intrinsic_reward_per_frame = []
+        self.ir_dict = {}
+
 
     # the experience collector runs in all the environments at the same time and 
     # the next actions are computed in a batch mode for all environments at the same time
@@ -268,6 +278,13 @@ class BaseAlgo(ABC):
 
             next_lstm_embedding_copy = next_lstm_embedding.clone()
 
+            # keep track of the agent grid visitation
+            for agent_state in agent_loc:
+                if agent_state in self.state_visitation.keys():
+                    self.state_visitation[agent_state] += 1
+                else:
+                    self.state_visitation[agent_state] = 1
+
             # keep track of the extrinsic rewards
             self.log_episode_ext_return += torch.tensor(reward, device=self.device, dtype=torch.float)
 
@@ -285,6 +302,8 @@ class BaseAlgo(ABC):
                 total_reward += np.array(count_intrinsic_reward, dtype=np.float64)
                 total_reward = tuple(total_reward)
 
+                self.intrinsic_reward_per_frame = count_intrinsic_reward
+
             elif self.intrinsic_reward_model == "RND":
 
                 intrinsic_reward = self.rnd_model.compute_intrinsic_reward(input_next_obs)
@@ -292,15 +311,13 @@ class BaseAlgo(ABC):
                 # Keep track of the MSE loss to update the params of the predictor network
                 self.rnd_loss[i]=intrinsic_reward
 
-                print("intrinsic reward: ", intrinsic_reward)
-
                 # Add the intrinsic reward to the the extrinsic/envs reward
                 total_reward = torch.tensor(reward, dtype=torch.float32, requires_grad=True)  # Ensure reward is float and requires grad
                 total_reward = total_reward.clone() + self.intrinsic_coef * intrinsic_reward
                 # print("reward is", reward)
                 total_reward = tuple(total_reward)
 
-                rnd_intrinsic_reward = self.intrinsic_coef * intrinsic_reward
+                self.intrinsic_reward_per_frame  = self.intrinsic_coef * intrinsic_reward
 
             elif self.intrinsic_reward_model == "TrajectoryCount":
                 # print("Using Trajectory Count")
@@ -325,8 +342,9 @@ class BaseAlgo(ABC):
                 # print("reward is", reward)
                 total_reward = tuple(total_reward)
 
+                self.intrinsic_reward_per_frame  = trajectory_intrinsic_reward
+
             elif self.intrinsic_reward_model == "DIAYN":
-                # print("Using DYAIN")
 
                 diayn_rewards = []
 
@@ -338,13 +356,13 @@ class BaseAlgo(ABC):
                     diayn_reward = self.diayn_reward.diayn_reward(probability_of_correct_skill[idx,self.skills[idx]])
                     diayn_rewards.append(diayn_reward)
                 
-                # print("diayn rewards ", diayn_rewards)
-
                 # Add the intrinsic reward to the the extrinsic/envs reward
                 total_reward = torch.tensor(reward, dtype=torch.float32, requires_grad=True)  # Ensure reward is float and requires grad
                 diayn_rewards = torch.tensor(diayn_rewards, dtype=torch.float32, requires_grad=True)
                 total_reward = total_reward.clone() + diayn_rewards
                 total_reward = tuple(reward)   
+
+                self.intrinsic_reward_per_frame = diayn_rewards
 
             elif self.intrinsic_reward_model == "TrajectoryWindowCount":
 
@@ -369,6 +387,8 @@ class BaseAlgo(ABC):
                 # print("reward is", reward)
                 total_reward = tuple(total_reward)
 
+                self.intrinsic_reward_per_frame = window_count_intrinsic_reward
+
 
             elif self.intrinsic_reward_model == "TrajectoryRND":
  
@@ -381,7 +401,7 @@ class BaseAlgo(ABC):
                 # print("reward is", reward)
                 total_reward = tuple(total_reward)
 
-                traj_rnd_intrinsic_reward = self.intrinsic_coef * traj_rnd_intrinsic_reward
+                self.intrinsic_reward_per_frame = self.intrinsic_coef * traj_rnd_intrinsic_reward
             
             # for no intrinsic model
             elif self.intrinsic_reward_model == None:
@@ -439,6 +459,14 @@ class BaseAlgo(ABC):
             
             # keep track of the log prob of the action under the distribution over the action space 
             self.log_probs[i] = dist.log_prob(action)
+
+            # keep track of the intrinsic reward per grid position
+            if (len(self.intrinsic_reward_per_frame) != 0) and (self.singleton_env != False):
+                for idx in range(len(self.intrinsic_reward_per_frame)):
+                    if agent_loc[idx] in self.ir_dict.keys():
+                        self.ir_dict[agent_loc[idx]] += self.intrinsic_reward_per_frame[idx]
+                    else:
+                        self.ir_dict[agent_loc[idx]] = self.intrinsic_reward_per_frame[idx]
 
             # Update log values
 
@@ -557,7 +585,7 @@ class BaseAlgo(ABC):
         self.log_num_frames = self.log_num_frames[-self.num_procs:]
 
         # return experience and logs
-        return exps, logs
+        return exps, logs, self.state_visitation, self.ir_dict
 
     @abstractmethod
     def update_parameters(self):
