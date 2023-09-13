@@ -23,14 +23,23 @@ python3 -m rl_starter_files.scripts.train [arguments]
 The main arguments are:
 
 General Arguments:
+
 --algo: (REQUIRED) Algorithm to use. Use ppo.
+
 --env: (REQUIRED) Name of the Minigrid environment to train on.
+
 --model: (Optional) Name of the model. Default: {ENV}_{ALGO}_{TIME}.
+
 --seed: Random seed. Default: 1.
+
 --log-interval: Number of updates between logs. Default: 1.
+
 --save-interval: Number of updates between saves (set to 0 to disable). Default: 10.
+
 --procs: Number of processes. Default: 16.
+
 --frames: Total number of frames. Default: 10**7.
+
 --pretrained-model: Specifies if to use a pretrained model. Default: False.
 
 Intrinsic Motivation Arguments:
@@ -41,6 +50,7 @@ Intrinsic Motivation Arguments:
 --window-size: Specifies the window size for TrajectoryWindowCount. Default: 5.
 
 Singleton Env Arguments:
+
 --singleton-env: Specifies if the env is singleton (default env is procedurally-generated). If this flat is set to true, the code will additionally plot an state visitation heatmap and intrinsic reward heatmap. Default False
 
 ## Example of use
